@@ -28,6 +28,8 @@ public class UserController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupViewGet(Model model){
 
+
+
         model.addAttribute("user",new User());
         // Return the view
         return "Signup";
@@ -50,7 +52,7 @@ public class UserController {
 
         System.out.println("############");
         System.out.println(user);
-        //userService.save(user);
+        userService.save(user);
 
         model.addAttribute("username", user.getUsername());
 

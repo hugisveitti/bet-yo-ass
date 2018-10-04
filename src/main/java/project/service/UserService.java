@@ -41,8 +41,8 @@ public interface UserService {
     /**
      * Find all {@link User}s with {@link String username}
      * @param username {@link String}
-     * @return All {@link User}s with the {@link String username} passed
+     * @return A {@link User} with the {@link String username} passed
      */
-    List<User> findByUsername(String username);
+    User findByUsername(String username);
 
 }
