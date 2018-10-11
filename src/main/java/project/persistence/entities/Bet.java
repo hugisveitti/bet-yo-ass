@@ -20,7 +20,8 @@ public class Bet {
     private String note;
 
     //todo decide var/functions needed
-    private User creator;
+    //@Column(name = "betuser")
+    //private User creator;
 
 
     // Notice the empty constructor, because we need to be able to create an empty PostitNote to add
