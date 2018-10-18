@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "user") // If you want to specify a table name, you can do so here
+@Table(name = "betuser") // If you want to specify a table name, you can do so here
 public class User {
 
     // Declare that this attribute is the id
