@@ -55,7 +55,7 @@ public class User {
 
     @Override
     public String toString(){
-        return "User " + this.username + " has id " + this.id;
+        return "User " + this.username + " has id " + this.id + " and password " + this.password;
     }
 
 }

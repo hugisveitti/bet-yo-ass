@@ -2,5 +2,5 @@
 
 yo thu er ${username}
 <form>
-
+    <input name />
 </form>

@@ -6,19 +6,30 @@
 <html lang="en">
 
     <head>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
         <title>BET YO ASS</title>
     </head>
+    <header>
+        <h1>BET YO ASS</h1>
+        <nav>
+            <c:choose>
+                <c:when test="${username != null}">
+                    <a href="/userpage">User Page</a>
+                    <a href="/sendbet">Make a bet</a>
+                    <a href="/logout">Logout</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/signup">Signup</a>
+                    <a href="/login">Login</a>
+                </c:otherwise>
+            </c:choose>
+        </nav>
+    </header>
     <body>
 
-    <h1>HBV501G Project Spring Boot Skeleton</h1>
-    <h2>BET YO ASS</h2>
-    <p>This skeleton of a Spring Boot Web project was made to help groups get started on their projects without to much hassle.</p>
 
-    <ul>
-        <li><a href="/postit">Click here for Persistence Layer Demo</a></li>
-    </ul>
     </body>
     <footer>Class HBV501G, University of Iceland</footer>
 
-    <a href="/signup">Signup page</a>
+
 </html>
