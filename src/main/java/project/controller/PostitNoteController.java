@@ -51,6 +51,7 @@ public class PostitNoteController {
                                      Model model){
 
         // Save the Postit Note that we received from the form
+        System.out.println(postitNote.getId());
         postitNoteService.save(postitNote);
 
         // Here we get all the Postit Notes (in a reverse order) and add them to the model

@@ -19,4 +19,6 @@
     </ul>
     </body>
     <footer>Class HBV501G, University of Iceland</footer>
+
+    <a href="/signup">Signup page</a>
 </html>
