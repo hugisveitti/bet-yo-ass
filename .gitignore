@@ -22,3 +22,5 @@
 
 # Specific files
 application.properties
+src/main/resources/application.properties
+.idea/workspace.xml

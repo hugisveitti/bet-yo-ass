@@ -35,7 +35,7 @@ public class UserController {
     }
 
     // Method that receives the POST request on the URL /signup
-    // and receives the ModelAttribute("User")
+    // and receives the ModelAttribute("user")
     // That attribute is the attribute that is mapped to the form, so here
     // we can save the user because we get the data that was entered
     // into the form.
@@ -51,7 +51,8 @@ public class UserController {
 
         System.out.println("############");
         System.out.println(user);
-        userService.save(user);
+        User newUser = new User(user.getUsername(), user.getPassword());
+        userService.save(newUser);
 
         model.addAttribute("username", user.getUsername());
 
