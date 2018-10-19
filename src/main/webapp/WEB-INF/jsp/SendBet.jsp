@@ -13,7 +13,7 @@
 <h1>Send bet</h1>
 
 <div class="box">
-    <sf:form method="POST" modelAttribute="pendingBet" action="/sendbet">
+    <sf:form onsubmit="testing()" method="POST" modelAttribute="pendingBet" action="/sendbet">
         <input type="hidden" value="${username}" name="sender">
         <legend>Name of bet</legend>
         <input type="text" placeholder="Bet name" name="title"/>
@@ -29,14 +29,14 @@
         <legend>Your Odds</legend>
         <input id="your-odds" type="number" placeholder="Your Odds" name="oddsSender">
 
-        <legend>Opponent-odds</legend>
-        <p id="opponent-odds"></p>
+        <p>Opponent-odds</p>
+        <p class="opponent-show " id="opponent-odds"></p>
 
         <legend>Opponent-amount</legend>
-        <p id="opponent-amount"></p>
+        <p class="opponent-show" id="opponent-amount"></p>
 
 
-        <input type="submit" VALUE="Send bet"/>
+        <input id="pending-bet-button" type="submit" VALUE="Send bet"/>
 
     </sf:form>
 </div>
@@ -49,29 +49,46 @@
     var yourAmount = document.getElementById("your-amount");
     var oppAmount = document.getElementById("opponent-amount");
 
+    var submit = document.getElementById("pending-bet-button");
 
     yourOdds.addEventListener("keyup", calcOdds);
     yourAmount.addEventListener("keyup", calcAmount);
 
 
-
     function calcOdds(e){
+
+        if (yourAmount.value == "" || yourOdds.value == "") {
+            oppOdds.className = "opponent-hidden";
+            oppAmount.className = "opponent-hidden";
+            return;
+        }
+        oppOdds.className = "opponent-show";
+        oppAmount.className = "opponent-show";
+
         var odds = e.target.value;
         //todo if brwoser not support number in input
 
-
         var likur = (1/parseFloat(odds))*100;
-
         var oOdds = (1/(100.0-likur))*100;
 
+
         oppOdds.innerHTML = oOdds;
-
-
-
-        oppAmount.innerHTML = parseFloat(yourAmount.value)*parseFloat(yourOdds.value)/parseFloat(oppOdds.innerHTML);
+        oppAmount.innerHTML = parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML);
     }
 
     function calcAmount(e){
+        console.log(yourAmount.value);
+        console.log(yourOdds.value);
+
+        if (yourAmount.value == "" || yourOdds.value == "") {
+            oppOdds.className = "opponent-hidden";
+            oppAmount.className = "opponent-hidden";
+            return;
+        }
+        oppOdds.className = "opponent-show";
+        oppAmount.className = "opponent-show";
+
+
         oppAmount.innerHTML = parseFloat(yourAmount.value)*parseFloat(yourOdds.value)/parseFloat(oppOdds.innerHTML);
     }
 
