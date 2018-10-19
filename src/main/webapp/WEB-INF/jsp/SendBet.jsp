@@ -23,8 +23,8 @@
         <legend>Opponent</legend>
         <input type="text" placeholder="Opponent" name="receiver">
 
-        <legend>Credit Amount</legend>
-        <input id="your-amount" type="number" placeholder="Credit amount" name="amount">
+        <legend>Your Amount</legend>
+        <input id="your-amount" type="number" placeholder="Your amount" name="amount">
 
         <legend>Your Odds</legend>
         <input id="your-odds" type="number" placeholder="Your Odds" name="oddsSender">
