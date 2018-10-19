@@ -20,13 +20,21 @@
         <legend>Description</legend>
         <input type="text" placeholder="Description" name="description"/>
 
-        <legend>Oppenent</legend>
+        <legend>Opponent</legend>
         <input type="text" placeholder="Opponent" name="receiver">
+
+        <legend>Credit Amount</legend>
+        <input id="your-amount" type="number" placeholder="Credit amount" name="amount">
 
         <legend>Your Odds</legend>
         <input id="your-odds" type="number" placeholder="Your Odds" name="oddsSender">
-        <legend>Oppenent-odds</legend>
+
+        <legend>Opponent-odds</legend>
         <p id="opponent-odds"></p>
+
+        <legend>Opponent-amount</legend>
+        <p id="opponent-amount"></p>
+
 
         <input type="submit" VALUE="Send bet"/>
 
@@ -38,15 +46,31 @@
     var yourOdds = document.getElementById("your-odds");
     var oppOdds = document.getElementById("opponent-odds");
 
+    var yourAmount = document.getElementById("your-amount");
+    var oppAmount = document.getElementById("opponent-amount");
+
+
     yourOdds.addEventListener("keyup", calcOdds);
+    yourAmount.addEventListener("keyup", calcAmount);
+
+
 
     function calcOdds(e){
-        console.log(e.target.value);
         var odds = e.target.value;
         //todo if brwoser not support number in input
+
+
+
         oppOdds.innerHTML = 4.0/parseFloat(odds);
+        console.log(yourAmount)
         console.log(oppOdds);
         console.log(odds);
-        console.log(4.0/parseFloat(odds));
+
+        oppAmount.innerHTML = yourAmount.value*odds/parseFloat(oppOdds.innerHTML);
     }
+
+    function calcAmount(e){
+        oppAmount.innerHTML = yourAmount.value*odds/parseFloat(oppOdds.innerHTML);
+    }
+
 </script>
