@@ -60,17 +60,19 @@
         //todo if brwoser not support number in input
 
 
+        var likur = (1/parseFloat(odds))*100;
 
-        oppOdds.innerHTML = 4.0/parseFloat(odds);
-        console.log(yourAmount)
-        console.log(oppOdds);
-        console.log(odds);
+        var oOdds = (1/(100.0-likur))*100;
 
-        oppAmount.innerHTML = yourAmount.value*odds/parseFloat(oppOdds.innerHTML);
+        oppOdds.innerHTML = oOdds;
+
+
+
+        oppAmount.innerHTML = parseFloat(yourAmount.value)*parseFloat(yourOdds.value)/parseFloat(oppOdds.innerHTML);
     }
 
     function calcAmount(e){
-        oppAmount.innerHTML = yourAmount.value*odds/parseFloat(oppOdds.innerHTML);
+        oppAmount.innerHTML = parseFloat(yourAmount.value)*parseFloat(yourOdds.value)/parseFloat(oppOdds.innerHTML);
     }
 
 </script>
