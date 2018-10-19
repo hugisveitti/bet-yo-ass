@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "Bet") // If you want to specify a table name, you can do so here
+@Table(name = "bet") // If you want to specify a table name, you can do so here
 public class Bet {
 
     // Declare that this attribute is the id
@@ -16,8 +16,9 @@ public class Bet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String usernameReceiver;
     private String name;
-    private String note;
+    private String description;
 
     //todo decide var/functions needed
     //@Column(name = "betuser")
@@ -29,9 +30,10 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(String name, String note) {
+    public Bet(String usernameReceiver, String name, String description) {
+        this.usernameReceiver = usernameReceiver;
         this.name = name;
-        this.note = note;
+        this.description = description;
     }
 
     public Long getId() {
@@ -42,27 +44,23 @@ public class Bet {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getNote() {
-        return note;
-    }
+    public String getDescription() { return description; }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getUsernameReceiver() { return usernameReceiver; }
+
+    public void setUsernameReceiver(String usernameReceiver) { this.usernameReceiver = usernameReceiver; }
 
     // This is for easier debug.
     @Override
     public String toString() {
         return String.format(
-                "Postit Note[name=%s, note=%s]",
-                name,note);
+                "Postit Note[usernameReceiver=%s, name=%s, description=%s]",
+                usernameReceiver,name,description);
     }
 }
