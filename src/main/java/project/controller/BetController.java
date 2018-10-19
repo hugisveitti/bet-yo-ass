@@ -5,12 +5,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.Bet;
 import project.persistence.entities.User;
 
 @Controller
+@SessionAttributes("username")
 public class BetController {
+
+    @RequestMapping(value="/sendbet", method = RequestMethod.GET)
+    public String sendBetViewGet(Model model){
+        model.addAttribute("bet",new Bet());
+        return "SendBet";
+    }
+
 
 
     @RequestMapping(value = "/sendbet", method = RequestMethod.POST)

@@ -89,13 +89,6 @@ public class UserController {
         return "UserPage";
     }
 
-    @RequestMapping(value="/sendbet", method = RequestMethod.GET)
-    public String sendBetViewGet(Model model){
-        model.addAttribute("bet",new Bet());
-        return "SendBet";
-    }
-
-
     @RequestMapping(value="/error", method = RequestMethod.GET)
     public String errorViewGet(){
         System.out.println("ERROR");
