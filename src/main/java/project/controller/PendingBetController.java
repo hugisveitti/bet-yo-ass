@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.PendingBet;
+import project.service.PendingBetService;
 
 @Controller
 @SessionAttributes("username")
 public class PendingBetController {
+
+    private PendingBetService pendingBetService;
+
+    public PendingBetController(PendingBetService pendingBetService){
+        this.pendingBetService = pendingBetService;
+    }
 
     @RequestMapping(value="/sendbet", method = RequestMethod.GET)
     public String sendBetViewGet(Model model){
