@@ -7,23 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import project.persistence.entities.Bet;
-import project.persistence.entities.User;
+import project.persistence.entities.PendingBet;
 
 @Controller
 @SessionAttributes("username")
-public class BetController {
+public class PendingBetController {
 
     @RequestMapping(value="/sendbet", method = RequestMethod.GET)
     public String sendBetViewGet(Model model){
-        model.addAttribute("bet",new Bet());
+        model.addAttribute("pendingBet",new PendingBet());
         return "SendBet";
     }
 
 
 
     @RequestMapping(value = "/sendbet", method = RequestMethod.POST)
-    public RedirectView sendbetPost(@ModelAttribute("bet") Bet bet, Model model){
+    public RedirectView sendbetPost(@ModelAttribute("pendingBet") PendingBet bet, Model model){
 
 
         System.out.println("############");

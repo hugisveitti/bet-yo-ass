@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-import project.persistence.entities.Bet;
 import project.persistence.entities.User;
 import project.service.UserService;
 
