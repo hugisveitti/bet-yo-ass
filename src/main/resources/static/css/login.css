@@ -2,7 +2,7 @@
     margin: auto;
     width: 50%;
     height: auto;
-    background-color: lightslategrey;
+    background-color: #f48942;
     color:black;
     box-shadow: black 1px 1px;
     padding: 15px;
@@ -16,4 +16,8 @@ input{
     margin: auto;
     margin-bottom: 10px;
 
+}
+
+h5{
+    text-align: center;
 }

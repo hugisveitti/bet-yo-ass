@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "betuser") // If you want to specify a table name, you can do so here, má ekki vera bara "user"
+@Table(name = "betuser") // If you want to specify a table name, you can do so here
 public class User {
 
     // Declare that this attribute is the id
@@ -55,7 +55,7 @@ public class User {
 
     @Override
     public String toString(){
-        return "User " + this.username + " has id " + this.id;
+        return "User " + this.username + " has id " + this.id + " and password " + this.password;
     }
 
 }

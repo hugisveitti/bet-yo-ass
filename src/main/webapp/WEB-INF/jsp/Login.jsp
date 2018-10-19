@@ -11,18 +11,19 @@
 
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
 </head>
+<%@ include file="blocks/header.jsp" %>
 <body>
 
-<h1><a href="/login">Login Page</a></h1>
+<h1>Login</h1>
+<div class="box">
+    <sf:form method="POST" modelAttribute="user" action="/login">
+        <input type="text" name="username" placeholder="username" />
+        <input type="password" name="password" placeholder="password" />
+        <input type="submit" VALUE="Login"/>
 
-<sf:form method="POST" modelAttribute="postitNote" action="/postit">
-
-
-
-    <input type="submit" VALUE="Login"/>
-
-</sf:form>
-
+    </sf:form>
+    <p>${errorMsg}</p>
+</div>
 
 </body>
 </html>
