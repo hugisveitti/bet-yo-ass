@@ -21,3 +21,7 @@ input{
 h5{
     text-align: center;
 }
+
+.opponent-hidden {
+    display: none;
+}

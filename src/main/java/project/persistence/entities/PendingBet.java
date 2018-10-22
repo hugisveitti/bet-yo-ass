@@ -147,10 +147,22 @@ public class PendingBet {
     }
 
 
-
-    // This is for easier debug.
     @Override
     public String toString() {
-        return "User receiver: " + this.getReceiver() + " user sender " + this.getSender();
+        return "PendingBet{" +
+                "id=" + id +
+                ", receiver='" + receiver + '\'' +
+                ", sender='" + sender + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", oddsSender=" + oddsSender +
+                ", oddsReceiver=" + oddsReceiver +
+                ", amountSender=" + amountSender +
+                ", amountReceiver=" + amountReceiver +
+                ", dateAndTimeCreated='" + dateAndTimeCreated + '\'' +
+                ", dateAndTimeResolve='" + dateAndTimeResolve + '\'' +
+                ", acceptSender=" + acceptSender +
+                ", acceptReceiver=" + acceptReceiver +
+                '}';
     }
 }
