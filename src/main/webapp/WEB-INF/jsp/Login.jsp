@@ -16,13 +16,16 @@
 
 <h1>Login</h1>
 <div class="box">
-    <sf:form method="POST" modelAttribute="user" action="/login">
-        <input type="text" name="username" placeholder="username" />
-        <input type="password" name="password" placeholder="password" />
+    <sf:form method="POST" action="/login">
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
         <input type="submit" VALUE="Login"/>
 
     </sf:form>
     <p>${errorMsg}</p>
+    <c:if test="${not empty param.error}">
+        <p>Wrong username or password, ((kannski vitlaust ad segja thetta thvi eina sem eg veit er ad thad var error))</p>
+    </c:if>
 </div>
 
 </body>

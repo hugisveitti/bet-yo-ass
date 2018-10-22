@@ -1,39 +1,51 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.ModelAndView;
+import project.persistence.entities.Role;
 import project.persistence.entities.User;
-import project.service.UserService;
+import project.persistence.repositories.UserRepository;
+import project.service.CustomUserDetailsService;
 
-import javax.servlet.http.HttpSession;
+import project.persistence.repositories.RoleRepository;
+
+import java.util.Set;
+import java.util.HashSet;
 
 @Controller
 @SessionAttributes("username")
 public class UserController {
 
-    // Instance Variables
-    private UserService userService;
 
+
+    private CustomUserDetailsService customUserDetailsService;
+
+    private RoleRepository roleRepository;
     // Dependency Injection
+
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(CustomUserDetailsService customUserDetailsService, RoleRepository roleRepository) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.roleRepository = roleRepository;
     }
 
     // Method that returns the correct view for the URL /signup
     // This handles the GET request for this URL
     // Notice the `method = RequestMethod.GET` part
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signupViewGet(Model model){
+    public ModelAndView signupViewGet(){
+        ModelAndView model = new ModelAndView();
 
 
-
-        model.addAttribute("user",new User());
+        model.addObject("user",new User());
+        model.setViewName("Signup");
         // Return the view
-        return "Signup";
+        return model;
     }
 
     // Method that receives the POST request on the URL /signup
@@ -43,23 +55,27 @@ public class UserController {
     // into the form.
     // Notice the `method = RequestMethod.POST` part
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public RedirectView signupViewPost(@ModelAttribute("user") User user, Model model){
+    public String signupViewPost(@ModelAttribute("user") User user, Model model){
 
         // Save the user that we received from the form
-        //todo encrypt password
-        //todo unique users
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-
-        System.out.println("############");
-        System.out.println(user);
         User newUser = new User(user.getUsername(), user.getPassword());
-        userService.save(newUser);
 
-        model.addAttribute("username", user.getUsername());
+        Role role = roleRepository.findByRole("ROLE_USER");
 
+
+        Set<Role> newRoles = new HashSet<>();
+        newRoles.add(role);
+
+        //TODO laga thetta kannski
+        newUser.setRoles(newRoles);
+        //newUser.setRoles(user.getRoles());
+        //userRepository.save(newUser);
+        customUserDetailsService.save(newUser);
+
+
+        model.addAttribute("errorMsg", "Login with your new account");
         // Return the view
-        return new RedirectView("/userpage");
+        return "Login";
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
@@ -67,25 +83,10 @@ public class UserController {
         return "Login";
     }
 
-    @RequestMapping(value="/login", method=RequestMethod.POST)
-    public String loginViewPost(@ModelAttribute("user") User user, Model model){
-
-        User loginUser = userService.findByUsername(user.getUsername());
-
-        if(loginUser.getPassword().equals(user.getPassword())){
-            model.addAttribute("username", loginUser.getPassword());
-            return "UserPage";
-        } else {
-            model.addAttribute("errorMsg", "Username or Password incorrect");
-            return "Login";
-        }
-
-    }
-
 
     @RequestMapping(value="/userpage", method = RequestMethod.GET)
     public String userPageViewGet(){
-        return "UserPage";
+          return "UserPage";
     }
 
     @RequestMapping(value="/error", method = RequestMethod.GET)
@@ -95,12 +96,4 @@ public class UserController {
     }
 
 
-
-
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session, Model model){
-        session.invalidate();
-        model.asMap().clear();
-        return "Index";
-    }
 }
