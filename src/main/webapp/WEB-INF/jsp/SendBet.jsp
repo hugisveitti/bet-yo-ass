@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
@@ -28,6 +28,9 @@
 
         <legend>Your Odds</legend>
         <input id="your-odds" type="number" placeholder="Your Odds" name="oddsSender">
+        <p id="your-odds-percentage"></p>
+
+        </br>
 
         <p>Opponent-odds</p>
         <p class="opponent-show " id="opponent-odds"></p>
@@ -45,6 +48,7 @@
 <script>
     var yourOdds = document.getElementById("your-odds");
     var oppOdds = document.getElementById("opponent-odds");
+    var yourOddsPercentage = document.getElementById("your-odds-percentage");
 
     var yourAmount = document.getElementById("your-amount");
     var oppAmount = document.getElementById("opponent-amount");
@@ -55,7 +59,7 @@
     yourAmount.addEventListener("keyup", calcAmount);
 
 
-    function calcOdds(e){
+    function calcOdds(e) {
 
         if (yourAmount.value == "" || yourOdds.value == "") {
             oppOdds.className = "opponent-hidden";
@@ -65,18 +69,23 @@
         oppOdds.className = "opponent-show";
         oppAmount.className = "opponent-show";
 
+
         var odds = e.target.value;
         //todo if brwoser not support number in input
 
-        var likur = (1/parseFloat(odds))*100;
-        var oOdds = (1/(100.0-likur))*100;
+        var likur = (1 / parseFloat(odds)) * 100;
+        var oOdds = (1 / (100.0 - likur)) * 100;
 
 
-        oppOdds.innerHTML = oOdds;
+
+
+        console.log("you have " + likur + "% chance of winning");
+        yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
+        oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
         oppAmount.innerHTML = parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML);
     }
 
-    function calcAmount(e){
+    function calcAmount(e) {
         console.log(yourAmount.value);
         console.log(yourOdds.value);
 
@@ -89,7 +98,7 @@
         oppAmount.className = "opponent-show";
 
 
-        oppAmount.innerHTML = parseFloat(yourAmount.value)*parseFloat(yourOdds.value)/parseFloat(oppOdds.innerHTML);
+        oppAmount.innerHTML = parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML);
     }
 
 </script>
