@@ -42,7 +42,7 @@ public interface BetService {
 
 
 
-    
+
     void deleteBet(Bet bet);
 
     List<Bet> findBetBySender(String sender);

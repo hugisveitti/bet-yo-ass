@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.HashSet;
 
 @Controller
-@SessionAttributes("username")
 public class UserController {
 
 

@@ -16,14 +16,13 @@ import java.util.List;
 
 
 @Controller
-@SessionAttributes("username")
-public class PendingBetController {
+public class BetController {
 
     private BetService pendingBetService;
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public PendingBetController(BetService pendingBetService, CustomUserDetailsService customUserDetailsService){
+    public BetController(BetService pendingBetService, CustomUserDetailsService customUserDetailsService){
         this.pendingBetService = pendingBetService;
         this.customUserDetailsService = customUserDetailsService;
     }
@@ -38,20 +37,18 @@ public class PendingBetController {
     }
 
 
-/*
+
     @RequestMapping(value = "/sendbet", method = RequestMethod.POST)
-    public RedirectView sendbetPost(@ModelAttribute("pendingBet") PendingBet bet, Model model){
+    public String sendbetPost(@ModelAttribute("pendingBet") PendingBet pendingBet, Model model){
 
 
         System.out.println("############");
         System.out.println(model);
-        System.out.println(bet);
+        System.out.println(pendingBet);
 
 
         System.out.println(23);
-        return new RedirectView("/sendbet");
+        return "UserPage";
     }
-
-*/
 
 }
