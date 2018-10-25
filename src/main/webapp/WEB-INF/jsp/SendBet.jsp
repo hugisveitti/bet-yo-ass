@@ -13,7 +13,7 @@
 <h1>Send bet</h1>
 
 <div class="box">
-    <sf:form onsubmit="testing()" method="POST" modelAttribute="pendingBet" action="/sendbet">
+    <sf:form method="POST" modelAttribute="pendingBet" action="/sendbet" autocomplete="off">
         <input type="hidden" value="${username}" name="sender">
         <legend>Name of bet</legend>
         <input type="text" placeholder="Bet name" name="title"/>
@@ -21,13 +21,20 @@
         <input type="text" placeholder="Description" name="description"/>
 
         <legend>Opponent</legend>
-        <input type="text" placeholder="Opponent" name="receiver">
+        <div id="users-dropdown">
+            <input type="text" id="opponent" placeholder="Opponent" name="receiver">
+        </div>
+
+        <c:forEach items="${users}" var="user">
+            <span class="get-users" hidden>${user.getUsername()}</span>
+        </c:forEach>
+
 
         <legend>Your Amount</legend>
-        <input id="your-amount" type="number" step="any" placeholder="Your amount" name="amount">
+        <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="amountSender">
 
         <legend>Your Odds</legend>
-        <input id="your-odds" type="number" step="any" placeholder="Your Odds" name="oddsSender">
+        <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="oddsSender">
         <p id="your-odds-percentage"></p>
 
         </br>
@@ -98,4 +105,74 @@
         oppAmount.innerHTML =  Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) *100)/100;
     }
 
+
+
+    //dropdown fyrir opponent users
+    var getUsers = document.getElementsByClassName("get-users");
+    var opponent = document.getElementById("opponent");
+    opponent.addEventListener("keyup", opponentDropdown);
+    opponent.style.marginBottom = "0";
+    opponent.style.paddingBottom = "0";
+
+    var usersDropdown = document.getElementById("users-dropdown");
+
+
+    var users = [];
+    for(var i=0;i<getUsers.length;i++){
+        users.push(getUsers[i].innerHTML);
+    }
+    function opponentDropdown(e){
+        closeDropdown();
+
+        var a = this.value;
+        a = document.createElement("DIV");
+        a.setAttribute("id", "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+
+        a.style.backgroundColor = "white";
+        a.style.height = "auto";
+        a.style.width = "inherit";
+
+
+        this.parentNode.appendChild(a);
+
+
+        //users that match the input
+        var matchUsers = [];
+
+
+
+
+        for(var i=0; i<users.length; i++){
+            if(e.target.value.toUpperCase() === users[i].substring(0, e.target.value.length).toUpperCase() && e.target.value.length > 0){
+                matchUsers.push(users[i]);
+            }
+        }
+        for(var i=0; i<matchUsers.length; i++){
+            var item = document.createElement("DIV");
+            item.setAttribute("class", "autocomplete-text")
+
+            item.innerHTML = "<b>" + matchUsers[i].substr(0,e.target.value.length) + "</b>";
+            item.innerHTML += matchUsers[i].substr(e.target.value.length);
+            //item.innerHTML = matchUsers[i];
+
+            //item.value = matchUsers[i];
+            item.innerHTML += "<input type='hidden' value='" + matchUsers[i] + "'>";
+            item.addEventListener("click", function(e) {
+
+                console.log(e);
+                console.log(this)
+                opponent.value = this.getElementsByTagName("input")[0].value;
+                closeDropdown();
+            });
+            a.appendChild(item);
+        }
+    }
+
+    function closeDropdown(e){
+        var x = document.getElementsByClassName("autocomplete-items");
+        for(var i=0; i<x.length;i++){
+            x[i].parentNode.removeChild(x[i]);
+        }
+    }
 </script>

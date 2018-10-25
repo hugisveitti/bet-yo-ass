@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,6 @@ public class UserController {
         try {
             customUserDetailsService.save(newUser);
         } catch (Exception e){
-            System.out.println(e);
             model.addAttribute("errorMsg", "Username taken");
             return "Signup";
         }
@@ -83,8 +83,11 @@ public class UserController {
 
 
     @RequestMapping(value="/userpage", method = RequestMethod.GET)
-    public String userPageViewGet(){
-          return "UserPage";
+    public String userPageViewGet(Authentication authentication, Model model){
+        User user = customUserDetailsService.findByUsername(authentication.getName());
+        model.addAttribute("pendingBets", user.getPendingBets());
+        System.out.println(user.getPendingBets());
+        return "UserPage";
     }
 
     @RequestMapping(value="/error", method = RequestMethod.GET)

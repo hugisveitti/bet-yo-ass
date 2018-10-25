@@ -39,6 +39,14 @@ public class User implements UserDetails {
     private Boolean enabled;
 
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_pending_bets",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "pending_bet_id", referencedColumnName = "pending_bet_id"))
+    private Set<PendingBet> pendingBets;
+
 
     @ManyToMany
     @JoinTable(
@@ -48,6 +56,7 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(
                 name = "role", referencedColumnName = "role"))
     private Set<Role> roles;
+
 
 
     private float credit;
@@ -78,6 +87,14 @@ public class User implements UserDetails {
         return authorities;
     }
 
+
+    public Set<PendingBet> getPendingBets() {
+        return pendingBets;
+    }
+
+    public void setPendingBets(Set<PendingBet> pendingBets) {
+        this.pendingBets = pendingBets;
+    }
 
     public Long getId() {
         return id;

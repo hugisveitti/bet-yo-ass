@@ -15,6 +15,7 @@ public class PendingBet {
     // Declare that this attribute is the id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="pending_bet_id")
     private Long id;
 
     private String receiver;
