@@ -1,7 +1,6 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import project.persistence.entities.PendingBet;
 import project.persistence.entities.User;
-import project.service.PendingBetService;
+import project.service.BetService;
 import project.service.CustomUserDetailsService;
 
 import java.util.List;
@@ -20,11 +19,11 @@ import java.util.List;
 @SessionAttributes("username")
 public class PendingBetController {
 
-    private PendingBetService pendingBetService;
+    private BetService pendingBetService;
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public PendingBetController(PendingBetService pendingBetService, CustomUserDetailsService customUserDetailsService){
+    public PendingBetController(BetService pendingBetService, CustomUserDetailsService customUserDetailsService){
         this.pendingBetService = pendingBetService;
         this.customUserDetailsService = customUserDetailsService;
     }
