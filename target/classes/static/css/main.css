@@ -32,5 +32,10 @@ h1{
     margin: 0;
     padding: 20px;
     text-align: center;
+}
 
+#logout-form{
+    margin: 0;
+    padding: 0;
+    display: inline;
 }

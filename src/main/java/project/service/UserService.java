@@ -1,7 +1,12 @@
 package project.service;
 
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import project.persistence.entities.Role;
 import project.persistence.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserService {
@@ -11,7 +16,7 @@ public interface UserService {
      * @param user {@link User} to be saved
      * @return {@link User} that was saved
      */
-    User save(User user);
+    User save(User user) throws AuthenticationException;
 
     /**
      * Delete {@link User}
@@ -45,4 +50,6 @@ public interface UserService {
      */
     User findByUsername(String username);
 
+
+    List<GrantedAuthority> getAuthorities(List<Role> roles);
 }
