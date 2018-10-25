@@ -18,7 +18,9 @@ public class PendingBet {
     private Long id;
 
     private String receiver;
+    private Long receiverID;
     private String sender;
+    private Long senderID;
     private String title;
     private String description;
     private int oddsSender;
@@ -30,7 +32,6 @@ public class PendingBet {
 
     private boolean acceptSender;
     private boolean acceptReceiver;
-
 
 
     public PendingBet() {
@@ -58,6 +59,11 @@ public class PendingBet {
         this.receiver = receiver;
     }
 
+    public Long getReceiverID() {return receiverID;}
+
+    public void setReceiverID(Long receiverID) {this.receiverID = receiverID;}
+
+
     public String getSender() {
         return sender;
     }
@@ -65,6 +71,10 @@ public class PendingBet {
     public void setSender(String sender) {
         this.sender = sender;
     }
+
+    public Long getSenderID() {return senderID;}
+
+    public void setSenderID(Long senderID) {this.senderID = senderID;}
 
     public String getTitle() {
         return title;
@@ -147,12 +157,17 @@ public class PendingBet {
     }
 
 
+
+
+
     @Override
     public String toString() {
         return "PendingBet{" +
                 "id=" + id +
                 ", receiver='" + receiver + '\'' +
+                ", receiverID='" + receiverID+ '\'' +
                 ", sender='" + sender + '\'' +
+                ", senderID='" + senderID + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", oddsSender=" + oddsSender +
