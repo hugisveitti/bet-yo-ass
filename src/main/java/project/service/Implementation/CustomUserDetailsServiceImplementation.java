@@ -37,6 +37,7 @@ public class CustomUserDetailsServiceImplementation implements CustomUserDetails
     }
 
 
+    //Exception sent if there exsitis a user with this username
     public class UserExsitsException extends AuthenticationException {
         public UserExsitsException(final String msg){
             super(msg);

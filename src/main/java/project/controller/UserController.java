@@ -65,11 +65,13 @@ public class UserController {
 
         //TODO laga thetta kannski
         newUser.setRoles(newRoles);
-        //newUser.setRoles(user.getRoles());
-        //userRepository.save(newUser);
-        customUserDetailsService.save(newUser);
-
-
+        try {
+            customUserDetailsService.save(newUser);
+        } catch (Exception e){
+            System.out.println(e);
+            model.addAttribute("errorMsg", "Username taken");
+            return "Signup";
+        }
         model.addAttribute("errorMsg", "Login with your new account");
         // Return the view
         return "Login";

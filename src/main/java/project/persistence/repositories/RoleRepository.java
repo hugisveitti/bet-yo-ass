@@ -20,7 +20,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     Role save(Role role);
 
-
     Role findByRole(String role);
 
 }

@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout().deleteCookies("remove").invalidateHttpSession(true).logoutSuccessUrl("/").permitAll();
 
-        http.exceptionHandling().accessDeniedPage("/403");
+        //http.exceptionHandling().accessDeniedPage("/403");
     }
 
     @Bean
