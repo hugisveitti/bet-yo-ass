@@ -24,7 +24,7 @@ public interface BetsRepository extends JpaRepository<Bet, Long> {
     // If we need a custom query that maybe doesn't fit the naming convention used by the JPA repository,
     // then we can write it quite easily with the @Query notation, like you see below.
     // This method returns all Users where the length of the name is equal or greater than 3 characters.
-    @Query(value = "SELECT b FROM Bet b where length(n.title) >= 3 ")
+    @Query(value = "SELECT b FROM Bet b where length(b.title) >= 3 ")
     List<Bet> findAllWithNameLongerThan3Chars();
 
     // Instead of the method findAllReverseOrder() in User.java,

@@ -24,10 +24,10 @@
         <input type="text" placeholder="Opponent" name="receiver">
 
         <legend>Your Amount</legend>
-        <input id="your-amount" type="number" placeholder="Your amount" name="amount">
+        <input id="your-amount" type="number" step="any" placeholder="Your amount" name="amount">
 
         <legend>Your Odds</legend>
-        <input id="your-odds" type="number" placeholder="Your Odds" name="oddsSender">
+        <input id="your-odds" type="number" step="any" placeholder="Your Odds" name="oddsSender">
         <p id="your-odds-percentage"></p>
 
         </br>
@@ -73,16 +73,15 @@
         var odds = e.target.value;
         //todo if brwoser not support number in input
 
-        var likur = (1 / parseFloat(odds)) * 100;
-        var oOdds = (1 / (100.0 - likur)) * 100;
-
+        var likur = Math.floor((1 / parseFloat(odds)) * 100 * 100) / 100;
+        var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
 
 
 
         console.log("you have " + likur + "% chance of winning");
         yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
         oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
-        oppAmount.innerHTML = parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML);
+        oppAmount.innerHTML = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) * 100) /100;
     }
 
     function calcAmount(e) {
@@ -98,7 +97,7 @@
         oppAmount.className = "opponent-show";
 
 
-        oppAmount.innerHTML = parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML);
+        oppAmount.innerHTML =  Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) *100)/100;
     }
 
 </script>
