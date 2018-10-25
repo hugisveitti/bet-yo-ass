@@ -24,6 +24,8 @@
 
     <input type="submit" VALUE="Login"/>
 
+    <span>${errorMsg}</span>
+
 </sf:form>
 </div>
 

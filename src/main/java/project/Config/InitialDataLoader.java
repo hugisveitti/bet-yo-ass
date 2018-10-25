@@ -5,21 +5,28 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import org.springframework.stereotype.Component;
 import project.persistence.repositories.RoleRepository;
-import project.persistence.repositories.UserRepository;
 import project.persistence.entities.Role;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+/*
+    * Class is only for setting up the Roles in the RoleRepository
+    * Maybe delete later....
+ */
+
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    boolean alreadySetup = false;
+    private boolean alreadySetup = false;
+    private RoleRepository roleRepository;
 
 
     @Autowired
-    private RoleRepository roleRepository;
+    public InitialDataLoader(RoleRepository roleRepository){
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     @Transactional
@@ -27,16 +34,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         if (alreadySetup)
             return;
-
-
         createRoleIfNotFound("ROLE_ADMIN");
         createRoleIfNotFound("ROLE_USER");
 
-
-
         alreadySetup = true;
     }
-
 
     @Transactional
     private void createRoleIfNotFound(String name) {
