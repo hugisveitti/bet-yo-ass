@@ -1,36 +1,40 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.PendingBet;
-import project.service.PendingBetService;
+import project.persistence.entities.User;
+import project.service.BetService;
+import project.service.CustomUserDetailsService;
+
+import java.util.List;
+
 
 @Controller
 @SessionAttributes("username")
 public class PendingBetController {
 
-    private PendingBetService pendingBetService;
+    private BetService pendingBetService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public PendingBetController(PendingBetService pendingBetService){
+    public PendingBetController(BetService pendingBetService, CustomUserDetailsService customUserDetailsService){
         this.pendingBetService = pendingBetService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
-    @PreAuthorize("hasRole('USER')")
+
     @RequestMapping(value="/sendbet", method = RequestMethod.GET)
-    public ModelAndView sendBetViewGet(){
-        ModelAndView model = new ModelAndView();
-        model.addObject("pendingBet",new PendingBet());
-        model.setViewName("/SendBet");
-        return model;
+    public String sendBetViewGet(@ModelAttribute("pendingbet") PendingBet pendingBet, Model model){
+        List<User> users = customUserDetailsService.findAll();
+        model.addAttribute("pendingBet",new PendingBet());
+        model.addAttribute("users", users);
+        return "SendBet";
     }
 
 

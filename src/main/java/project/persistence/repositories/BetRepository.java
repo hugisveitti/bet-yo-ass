@@ -3,6 +3,7 @@ package project.persistence.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.persistence.entities.Bet;
+import project.persistence.entities.PendingBet;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html
  *
  */
-public interface BetsRepository extends JpaRepository<Bet, Long> {
+public interface BetRepository extends JpaRepository<Bet, Long> {
 
     Bet save(Bet bet);
 
@@ -35,5 +36,12 @@ public interface BetsRepository extends JpaRepository<Bet, Long> {
     @Query(value = "SELECT b FROM Bet b WHERE b.id = ?1")
     Bet findOne(Long id);
 
+
     Bet findByTitle(String title);
+
+
+
+    List<Bet> findBySender(String sender);
+    List<Bet> findByReceiver(String receiver);
+
 }

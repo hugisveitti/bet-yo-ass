@@ -37,14 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username,password, enabled from betuser where username=?")
+                .usersByUsernameQuery("select username, password, enabled from betuser where username=?")
                 .authoritiesByUsernameQuery("select username, role from users_roles where username=?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/","/signup","/logout").permitAll()
-                .antMatchers("/sendbets","/userpage").hasRole("USER")
+                .antMatchers("/sendbet","/userpage").hasRole("USER")
                 //.anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/userpage").failureUrl("/login?error=true")
                 .and()
