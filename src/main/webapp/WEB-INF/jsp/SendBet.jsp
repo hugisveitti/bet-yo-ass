@@ -71,12 +71,10 @@
 
 
         var odds = e.target.value;
-        //todo if brwoser not support number in input
+        //todo if browser not support number in input
 
         var likur = (1 / parseFloat(odds)) * 100;
         var oOdds = (1 / (100.0 - likur)) * 100;
-
-
 
 
         console.log("you have " + likur + "% chance of winning");
