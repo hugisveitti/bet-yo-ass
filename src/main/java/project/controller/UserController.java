@@ -1,15 +1,12 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.persistence.entities.Role;
 import project.persistence.entities.User;
-import project.persistence.repositories.UserRepository;
 import project.service.CustomUserDetailsService;
 
 import project.persistence.repositories.RoleRepository;
