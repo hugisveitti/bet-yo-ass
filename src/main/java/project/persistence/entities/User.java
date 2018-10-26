@@ -50,6 +50,16 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
+            name = "users_bets",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns =  @JoinColumn(
+                    name = "bet_id", referencedColumnName = "bet_id"))
+    private Set<Bet> bets;
+
+
+    @ManyToMany
+    @JoinTable(
         name = "users_roles",
         joinColumns = @JoinColumn(
                 name = "username", referencedColumnName = "username"),

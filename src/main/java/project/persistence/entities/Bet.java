@@ -8,24 +8,39 @@ import javax.persistence.*;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "bets") // If you want to specify a table name, you can do so here
+@Table(name = "bet") // If you want to specify a table name, you can do so here
 public class Bet {
 
     // Declare that this attribute is the id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bet_id")
     private Long id;
 
     private String receiver;
     private String sender;
     private String title;
     private String description;
-    private int oddsSender;
-    private int oddsReceiver;
-    private int amountSender;
-    private int amountReceiver;
+    private double oddsSender;
+    private double oddsReceiver;
+    private double amountSender;
+    private double amountReceiver;
     private String dateAndTimeCreated;
     private String dateAndTimeResolve;
+
+
+
+    private boolean senderResolved;
+    private boolean receiverResolved;
+
+    private boolean hasBeenResolved;
+
+    //remember who won and lost
+    private String winnerId;
+    private String loserId;
+
+
+
 
 
     public Bet(){}
@@ -76,7 +91,7 @@ public class Bet {
         this.description = description;
     }
 
-    public int getOddsSender() {
+    public double getOddsSender() {
         return oddsSender;
     }
 
@@ -84,7 +99,7 @@ public class Bet {
         this.oddsSender = oddsSender;
     }
 
-    public int getOddsReceiver() {
+    public double getOddsReceiver() {
         return oddsReceiver;
     }
 
@@ -92,7 +107,7 @@ public class Bet {
         this.oddsReceiver = oddsReceiver;
     }
 
-    public int getAmountSender() {
+    public double getAmountSender() {
         return amountSender;
     }
 
@@ -100,7 +115,7 @@ public class Bet {
         this.amountSender = amountSender;
     }
 
-    public int getAmountReceiver() {
+    public double getAmountReceiver() {
         return amountReceiver;
     }
 
@@ -122,6 +137,53 @@ public class Bet {
 
     public void setDateAndTimeResolve(String dateAndTimeResolve) {
         this.dateAndTimeResolve = dateAndTimeResolve;
+    }
+
+
+    public boolean isSenderResolved() {
+        return senderResolved;
+    }
+
+    public void setSenderResolved(boolean senderResolved) {
+        if(receiverResolved){
+            this.hasBeenResolved = true;
+        }
+        this.senderResolved = senderResolved;
+    }
+
+    public boolean isReceiverResolved() {
+        return receiverResolved;
+    }
+
+    public void setReceiverResolved(boolean receiverResolved) {
+        if(senderResolved){
+            this.hasBeenResolved = true;
+        }
+        this.receiverResolved = receiverResolved;
+    }
+
+    public boolean isHasBeenResolved() {
+        return hasBeenResolved;
+    }
+
+    public void setHasBeenResolved(boolean hasBeenResolved) {
+        this.hasBeenResolved = hasBeenResolved;
+    }
+
+    public String getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(String winnerId) {
+        this.winnerId = winnerId;
+    }
+
+    public String getLoserId() {
+        return loserId;
+    }
+
+    public void setLoserId(String loserId) {
+        this.loserId = loserId;
     }
 
     @Override

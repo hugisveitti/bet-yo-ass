@@ -24,12 +24,15 @@ public class PendingBet {
     private Long senderID;
     private String title;
     private String description;
-    private int oddsSender;
-    private int oddsReceiver;
-    private int amountSender;
-    private int amountReceiver;
+    private double oddsSender;
+    private double oddsReceiver;
+    private double amountSender;
+    private double amountReceiver;
     private String dateAndTimeCreated;
+    //must use datetime-local in html form
     private String dateAndTimeResolve;
+
+
 
     private boolean acceptSender;
     private boolean acceptReceiver;
@@ -93,35 +96,35 @@ public class PendingBet {
         this.description = description;
     }
 
-    public int getOddsSender() {
+    public double getOddsSender() {
         return oddsSender;
     }
 
-    public void setOddsSender(int oddsSender) {
+    public void setOddsSender(double oddsSender) {
         this.oddsSender = oddsSender;
     }
 
-    public int getOddsReceiver() {
+    public double getOddsReceiver() {
         return oddsReceiver;
     }
 
-    public void setOddsReceiver(int oddsReceiver) {
+    public void setOddsReceiver(double oddsReceiver) {
         this.oddsReceiver = oddsReceiver;
     }
 
-    public int getAmountSender() {
+    public double getAmountSender() {
         return amountSender;
     }
 
-    public void setAmountSender(int amountSender) {
+    public void setAmountSender(double amountSender) {
         this.amountSender = amountSender;
     }
 
-    public int getAmountReceiver() {
+    public double getAmountReceiver() {
         return amountReceiver;
     }
 
-    public void setAmountReceiver(int amountReceiver) {
+    public void setAmountReceiver(double amountReceiver) {
         this.amountReceiver = amountReceiver;
     }
 

@@ -38,7 +38,6 @@ public class UserController {
     public ModelAndView signupViewGet(){
         ModelAndView model = new ModelAndView();
 
-
         model.addObject("user",new User());
         model.setViewName("Signup");
         // Return the view
@@ -58,7 +57,6 @@ public class UserController {
         User newUser = new User(user.getUsername(), user.getPassword());
 
         Role role = roleRepository.findByRole("ROLE_USER");
-
 
         Set<Role> newRoles = new HashSet<>();
         newRoles.add(role);
@@ -86,7 +84,7 @@ public class UserController {
     public String userPageViewGet(Authentication authentication, Model model){
         User user = customUserDetailsService.findByUsername(authentication.getName());
         model.addAttribute("pendingBets", user.getPendingBets());
-        System.out.println(user.getPendingBets());
+        model.addAttribute("username", user.getUsername());
         return "UserPage";
     }
 

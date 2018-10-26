@@ -20,6 +20,10 @@
         <legend>Description</legend>
         <input type="text" placeholder="Description" name="description"/>
 
+        <%--date and time virka ekki a ollum browserum t.d. firefox!!!!!!!--%>
+        <lengend>Date and time for bet to be resolved</lengend>
+        <legend>The format dd-MON-yyyyThh:mm</legend>
+        <input type="datetime-local" name="dateAndTimeResolve">
         <legend>Opponent</legend>
         <div id="users-dropdown">
             <input type="text" id="opponent" placeholder="Opponent" name="receiver">
@@ -35,15 +39,15 @@
 
         <legend>Your Odds</legend>
         <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="oddsSender">
-        <p id="your-odds-percentage"></p>
+        <span id="your-odds-percentage"></span>
 
-        </br>
+        <span>Opponent-odds</span>
+        <span id="opponent-odds"></span>
+        <br>
+        <br>
 
-        <p>Opponent-odds</p>
-        <p class="opponent-show " id="opponent-odds"></p>
-
-        <legend>Opponent-amount</legend>
-        <p class="opponent-show" id="opponent-amount"></p>
+        <span>Opponent-amount</span>
+        <span id="opponent-amount"></span>
 
 
         <input id="pending-bet-button" type="submit" VALUE="Send bet"/>
@@ -69,12 +73,18 @@
     function calcOdds(e) {
 
         if (yourAmount.value == "" || yourOdds.value == "") {
-            oppOdds.className = "opponent-hidden";
-            oppAmount.className = "opponent-hidden";
+            oppOdds.innerHTML = "";
+            oppAmount.innerHTML = "";
             return;
         }
-        oppOdds.className = "opponent-show";
-        oppAmount.className = "opponent-show";
+
+        //cant have odds less then 1
+        if(parseFloat(yourOdds.value) <= 1.0){
+            oppOdds.innerHTML = "";
+            oppAmount.innerHTML = "";
+            return
+        }
+
 
 
         var odds = e.target.value;
@@ -83,24 +93,27 @@
         var likur = Math.floor((1 / parseFloat(odds)) * 100 * 100) / 100;
         var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
 
-        console.log("you have " + likur + "% chance of winning");
-        yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
-        oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
+        //console.log("you have " + likur + "% chance of winning");
+        //yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
+        //oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
+        oppOdds.innerHTML = oOdds;
         oppAmount.innerHTML = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) * 100) /100;
     }
 
     function calcAmount(e) {
-        console.log(yourAmount.value);
-        console.log(yourOdds.value);
 
         if (yourAmount.value == "" || yourOdds.value == "") {
-            oppOdds.className = "opponent-hidden";
-            oppAmount.className = "opponent-hidden";
+            oppOdds.innerHTML = "";
+            oppAmount.innerHTML = "";
             return;
         }
-        oppOdds.className = "opponent-show";
-        oppAmount.className = "opponent-show";
 
+        //cant have odds less then 1
+        if(parseFloat(yourOdds.value) <= 1.0){
+            oppOdds.innerHTML = "";
+            oppAmount.innerHTML = "";
+            return
+        }
 
         oppAmount.innerHTML =  Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) *100)/100;
     }

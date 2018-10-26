@@ -32,6 +32,45 @@
         <p><i>Description:</i> ${pendingBet.description}</p>
         <p><i>Sender:</i> ${pendingBet.sender}</p>
         <p><i>Receiver</i> ${pendingBet.receiver}</p>
+        <p><i>Receiver odds</i> ${pendingBet.oddsReceiver}</p>
+        <p><i>Receiver amount</i> ${pendingBet.amountReceiver}</p>
+        <p><i>Sender odds</i> ${pendingBet.oddsSender}</p>
+        <p><i>Sender amount</i> ${pendingBet.amountSender}</p>
+        <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
+        <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
+
+        <c:choose>
+            <c:when test="${pendingBet.sender == username}">
+                <c:choose>
+                    <c:when test="${pendingBet.acceptSender == true}">
+                        You are the sender. You are waiting for other user to respond the bet.
+                    </c:when>
+                    <c:otherwise>
+                        You are the sender. You have to respond to the bet.
+                        <sf:form method="POST" action="/accept-pending-bet">
+                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                            <input type="hidden" name="who" value="sender">
+                            <input type="submit" value="Accept bet">
+                        </sf:form>
+                    </c:otherwise>
+                </c:choose>
+            </c:when>
+            <c:otherwise>
+                <c:choose>
+                    <c:when test="${pendingBet.acceptReceiver == true}">
+                        You are the receiver. You are waiting for other user to respond the bet.
+                    </c:when>
+                    <c:otherwise>
+                        You are the receiver. You have to respond to the bet
+                        <sf:form method="POST" action="/accept-pending-bet">
+                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                            <input type="hidden" name="who" value="receiver">
+                            <input type="submit" value="Accept bet">
+                        </sf:form>
+                    </c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
     </div>
 </c:forEach>
 

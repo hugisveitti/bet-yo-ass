@@ -4,16 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.persistence.entities.PendingBet;
 import project.persistence.entities.User;
 import project.service.BetService;
 import project.service.CustomUserDetailsService;
+import sun.misc.Request;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +46,6 @@ public class BetController {
     @RequestMapping(value = "/sendbet", method = RequestMethod.POST)
     public String sendbetPost(@ModelAttribute("pendingBet") PendingBet pendingBet, Authentication authentication, Model model){
 
-
         System.out.println("############");
         System.out.println(model);
         System.out.println(pendingBet);
@@ -75,10 +73,23 @@ public class BetController {
         newPendingBet.setAmountReceiver(pendingBet.getAmountReceiver());
         newPendingBet.setAmountSender(pendingBet.getAmountSender());
 
+        //calc opponent odds
+        double odds = pendingBet.getOddsSender();
+        double likur = Math.floor((1 / odds) * 100 * 100) / 100;
+        double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+        double oppAmount = (((pendingBet.getAmountSender() * odds) / oppOdds) * 100) /100;
+        System.out.println("opp odds " + oppOdds + " opp amount " + oppAmount);
+        System.out.println("your odds" + odds + " your amount " + pendingBet.getAmountSender());
+        newPendingBet.setOddsReceiver(oppOdds);
+        newPendingBet.setAmountReceiver(oppAmount);
 
 
         newPendingBet.setAcceptSender(true);
         newPendingBet.setAcceptReceiver(false);
+
+        newPendingBet.setDateAndTimeResolve(pendingBet.getDateAndTimeResolve());
+        System.out.println("resolve " + pendingBet.getDateAndTimeResolve());
+        System.out.println("created " + newPendingBet.getDateAndTimeCreated());
 
         //add to senders pending bets
         Set<PendingBet> senderPendingBets = sender.getPendingBets();
@@ -98,6 +109,19 @@ public class BetController {
 
         betService.savePendingBet(newPendingBet);
 
+        System.out.println(pendingBet);
+        return "redirect:userpage";
+    }
+
+
+    @RequestMapping(value = "/accept-pending-bet", method = RequestMethod.POST)
+    @ResponseBody
+    public String acceptPendingBet(HttpServletRequest request){
+        String pendingBetId = request.getParameter("pendingBetId");
+        String who = request.getParameter("who");
+        System.out.println(pendingBetId);
+        System.out.println(who);
+        //TODO senda í bet reposirtory og eyða úr pendingbet
         return "redirect:userpage";
     }
 
