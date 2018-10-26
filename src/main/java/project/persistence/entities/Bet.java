@@ -18,7 +18,9 @@ public class Bet {
     private Long id;
 
     private String receiver;
+    private Long receiverID;
     private String sender;
+    private Long senderID;
     private String title;
     private String description;
     private double oddsSender;
@@ -67,6 +69,10 @@ public class Bet {
         this.receiver = receiver;
     }
 
+    public Long getReceiverID() {return receiverID;}
+
+    public void setReceiverID(Long receiverID) {this.receiverID = receiverID;}
+
     public String getSender() {
         return sender;
     }
@@ -74,6 +80,10 @@ public class Bet {
     public void setSender(String sender) {
         this.sender = sender;
     }
+
+    public Long getSenderID() {return senderID;}
+
+    public void setSenderID(Long senderID) {this.senderID = senderID;}
 
     public String getTitle() {
         return title;
