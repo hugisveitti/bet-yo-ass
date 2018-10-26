@@ -64,7 +64,6 @@ public class PendingBet {
 
     public void setReceiverID(Long receiverID) {this.receiverID = receiverID;}
 
-
     public String getSender() {
         return sender;
     }
