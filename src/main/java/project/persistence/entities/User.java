@@ -33,15 +33,13 @@ public class User implements UserDetails {
     private String password;
 
 
-    private String email;
-
     @Column(name="enabled")
     private Boolean enabled;
 
 
     @ManyToMany
     @JoinTable(
-            name = "users_pending_bets",
+            name = "user_pending_bet",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
                     name = "pending_bet_id", referencedColumnName = "pending_bet_id"))
@@ -50,7 +48,7 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "users_bets",
+            name = "user_bet",
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns =  @JoinColumn(
@@ -60,7 +58,7 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-        name = "users_roles",
+        name = "user_role",
         joinColumns = @JoinColumn(
                 name = "username", referencedColumnName = "username"),
         inverseJoinColumns = @JoinColumn(
@@ -146,14 +144,6 @@ public class User implements UserDetails {
 
     public void setCredit(float credit) {
         this.credit = credit;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override

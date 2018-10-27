@@ -32,7 +32,6 @@ public class CustomUserDetailsServiceImplementation implements CustomUserDetails
         if(user == null) {
             throw new UsernameNotFoundException("Username not found");
         }
-
         return user;
     }
 
