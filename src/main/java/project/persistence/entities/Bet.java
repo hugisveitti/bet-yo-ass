@@ -27,6 +27,7 @@ public class Bet {
     private double oddsReceiver;
     private double amountSender;
     private double amountReceiver;
+
     private String dateAndTimeCreated;
     private String dateAndTimeResolve;
 
@@ -45,10 +46,28 @@ public class Bet {
 
     public Bet(){}
 
-    public Bet(String receiver, String title, String description) {
-        this.receiver = receiver;
-        this.title = title;
-        this.description = description;
+
+    public Bet(PendingBet pendingBet){
+        this.receiver = pendingBet.getReceiver();
+        this.sender = pendingBet.getSender();
+        this.receiverID = pendingBet.getReceiverID();
+        this.senderID = pendingBet.getSenderID();
+        this.title = pendingBet.getTitle();
+        this.description = pendingBet.getDescription();
+        this.oddsReceiver = pendingBet.getOddsReceiver();
+        this.amountReceiver = pendingBet.getAmountReceiver();
+        this.oddsSender = pendingBet.getOddsSender();
+        this.amountSender = pendingBet.getAmountSender();
+
+        this.dateAndTimeCreated = pendingBet.getDateAndTimeCreated();
+        this.dateAndTimeResolve = pendingBet.getDateAndTimeResolve();
+
+
+        this.senderResolved = false;
+        this.receiverResolved = false;
+        this.hasBeenResolved = false;
+
+
     }
 
     public Long getId() {

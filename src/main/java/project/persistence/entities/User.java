@@ -3,11 +3,10 @@ package project.persistence.entities;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The class for the User itself.
@@ -44,6 +43,8 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(
                     name = "pending_bet_id", referencedColumnName = "pending_bet_id"))
     private Set<PendingBet> pendingBets;
+
+
 
 
     @ManyToMany
@@ -95,9 +96,38 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    public Set<Bet> getResolvedBets(){
+        Set<Bet> resolvedBets = new HashSet<>();
+        for(Bet b : getBets()){
+            if(b.isHasBeenResolved()){
+                resolvedBets.add(b);
+            }
+        }
+        return resolvedBets;
+    }
+
+    public Set<Bet> getActiveBets(){
+        Set<Bet> activeBets = new HashSet<>();
+        for(Bet b : getBets()){
+            if(!b.isHasBeenResolved()){
+                activeBets.add(b);
+            }
+        }
+        return activeBets;
+    }
+
 
     public Set<PendingBet> getPendingBets() {
         return pendingBets;
+    }
+
+    @Transactional
+    public void removePendingBet(PendingBet pendingBet){
+        pendingBets.remove(pendingBet);
+        for(PendingBet p : pendingBets){
+            System.out.println(p);
+        }
+
     }
 
     public void setPendingBets(Set<PendingBet> pendingBets) {
@@ -176,5 +206,13 @@ public class User implements UserDetails {
 
     public void setEnabled(Boolean enabled){
         this.enabled = enabled;
+    }
+
+    public Set<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(Set<Bet> bets) {
+        this.bets = bets;
     }
 }

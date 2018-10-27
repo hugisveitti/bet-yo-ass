@@ -32,8 +32,6 @@ public class PendingBet {
     //must use datetime-local in html form
     private String dateAndTimeResolve;
 
-
-
     private boolean acceptSender;
     private boolean acceptReceiver;
 

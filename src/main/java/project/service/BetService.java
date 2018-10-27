@@ -47,7 +47,8 @@ public interface BetService {
      * @param Id (@link PendingBet) to be found
      * @return one (@link PendingBet)
      */
-    PendingBet findById(long Id);
+    PendingBet findPendingBetById(long Id);
+
 
 
     void deleteBet(Bet bet);
@@ -55,6 +56,8 @@ public interface BetService {
     List<Bet> findBetBySender(String sender);
 
     void saveBet(Bet bet);
+
+    void saveBet(PendingBet pendingBet, User sender, User receiver);
 
     List<Bet> findBetByReceiver(String receiver);
 

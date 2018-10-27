@@ -49,7 +49,6 @@
                         You are the sender. You have to respond to the bet.
                         <sf:form method="POST" action="/accept-pending-bet">
                             <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="hidden" name="who" value="sender">
                             <input type="submit" value="Accept bet">
                         </sf:form>
                     </c:otherwise>
@@ -64,7 +63,6 @@
                         You are the receiver. You have to respond to the bet
                         <sf:form method="POST" action="/accept-pending-bet">
                             <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="hidden" name="who" value="receiver">
                             <input type="submit" value="Accept bet">
                         </sf:form>
                     </c:otherwise>
@@ -73,6 +71,30 @@
         </c:choose>
     </div>
 </c:forEach>
+
+<br>
+<h3>Active bets</h3>
+<c:forEach items="${activeBets}" var="activeBet">
+    <div class="box">
+        <h4><i>Title of bet</i> ${activeBet.title}</h4>
+        <p><i>Description:</i> ${activeBet.description}</p>
+        <p><i>Sender:</i> ${activeBet.sender}</p>
+        <p><i>Receiver</i> ${activeBet.receiver}</p>
+    </div>
+</c:forEach>
+
+<br>
+<h3>Resolved bets</h3>
+<c:forEach items="${resolvedBets}" var="resolvedBet">
+    <div class="box">
+        <h4><i>Title of bet</i> ${resolvedBet.title}</h4>
+        <p><i>Description:</i> ${resolvedBet.description}</p>
+        <p><i>Sender:</i> ${resolvedBet.sender}</p>
+        <p><i>Receiver</i> ${resolvedBet.receiver}</p>
+    </div>
+</c:forEach>
+
+
 
 <br>
 Logged in as <sec:authentication property="principal.username" />

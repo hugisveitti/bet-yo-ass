@@ -95,9 +95,11 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public PendingBet findById(long Id){
+    public PendingBet findPendingBetById(long Id){
         return pendingBetRepository.findOne(Id);
     }
+
+
 
     /*
     Bet service implementation
@@ -111,6 +113,29 @@ public class BetServiceImplementation implements BetService {
     @Override
     public void saveBet(Bet bet){
         betRepository.save(bet);
+    }
+
+    @Override
+    public void saveBet(PendingBet pendingBet, User sender, User receiver){
+        receiver.removePendingBet(pendingBet);
+        sender.removePendingBet(pendingBet);
+        this.deletePendingBet(pendingBet);
+
+        Bet newBet = new Bet(pendingBet);
+        Set<Bet> senderBets = sender.getBets();
+        if(senderBets == null){
+            senderBets = new HashSet<>();
+        }
+        senderBets.add(newBet);
+
+        Set<Bet> receiverBets = receiver.getBets();
+        if(receiverBets == null){
+            receiverBets = new HashSet<>();
+        }
+        receiverBets.add(newBet);
+
+        this.saveBet(newBet);
+
     }
 
     @Override
