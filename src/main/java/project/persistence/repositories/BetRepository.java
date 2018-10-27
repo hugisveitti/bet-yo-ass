@@ -28,17 +28,9 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     @Query(value = "SELECT b FROM Bet b where length(b.title) >= 3 ")
     List<Bet> findAllWithNameLongerThan3Chars();
 
-    // Instead of the method findAllReverseOrder() in User.java,
-    // We could have used this method by adding the words
-    // ByOrderByIdDesc, which mean: Order By Id in a Descending order
-    //
 
     @Query(value = "SELECT b FROM Bet b WHERE b.id = ?1")
     Bet findOne(Long id);
-
-
-    Bet findByTitle(String title);
-
 
 
     List<Bet> findBySender(String sender);

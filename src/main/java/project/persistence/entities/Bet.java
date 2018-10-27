@@ -3,7 +3,7 @@ package project.persistence.entities;
 import javax.persistence.*;
 
 /**
- * The class for the User itself.
+ * The class for the Bet itself.
  * The system generates a table schema based on this class for this entity.
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
@@ -29,8 +29,6 @@ public class Bet {
     private double amountReceiver;
     private String dateAndTimeCreated;
     private String dateAndTimeResolve;
-
-
 
     private boolean senderResolved;
     private boolean receiverResolved;

@@ -15,7 +15,7 @@ import java.util.Set;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "betuser") // If you want to specify a table name, you can do so here
+@Table(name = "user_account") // If you want to specify a table name, you can do so here
 public class User implements UserDetails {
 
 

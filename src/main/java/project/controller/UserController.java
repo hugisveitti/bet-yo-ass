@@ -12,8 +12,6 @@ import project.service.CustomUserDetailsService;
 
 import project.persistence.repositories.RoleRepository;
 
-import java.util.Set;
-import java.util.HashSet;
 
 @Controller
 public class UserController {
