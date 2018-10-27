@@ -52,19 +52,8 @@ public class UserController {
     // Notice the `method = RequestMethod.POST` part
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupViewPost(@ModelAttribute("user") User user, Model model){
-
-        // Save the user that we received from the form
-        User newUser = new User(user.getUsername(), user.getPassword());
-
-        Role role = roleRepository.findByRole("ROLE_USER");
-
-        Set<Role> newRoles = new HashSet<>();
-        newRoles.add(role);
-
-        //TODO laga thetta kannski
-        newUser.setRoles(newRoles);
         try {
-            customUserDetailsService.save(newUser);
+            customUserDetailsService.save(user);
         } catch (Exception e){
             model.addAttribute("errorMsg", "Username taken");
             return "Signup";

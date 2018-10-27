@@ -46,70 +46,11 @@ public class BetController {
     @RequestMapping(value = "/sendbet", method = RequestMethod.POST)
     public String sendbetPost(@ModelAttribute("pendingBet") PendingBet pendingBet, Authentication authentication, Model model){
 
-        System.out.println("############");
-        System.out.println(model);
-        System.out.println(pendingBet);
-
         User receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
-
-        PendingBet newPendingBet = new PendingBet();
-        newPendingBet.setReceiver(receiver.getUsername());
-        newPendingBet.setReceiverID(receiver.getId());
-
-        newPendingBet.setTitle(pendingBet.getTitle());
-        newPendingBet.setDescription(pendingBet.getDescription());
-
-        //TODO laga
-        newPendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
-
         User sender = customUserDetailsService.findByUsername(authentication.getName());
-        System.out.println(sender);
-        newPendingBet.setSender(sender.getUsername());
-        newPendingBet.setSenderID(sender.getId());
 
-        //TODO CALC RECEIVER AMOUNT AND ODDS WITH ONLY SENDER AMOUNT AND ODDS
-        newPendingBet.setOddsSender(pendingBet.getOddsSender());
-        newPendingBet.setOddsReceiver(pendingBet.getOddsReceiver());
-        newPendingBet.setAmountReceiver(pendingBet.getAmountReceiver());
-        newPendingBet.setAmountSender(pendingBet.getAmountSender());
+        betService.savePendingBet(pendingBet, sender, receiver);
 
-        //calc opponent odds
-        double odds = pendingBet.getOddsSender();
-        double likur = Math.floor((1 / odds) * 100 * 100) / 100;
-        double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
-        double oppAmount = (((pendingBet.getAmountSender() * odds) / oppOdds) * 100) /100;
-        System.out.println("opp odds " + oppOdds + " opp amount " + oppAmount);
-        System.out.println("your odds" + odds + " your amount " + pendingBet.getAmountSender());
-        newPendingBet.setOddsReceiver(oppOdds);
-        newPendingBet.setAmountReceiver(oppAmount);
-
-
-        newPendingBet.setAcceptSender(true);
-        newPendingBet.setAcceptReceiver(false);
-
-        newPendingBet.setDateAndTimeResolve(pendingBet.getDateAndTimeResolve());
-        System.out.println("resolve " + pendingBet.getDateAndTimeResolve());
-        System.out.println("created " + newPendingBet.getDateAndTimeCreated());
-
-        //add to senders pending bets
-        Set<PendingBet> senderPendingBets = sender.getPendingBets();
-        if(senderPendingBets == null){
-            senderPendingBets = new HashSet<>();
-        }
-        senderPendingBets.add(newPendingBet);
-
-
-        //add to receiver pending bets
-        Set<PendingBet> receiverPendingBets = receiver.getPendingBets();
-        if(receiverPendingBets == null){
-            receiverPendingBets = new HashSet<>();
-        }
-        receiverPendingBets.add(newPendingBet);
-
-
-        betService.savePendingBet(newPendingBet);
-
-        System.out.println(pendingBet);
         return "redirect:userpage";
     }
 

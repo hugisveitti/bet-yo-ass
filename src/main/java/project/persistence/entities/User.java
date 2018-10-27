@@ -67,7 +67,7 @@ public class User implements UserDetails {
 
 
 
-    private float credit;
+    private double credit;
 
 
     public User(){}
@@ -138,11 +138,11 @@ public class User implements UserDetails {
     }
 
 
-    public float getCredit() {
+    public double getCredit() {
         return credit;
     }
 
-    public void setCredit(float credit) {
+    public void setCredit(double credit) {
         this.credit = credit;
     }
 

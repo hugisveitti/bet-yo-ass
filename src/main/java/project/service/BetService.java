@@ -1,6 +1,7 @@
 package project.service;
 
 import project.persistence.entities.Bet;
+import project.persistence.entities.User;
 import project.persistence.entities.PendingBet;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface BetService {
      */
     void savePendingBet(PendingBet pendingBet);
 
+    void savePendingBet(PendingBet pendingBet, User sender, User receiver);
 
     /**
      * Delete {@link PendingBet}
