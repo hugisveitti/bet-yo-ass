@@ -57,12 +57,21 @@ public class BetController {
 
     @RequestMapping(value = "/accept-pending-bet", method = RequestMethod.POST)
     @ResponseBody
-    public String acceptPendingBet(HttpServletRequest request){
+    public String acceptPendingBet(HttpServletRequest request, Authentication authentication){
         String pendingBetId = request.getParameter("pendingBetId");
         String who = request.getParameter("who");
         System.out.println(pendingBetId);
         System.out.println(who);
         //TODO senda í bet reposirtory og eyða úr pendingbet
+
+        PendingBet acceptPendingBet = betService.findById(Long.parseLong(pendingBetId));
+        //if
+        if(who == "sender" && authentication.getName() == acceptPendingBet.getSender()){
+            System.out.println("user is receiver");
+        }else {
+
+        }
+
         return "redirect:userpage";
     }
 

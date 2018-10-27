@@ -2,6 +2,7 @@ package project.persistence.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import project.persistence.entities.Bet;
 import project.persistence.entities.PendingBet;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface PendingBetRepository extends JpaRepository<PendingBet, Long> {
     PendingBet save(PendingBet pendingBet);
 
     void delete(PendingBet pendingBet);
+
+    @Query(value = "SELECT b FROM PendingBet b WHERE b.id = ?1")
+    PendingBet findOne(Long id);
 
 
     List<PendingBet> findBySender(String sender);

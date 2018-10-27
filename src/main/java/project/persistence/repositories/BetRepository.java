@@ -33,6 +33,13 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     Bet findOne(Long id);
 
 
+    @Query(value = "SELECT b FROM Bet b WHERE b.hasBeenResolved = true")
+    List<Bet> findResolvedBets();
+
+    @Query(value = "SELECT b FROM Bet b WHERE b.hasBeenResolved = false")
+    List<Bet> findActiveBets();
+
+
     List<Bet> findBySender(String sender);
     List<Bet> findByReceiver(String receiver);
 

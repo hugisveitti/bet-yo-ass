@@ -94,6 +94,10 @@ public class BetServiceImplementation implements BetService {
         return pendingBetRepository.findByReceiver(receiver);
     }
 
+    @Override
+    public PendingBet findById(long Id){
+        return pendingBetRepository.findOne(Id);
+    }
 
     /*
     Bet service implementation
@@ -120,8 +124,12 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public Bet findBetByTitle(String title){
-        return betRepository.findByTitle(title);
+    public List<Bet> getActiveBets(){
+        return betRepository.findActiveBets();
     }
 
+    @Override
+    public List<Bet> getResolvedBets(){
+        return betRepository.findResolvedBets();
+    }
 }

@@ -42,7 +42,12 @@ public interface BetService {
      */
     List<PendingBet> findPendingBetByReceiver(String receiver);
 
-
+    /**
+     * Get one (@link PendingBet) from id
+     * @param Id (@link PendingBet) to be found
+     * @return one (@link PendingBet)
+     */
+    PendingBet findById(long Id);
 
 
     void deleteBet(Bet bet);
@@ -53,5 +58,8 @@ public interface BetService {
 
     List<Bet> findBetByReceiver(String receiver);
 
-    Bet findBetByTitle(String title);
+
+    List<Bet> getActiveBets();
+
+    List<Bet> getResolvedBets();
 }
