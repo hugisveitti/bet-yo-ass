@@ -27,7 +27,4 @@ public interface PendingBetRepository extends JpaRepository<PendingBet, Long> {
     PendingBet findOne(Long id);
 
 
-    List<PendingBet> findBySender(String sender);
-    List<PendingBet> findByReceiver(String receiver);
-
 }

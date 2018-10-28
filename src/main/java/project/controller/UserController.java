@@ -16,17 +16,12 @@ import project.persistence.repositories.RoleRepository;
 @Controller
 public class UserController {
 
-
-
     private CustomUserDetailsService customUserDetailsService;
-
-    private RoleRepository roleRepository;
     // Dependency Injection
 
     @Autowired
-    public UserController(CustomUserDetailsService customUserDetailsService, RoleRepository roleRepository) {
+    public UserController(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
-        this.roleRepository = roleRepository;
     }
 
     // Method that returns the correct view for the URL /signup
@@ -77,11 +72,14 @@ public class UserController {
         return "UserPage";
     }
 
+
+    //TODO implement 403 and 404 pages
+    /*
     @RequestMapping(value="/error", method = RequestMethod.GET)
     public String errorViewGet(){
         System.out.println("ERROR");
         return "Index";
     }
-
+*/
 
 }

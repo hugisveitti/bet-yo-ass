@@ -77,7 +77,6 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
 
-
         //maybe change, 100 to begin with
         this.credit = 100;
         this.enabled = true;
@@ -183,6 +182,7 @@ public class User implements UserDetails {
 
 
 
+    //ATH BUA TIL VARIABLES FYRIR THESSI METHODS TIL AD SKILA
     //TODO LAGA THESSA BOLEAN DAEMI
     @Override
     public boolean isAccountNonExpired(){

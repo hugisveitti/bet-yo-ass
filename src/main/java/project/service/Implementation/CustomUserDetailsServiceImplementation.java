@@ -39,6 +39,7 @@ public class CustomUserDetailsServiceImplementation implements CustomUserDetails
     }
 
 
+    //Paeling ad setja thetta i ser classa
     //Exception sent if there exsitis a user with this username
     public class UserExsitsException extends AuthenticationException {
         public UserExsitsException(final String msg){
@@ -79,6 +80,8 @@ public class CustomUserDetailsServiceImplementation implements CustomUserDetails
         return repository.findOne(id);
     }
 
+
+    //paeling ad eyda thessu og nota bara loadByUsername, eda lata thetta bara skila id hja usernum eda ehv
     @Override
     public User findByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username);

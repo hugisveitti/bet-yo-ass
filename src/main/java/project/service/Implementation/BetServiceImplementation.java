@@ -11,7 +11,6 @@ import project.service.BetService;
 
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.time.ZonedDateTime;
 
@@ -30,6 +29,8 @@ public class BetServiceImplementation implements BetService {
     /*
     Pending bet service implementation
      */
+
+    //ma kannski eyda thessum classa
     @Override
     public void savePendingBet(PendingBet pendingBet){
          pendingBetRepository.save(pendingBet);
@@ -82,20 +83,9 @@ public class BetServiceImplementation implements BetService {
     }
 
 
-    @Override
-    public List<PendingBet> findPendingBetBySender(String sender){
-        return pendingBetRepository.findBySender(sender);
-    }
-
-
 
     @Override
-    public List<PendingBet> findPendingBetByReceiver(String receiver){
-        return pendingBetRepository.findByReceiver(receiver);
-    }
-
-    @Override
-    public PendingBet findPendingBetById(long Id){
+    public PendingBet findPendingBetById(Long Id){
         return pendingBetRepository.findOne(Id);
     }
 
@@ -110,6 +100,7 @@ public class BetServiceImplementation implements BetService {
         betRepository.delete(bet);
     }
 
+    //ma kannski eyda
     @Override
     public void saveBet(Bet bet){
         betRepository.save(bet);
@@ -139,22 +130,8 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public List<Bet> findBetBySender(String sender){
-        return betRepository.findBySender(sender);
+    public Bet findBetById(Long id){
+        return betRepository.findOne(id);
     }
 
-    @Override
-    public List<Bet> findBetByReceiver(String receiver){
-        return betRepository.findByReceiver(receiver);
-    }
-
-    @Override
-    public List<Bet> getActiveBets(){
-        return betRepository.findActiveBets();
-    }
-
-    @Override
-    public List<Bet> getResolvedBets(){
-        return betRepository.findResolvedBets();
-    }
 }

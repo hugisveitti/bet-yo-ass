@@ -39,12 +39,13 @@ public class PendingBet {
     public PendingBet() {
     }
 
+    /*
     public PendingBet(String receiver, String title, String description) {
         this.receiver = receiver;
         this.title = title;
         this.description = description;
     }
-
+*/
     public Long getId() {
         return id;
     }

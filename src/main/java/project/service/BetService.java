@@ -18,6 +18,7 @@ public interface BetService {
      * @param pendingBet {@link PendingBet} to be saved
      * @return {@link PendingBet} that was saved
      */
+    //eyda thessum kannski
     void savePendingBet(PendingBet pendingBet);
 
     void savePendingBet(PendingBet pendingBet, User sender, User receiver);
@@ -30,39 +31,19 @@ public interface BetService {
 
 
     /**
-     * Get all {@link PendingBet}s from a sender
-     * @return A list of {@link PendingBet}s
-     */
-    List<PendingBet> findPendingBetBySender(String sender);
-
-
-    /**
-     * Get all {@link PendingBet}s from a receiver
-     * @return A list of {@link PendingBet}s
-     */
-    List<PendingBet> findPendingBetByReceiver(String receiver);
-
-    /**
      * Get one (@link PendingBet) from id
      * @param Id (@link PendingBet) to be found
      * @return one (@link PendingBet)
      */
-    PendingBet findPendingBetById(long Id);
+    PendingBet findPendingBetById(Long Id);
 
 
 
     void deleteBet(Bet bet);
 
-    List<Bet> findBetBySender(String sender);
-
     void saveBet(Bet bet);
 
     void saveBet(PendingBet pendingBet, User sender, User receiver);
 
-    List<Bet> findBetByReceiver(String receiver);
-
-
-    List<Bet> getActiveBets();
-
-    List<Bet> getResolvedBets();
+    Bet findBetById(Long Id);
 }

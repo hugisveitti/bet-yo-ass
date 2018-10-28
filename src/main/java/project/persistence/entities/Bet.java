@@ -37,8 +37,8 @@ public class Bet {
     private boolean hasBeenResolved;
 
     //remember who won and lost
-    private String winnerId;
-    private String loserId;
+    private Long winnerId;
+    private Long loserId;
 
 
 
@@ -197,19 +197,19 @@ public class Bet {
         this.hasBeenResolved = hasBeenResolved;
     }
 
-    public String getWinnerId() {
+    public Long getWinnerId() {
         return winnerId;
     }
 
-    public void setWinnerId(String winnerId) {
+    public void setWinnerId(Long winnerId) {
         this.winnerId = winnerId;
     }
 
-    public String getLoserId() {
+    public Long getLoserId() {
         return loserId;
     }
 
-    public void setLoserId(String loserId) {
+    public void setLoserId(Long loserId) {
         this.loserId = loserId;
     }
 

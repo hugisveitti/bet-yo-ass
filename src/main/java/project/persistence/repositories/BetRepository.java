@@ -20,27 +20,16 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     void delete(Bet bet);
 
-    List<Bet> findAll();
-
-    // If we need a custom query that maybe doesn't fit the naming convention used by the JPA repository,
-    // then we can write it quite easily with the @Query notation, like you see below.
-    // This method returns all Users where the length of the name is equal or greater than 3 characters.
-    @Query(value = "SELECT b FROM Bet b where length(b.title) >= 3 ")
-    List<Bet> findAllWithNameLongerThan3Chars();
-
-
     @Query(value = "SELECT b FROM Bet b WHERE b.id = ?1")
     Bet findOne(Long id);
 
-
+/*
+Hugsa ad vid thurfum aldrei ad nota thetta thvi user geymir hver sin active og recsolved bet eru...
     @Query(value = "SELECT b FROM Bet b WHERE b.hasBeenResolved = true")
     List<Bet> findResolvedBets();
 
     @Query(value = "SELECT b FROM Bet b WHERE b.hasBeenResolved = false")
     List<Bet> findActiveBets();
-
-
-    List<Bet> findBySender(String sender);
-    List<Bet> findByReceiver(String receiver);
+*/
 
 }
