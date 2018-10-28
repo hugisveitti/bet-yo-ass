@@ -1,3 +1,5 @@
 # bet-yo-ass
-Verkefni hugb�na�arverkefni
-#Fugg yo mama
+Verkefni hugbúnaðarverkefni í HÍ
+
+## Peer to peer betting síða
+Hægt að búa til bet milli vina og setja undir 'yo-ass-credits', sem er gjaldmiðill forritsins.
