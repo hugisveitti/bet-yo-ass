@@ -22,6 +22,7 @@
 
 # Specific files
 application.properties
-target/classes/application.properties
+/target/classes/application.properties
+/resources/application.properties
 .idea/workspace.xml
 *.class

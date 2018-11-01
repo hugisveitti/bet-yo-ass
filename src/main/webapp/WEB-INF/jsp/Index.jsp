@@ -7,12 +7,16 @@
 
     <head>
         <title>BET YO ASS</title>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
     </head>
     <%@ include file="blocks/header.jsp" %>
     <body>
 
 
     </body>
+    <div class="box">
+        <img src="images/logo.png" />
+    </div>
     <footer>Class HBV501G, University of Iceland</footer>
 
 
