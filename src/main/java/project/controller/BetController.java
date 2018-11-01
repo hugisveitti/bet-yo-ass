@@ -47,9 +47,7 @@ public class BetController {
 
         User receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
         User sender = customUserDetailsService.findByUsername(authentication.getName());
-
         betService.savePendingBet(pendingBet, sender, receiver);
-
         return "redirect:userpage";
     }
 

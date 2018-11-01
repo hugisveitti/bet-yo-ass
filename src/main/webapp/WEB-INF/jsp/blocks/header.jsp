@@ -10,7 +10,6 @@
         <sec:authorize access="isAuthenticated()">
             <a href="/userpage">User Page</a>
             <a href="/sendbet">Make a bet</a>
-
             <sf:form method="POST" action="/logout" id="logout-form">
                 <a href="javascript:;" onclick="parentNode.submit();">Logout</a>
                 <input type="hidden" VALUE="logout"/>

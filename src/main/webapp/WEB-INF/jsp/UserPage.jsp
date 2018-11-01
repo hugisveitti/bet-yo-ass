@@ -15,6 +15,7 @@
 
 <%@ include file="blocks/header.jsp" %>
 
+<body>
 <h1>USERPAGE</h1>
 
 <c:choose>
@@ -97,5 +98,12 @@
 
 
 <br>
-Logged in as <sec:authentication property="principal.username" />
+Logged in as ${user.getUsername()}
+<br>
+You have ${user.getCredit()} credits
+
+
+<br>
+<br>
+</body>
 </html>

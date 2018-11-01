@@ -68,7 +68,7 @@ public class UserController {
         model.addAttribute("pendingBets", user.getPendingBets());
         model.addAttribute("resolvedBets", user.getResolvedBets());
         model.addAttribute("activeBets", user.getActiveBets());
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("user", user);
         return "UserPage";
     }
 
