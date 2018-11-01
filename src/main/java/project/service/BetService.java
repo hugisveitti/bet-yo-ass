@@ -21,7 +21,7 @@ public interface BetService {
     //eyda thessum kannski
     void savePendingBet(PendingBet pendingBet);
 
-    void savePendingBet(PendingBet pendingBet, User sender, User receiver);
+    void savePendingBet(PendingBet pendingBet, User sender, User receiver) throws Exception;
 
     /**
      * Delete {@link PendingBet}
@@ -43,7 +43,7 @@ public interface BetService {
 
     void saveBet(Bet bet);
 
-    void saveBet(PendingBet pendingBet, User sender, User receiver);
+    void saveBet(PendingBet pendingBet, User currUser) throws Exception;
 
     Bet findBetById(Long Id);
 }

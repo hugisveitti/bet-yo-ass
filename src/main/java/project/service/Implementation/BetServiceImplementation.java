@@ -8,7 +8,7 @@ import project.persistence.entities.User;
 import project.persistence.repositories.BetRepository;
 import project.persistence.repositories.PendingBetRepository;
 import project.service.BetService;
-
+import project.service.CustomUserDetailsService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,11 +19,13 @@ public class BetServiceImplementation implements BetService {
 
     private PendingBetRepository pendingBetRepository;
     private BetRepository betRepository;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public BetServiceImplementation(PendingBetRepository pendingBetRepository, BetRepository betRepository){
+    public BetServiceImplementation(PendingBetRepository pendingBetRepository, BetRepository betRepository, CustomUserDetailsService customUserDetailsService){
         this.pendingBetRepository = pendingBetRepository;
         this.betRepository = betRepository;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     /*
@@ -36,8 +38,18 @@ public class BetServiceImplementation implements BetService {
          pendingBetRepository.save(pendingBet);
     }
 
+
+
     @Override
-    public void savePendingBet(PendingBet pendingBet, User sender, User receiver){
+    public void savePendingBet(PendingBet pendingBet, User sender, User receiver) throws Exception{
+
+        if(sender.getCredit() < pendingBet.getAmountSender()){
+            throw new Exception("Sender does not have enough credits");
+        }
+
+        sender.removeCredit(pendingBet.getAmountSender());
+        receiver.removeCredit(pendingBet.getAmountReceiver());
+
 
         //TODO laga
         pendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
@@ -74,6 +86,8 @@ public class BetServiceImplementation implements BetService {
         pendingBet.setReceiverID(receiver.getId());
         pendingBet.setReceiver(receiver.getUsername());
 
+
+
         pendingBetRepository.save(pendingBet);
     }
 
@@ -107,7 +121,26 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public void saveBet(PendingBet pendingBet, User sender, User receiver){
+    public void saveBet(PendingBet pendingBet, User currUser) throws Exception{
+        User sender;
+        User receiver;
+        if(currUser.getUsername().equals(pendingBet.getSender())){
+            sender = currUser;
+            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
+        } else {
+            receiver = currUser;
+            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
+        }
+
+
+        if(receiver.getCredit() < pendingBet.getAmountReceiver()){
+            throw new Exception("Receiver does not have enough credits");
+        }
+
+        if(sender.getCredit() < pendingBet.getAmountSender()){
+            throw new Exception("Sender does not have enough credits");
+        }
+
         receiver.removePendingBet(pendingBet);
         sender.removePendingBet(pendingBet);
         this.deletePendingBet(pendingBet);

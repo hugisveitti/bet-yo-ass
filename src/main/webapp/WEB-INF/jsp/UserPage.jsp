@@ -41,7 +41,7 @@
         <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
 
         <c:choose>
-            <c:when test="${pendingBet.sender == username}">
+            <c:when test="${pendingBet.sender == user.getUsername()}">
                 <c:choose>
                     <c:when test="${pendingBet.acceptSender == true}">
                         You are the sender. You are waiting for other user to respond the bet.

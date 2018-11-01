@@ -47,41 +47,32 @@ public class BetController {
 
         User receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
         User sender = customUserDetailsService.findByUsername(authentication.getName());
-        betService.savePendingBet(pendingBet, sender, receiver);
-        return "redirect:userpage";
+        try{
+            betService.savePendingBet(pendingBet, sender, receiver);
+            return "redirect:userpage";
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            model.addAttribute("errorMsg", e.getMessage());
+            return "SendBet";
+        }
+
+
     }
 
 
     @RequestMapping(value = "/accept-pending-bet", method = RequestMethod.POST)
     @ResponseBody
-    public String acceptPendingBet(HttpServletRequest request, Authentication authentication){
+    public String acceptPendingBet(HttpServletRequest request, Authentication authentication, Model model){
         String pendingBetId = request.getParameter("pendingBetId");
-        String who = request.getParameter("who");
-        System.out.println(pendingBetId);
-        System.out.println(who);
-        //TODO senda í bet reposirtory og eyða úr pendingbet
 
         PendingBet acceptPendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
-        System.out.println(authentication.getName() + " " + acceptPendingBet.getSender() + " " + acceptPendingBet.isAcceptReceiver());
-        System.out.println(authentication.getName() + " " + acceptPendingBet.getReceiver() + " " + acceptPendingBet.isAcceptSender());
-
         User currUser = customUserDetailsService.findByUsername(authentication.getName());
 
-        if(currUser.getUsername().equals(acceptPendingBet.getReceiver())){
-            //find other user to save bet to his bets
-            User sender = customUserDetailsService.findByUsername(acceptPendingBet.getSender());
-            betService.saveBet(acceptPendingBet, sender, currUser);
-
-        } else if(currUser.getUsername().equals(acceptPendingBet.getSender())){
-            //find other user to save bet to his bets
-            User receiver = customUserDetailsService.findByUsername(acceptPendingBet.getReceiver());
-            betService.saveBet(acceptPendingBet, currUser, receiver);
-
-        } else {
-            System.out.println("user is hacker");
+        try{
+            betService.saveBet(acceptPendingBet, currUser);
+        } catch (Exception e){
+            model.addAttribute("errorMsg", e.getMessage());
         }
-
-        //TODO laga virkar ekki
         return "redirect:userpage";
     }
 

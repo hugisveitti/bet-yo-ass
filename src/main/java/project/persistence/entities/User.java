@@ -215,4 +215,8 @@ public class User implements UserDetails {
     public void setBets(Set<Bet> bets) {
         this.bets = bets;
     }
+
+    public void removeCredit(double removeCredit){
+        this.credit = this.credit - removeCredit;
+    }
 }

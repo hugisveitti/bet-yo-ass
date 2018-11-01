@@ -48,6 +48,7 @@ public class UserController {
         try {
             customUserDetailsService.save(user);
         } catch (Exception e){
+
             model.addAttribute("errorMsg", "Username taken");
             return "Signup";
         }
@@ -74,12 +75,12 @@ public class UserController {
 
 
     //TODO implement 403 and 404 pages
-    /*
-    @RequestMapping(value="/error", method = RequestMethod.GET)
+
+    @RequestMapping(value="/403", method = RequestMethod.GET)
     public String errorViewGet(){
         System.out.println("ERROR");
-        return "Index";
+        return "403";
     }
-*/
+
 
 }
