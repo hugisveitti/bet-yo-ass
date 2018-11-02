@@ -76,4 +76,28 @@ public class BetController {
         return "redirect:userpage";
     }
 
+
+    @RequestMapping(value = "/decline-pending-bet", method = RequestMethod.POST)
+    @ResponseBody
+    public String declinePendingBet(HttpServletRequest request, Authentication authentication, Model model){
+        // láta skila String
+        String pendingBetId = request.getParameter("pendingBetId");
+
+        PendingBet declinePendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
+        User currUser = customUserDetailsService.findByUsername(authentication.getName());
+
+        System.out.println(declinePendingBet);
+        System.out.println(currUser);
+
+        /*
+        try{
+            betService.saveBet(acceptPendingBet, currUser);
+        } catch (Exception e){
+            model.addAttribute("errorMsg", e.getMessage());
+        }
+        */
+        return "redirect:userpage";
+
+    }
+
 }

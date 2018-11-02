@@ -66,6 +66,17 @@
                             <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                             <input type="submit" value="Accept bet">
                         </sf:form>
+
+                        <sf:form method="POST" action="/decline-pending-bet">
+                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                            <input type="submit" value="Decline">
+                        </sf:form>
+
+                        <sf:form method="POST" action="/make-counter-bet">
+                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                            <input type="submit" value="Make counter offer">
+                        </sf:form>
+
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>
