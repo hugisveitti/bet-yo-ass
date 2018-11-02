@@ -41,7 +41,7 @@
         <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
         <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
         <c:choose>
-            <c:when test="${(pendingBet.sender == user.getUsername() and pendingBet.acceptSender)  or (pendingBet.receiver == user.getUsername() and pendingBet.acceptReceiver)}">
+            <c:when test="${(pendingBet.sender == user.getUsername() and pendingBet.acceptSender) or (pendingBet.receiver == user.getUsername() and pendingBet.acceptReceiver)}">
                 You are waiting for other user to respond the bet.
             </c:when>
             <c:otherwise>
@@ -57,13 +57,13 @@
                 </sf:form>
 
 
-                <button class="counter-btn" onclick="openCounter(${pendingBet.id})">Send counter offer</button>
-                <sf:form method="POST" action="/make-counter-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
+                <button class="counter-btn" onclick="openCounter(${pendingBet.id})" id="counter-btn${pendingBet.id}">Send counter offer</button>
+                <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
                     <legend>Your Amount</legend>
-                    <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="amountSender">
+                    <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
 
                     <legend>Your Odds</legend>
-                    <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="oddsSender">
+                    <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds">
                     <span>Opponent-odds</span>
                     <span id="opponent-odds"></span>
                     <br>
@@ -119,10 +119,16 @@ You have ${user.getCredit()} credits
 <script>
     //to open counter offer form
     function openCounter(pendingBetId){
+        // this.style.display = "none";
+
+        //athuga gæti verið slæmt að nota pendingbet id, þ.e. unsafe
+
         console.log(pendingBetId);
         var form = document.getElementById("counter-form" + pendingBetId);
-        console.log(form)
+        console.log(form);
         form.style.display = "block";
 
+        var btn = document.getElementById("counter-btn" + pendingBetId);
+        btn.style.display = "none";
     }
 </script>

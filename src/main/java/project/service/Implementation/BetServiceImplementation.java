@@ -10,6 +10,7 @@ import project.persistence.repositories.PendingBetRepository;
 import project.service.BetService;
 import project.service.CustomUserDetailsService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.time.ZonedDateTime;
@@ -54,9 +55,14 @@ public class BetServiceImplementation implements BetService {
 
         //TODO LAGA floating point number
         double odds = pendingBet.getOddsSender();
-        double likur = Math.floor((1 / odds) * 100 * 100) / 100;
-        double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
-        double oppAmount = (((pendingBet.getAmountSender() * odds) / oppOdds) * 100) /100;
+        double amount = pendingBet.getAmountSender();
+
+
+        ArrayList<Double> opponentOddsAndAmount = calcOpponentOddsAndAmount(odds, amount);
+        double oppOdds = opponentOddsAndAmount.get(0);
+        double oppAmount = opponentOddsAndAmount.get(1);
+
+
         System.out.println("opp odds " + oppOdds + " opp amount " + oppAmount);
         System.out.println("your odds" + odds + " your amount " + pendingBet.getAmountSender());
         pendingBet.setOddsReceiver(oppOdds);
@@ -101,7 +107,60 @@ public class BetServiceImplementation implements BetService {
         return pendingBetRepository.findOne(Id);
     }
 
+    @Override
+    public void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds){
+        System.out.println("counter");
 
+        ArrayList<User> senderReceiver = findWhoIsSender(currUser, counterPendingBet);
+        User sender = senderReceiver.get(0);
+        User receiver = senderReceiver.get(1);
+
+        double oppAmount, newReceiverOdds, newReceiverAmount, newSenderOdds, newSenderAmount;
+        ArrayList<Double> opponentOddsAndAmount = calcOpponentOddsAndAmount(counterOdds, counterAmount);
+        //ef senderinn er buinn accepta tha er receiverinn ad countera
+        if(counterPendingBet.isAcceptSender()){
+            newReceiverOdds = counterOdds;
+            newReceiverAmount = counterAmount;
+            newSenderOdds = opponentOddsAndAmount.get(0);
+            newSenderAmount = opponentOddsAndAmount.get(1);
+            counterPendingBet.setAcceptSender(false);
+            counterPendingBet.setAcceptReceiver(true);
+        }   else {
+            newReceiverOdds = opponentOddsAndAmount.get(0);
+            newReceiverAmount = opponentOddsAndAmount.get(1);
+            newSenderOdds = counterOdds;
+            newSenderAmount = counterAmount;
+            counterPendingBet.setAcceptSender(true);
+            counterPendingBet.setAcceptReceiver(false);
+        }
+
+        counterPendingBet.setOddsReceiver(newReceiverOdds);
+        counterPendingBet.setAmountReceiver(newReceiverAmount);
+        counterPendingBet.setAmountSender(newSenderAmount);
+        counterPendingBet.setOddsReceiver(newSenderOdds);
+
+        pendingBetRepository.save(counterPendingBet);
+    }
+
+    private ArrayList<User> findWhoIsSender(User currUser, PendingBet pendingBet){
+        User sender;
+        User receiver;
+        ArrayList<User> senderReceiver = new ArrayList<>();
+        if(currUser.getUsername().equals(pendingBet.getSender())){
+            sender = currUser;
+            pendingBet.setAcceptSender(true);
+            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
+            senderReceiver.add(sender);
+            senderReceiver.add(receiver);
+        } else {
+            receiver = currUser;
+            pendingBet.setAcceptReceiver(true);
+            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
+            senderReceiver.add(sender);
+            senderReceiver.add(receiver);
+        }
+        return senderReceiver;
+    }
 
     /*
     Bet service implementation
@@ -122,17 +181,20 @@ public class BetServiceImplementation implements BetService {
     public void saveBet(PendingBet pendingBet, User currUser) throws Exception{
         User sender;
         User receiver;
-        if(currUser.getUsername().equals(pendingBet.getSender())){
-            sender = currUser;
-            pendingBet.setAcceptSender(true);
-            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
-            receiver.removeCredit(pendingBet.getAmountReceiver());
-        } else {
-            receiver = currUser;
-            pendingBet.setAcceptReceiver(true);
-            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
-            sender.removeCredit(pendingBet.getAmountSender());
-        }
+//        if(currUser.getUsername().equals(pendingBet.getSender())){
+//            sender = currUser;
+//            pendingBet.setAcceptSender(true);
+//            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
+//            receiver.removeCredit(pendingBet.getAmountReceiver());
+//        } else {
+//            receiver = currUser;
+//            pendingBet.setAcceptReceiver(true);
+//            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
+//            sender.removeCredit(pendingBet.getAmountSender());
+//        }
+        ArrayList<User> senderReceiver = findWhoIsSender(currUser,pendingBet);
+        sender = senderReceiver.get(0);
+        receiver = senderReceiver.get(1);
 
         if(!pendingBet.isAcceptSender() || !pendingBet.isAcceptReceiver()){
             throw new Exception("Both users have to accept the bet.");
@@ -177,4 +239,17 @@ public class BetServiceImplementation implements BetService {
         return betRepository.findOne(id);
     }
 
+
+    private ArrayList<Double> calcOpponentOddsAndAmount(double odds, double amount){
+        ArrayList<Double> opponentOddsAndAmount = new ArrayList<Double>();
+
+        double likur = Math.floor((1 / odds) * 100 * 100) / 100;
+        double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+        double oppAmount = (((amount * odds) / oppOdds) * 100) /100;
+
+        opponentOddsAndAmount.add(oppOdds);
+        opponentOddsAndAmount.add(oppAmount);
+
+        return opponentOddsAndAmount;
+    }
 }
