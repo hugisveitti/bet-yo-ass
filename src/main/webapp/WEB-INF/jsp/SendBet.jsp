@@ -3,13 +3,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<html>
+<body>
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
 </head>
 
 <%@ include file="blocks/header.jsp" %>
 
+<body>
 <h1>Send bet</h1>
 
 <div class="box">
@@ -54,138 +55,7 @@
 
     </sf:form>
 </div>
+</body>
+<script src="<c:url value="/javascript/autofillbox.js" />"></script>
+<script src="<c:url value="/javascript/calcOdds.js" />"></script>
 </html>
-
-<script>
-    var yourOdds = document.getElementById("your-odds");
-    var oppOdds = document.getElementById("opponent-odds");
-    var yourOddsPercentage = document.getElementById("your-odds-percentage");
-
-    var yourAmount = document.getElementById("your-amount");
-    var oppAmount = document.getElementById("opponent-amount");
-
-    var submit = document.getElementById("pending-bet-button");
-
-    yourOdds.addEventListener("keyup", calcOdds);
-    yourAmount.addEventListener("keyup", calcAmount);
-
-
-    function calcOdds(e) {
-
-        if (yourAmount.value == "" || yourOdds.value == "") {
-            oppOdds.innerHTML = "";
-            oppAmount.innerHTML = "";
-            return;
-        }
-
-        //cant have odds less then 1
-        if(parseFloat(yourOdds.value) <= 1.0){
-            oppOdds.innerHTML = "";
-            oppAmount.innerHTML = "";
-            return
-        }
-
-
-
-        var odds = e.target.value;
-        //todo if browser not support number in input
-
-        var likur = Math.floor((1 / parseFloat(odds)) * 100 * 100) / 100;
-        var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
-
-        //console.log("you have " + likur + "% chance of winning");
-        //yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
-        //oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
-        oppOdds.innerHTML = oOdds;
-        oppAmount.innerHTML = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) * 100) /100;
-    }
-
-    function calcAmount(e) {
-
-        if (yourAmount.value == "" || yourOdds.value == "") {
-            oppOdds.innerHTML = "";
-            oppAmount.innerHTML = "";
-            return;
-        }
-
-        //cant have odds less then 1
-        if(parseFloat(yourOdds.value) <= 1.0){
-            oppOdds.innerHTML = "";
-            oppAmount.innerHTML = "";
-            return
-        }
-
-        oppAmount.innerHTML =  Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) *100)/100;
-    }
-
-
-
-    //dropdown fyrir opponent users
-    var getUsers = document.getElementsByClassName("get-users");
-    var opponent = document.getElementById("opponent");
-    opponent.addEventListener("keyup", opponentDropdown);
-    opponent.style.marginBottom = "0";
-    opponent.style.paddingBottom = "0";
-
-    var usersDropdown = document.getElementById("users-dropdown");
-
-
-    var users = [];
-    for(var i=0;i<getUsers.length;i++){
-        users.push(getUsers[i].innerHTML);
-    }
-    function opponentDropdown(e){
-        closeDropdown();
-
-        var a = this.value;
-        a = document.createElement("DIV");
-        a.setAttribute("id", "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-
-        a.style.backgroundColor = "white";
-        a.style.height = "auto";
-        a.style.width = "inherit";
-
-
-        this.parentNode.appendChild(a);
-
-
-        //users that match the input
-        var matchUsers = [];
-
-
-
-
-        for(var i=0; i<users.length; i++){
-            if(e.target.value.toUpperCase() === users[i].substring(0, e.target.value.length).toUpperCase() && e.target.value.length > 0){
-                matchUsers.push(users[i]);
-            }
-        }
-        for(var i=0; i<matchUsers.length; i++){
-            var item = document.createElement("DIV");
-            item.setAttribute("class", "autocomplete-text")
-
-            item.innerHTML = "<b>" + matchUsers[i].substr(0,e.target.value.length) + "</b>";
-            item.innerHTML += matchUsers[i].substr(e.target.value.length);
-            //item.innerHTML = matchUsers[i];
-
-            //item.value = matchUsers[i];
-            item.innerHTML += "<input type='hidden' value='" + matchUsers[i] + "'>";
-            item.addEventListener("click", function(e) {
-
-                console.log(e);
-                console.log(this)
-                opponent.value = this.getElementsByTagName("input")[0].value;
-                closeDropdown();
-            });
-            a.appendChild(item);
-        }
-    }
-
-    function closeDropdown(e){
-        var x = document.getElementsByClassName("autocomplete-items");
-        for(var i=0; i<x.length;i++){
-            x[i].parentNode.removeChild(x[i]);
-        }
-    }
-</script>

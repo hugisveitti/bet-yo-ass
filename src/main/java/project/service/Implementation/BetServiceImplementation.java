@@ -48,8 +48,6 @@ public class BetServiceImplementation implements BetService {
         }
 
         sender.removeCredit(pendingBet.getAmountSender());
-        receiver.removeCredit(pendingBet.getAmountReceiver());
-
 
         //TODO laga
         pendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
@@ -126,20 +124,32 @@ public class BetServiceImplementation implements BetService {
         User receiver;
         if(currUser.getUsername().equals(pendingBet.getSender())){
             sender = currUser;
+            pendingBet.setAcceptSender(true);
             receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
+            receiver.removeCredit(pendingBet.getAmountReceiver());
         } else {
             receiver = currUser;
+            pendingBet.setAcceptReceiver(true);
             sender = customUserDetailsService.findByUsername(pendingBet.getSender());
+            sender.removeCredit(pendingBet.getAmountSender());
+        }
+
+        if(!pendingBet.isAcceptSender() || !pendingBet.isAcceptReceiver()){
+            throw new Exception("Both users have to accept the bet.");
         }
 
 
+        //athuga að sender á núþegar að hafa sent peninginn sinni...
         if(receiver.getCredit() < pendingBet.getAmountReceiver()){
-            throw new Exception("Receiver does not have enough credits");
+            throw new Exception("Receiver does not have enough credits.");
         }
 
         if(sender.getCredit() < pendingBet.getAmountSender()){
             throw new Exception("Sender does not have enough credits");
         }
+
+
+
 
         receiver.removePendingBet(pendingBet);
         sender.removePendingBet(pendingBet);
