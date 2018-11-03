@@ -2,5 +2,7 @@ html{
     background: beige;
 }
 .logo{
+    margin: 20px;
+    display: flex;
     justify-content: center;
 }

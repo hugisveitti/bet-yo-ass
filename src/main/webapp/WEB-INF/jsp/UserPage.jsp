@@ -45,7 +45,8 @@
                 You are waiting for other user to respond the bet.
             </c:when>
             <c:otherwise>
-                You have to respond to the bet
+                <p>You have to respond to the bet</p>
+
                 <sf:form method="POST" action="/accept-pending-bet">
                     <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                     <input type="submit" value="Accept bet">
@@ -55,7 +56,6 @@
                     <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                     <input type="submit" value="Decline">
                 </sf:form>
-
 
                 <button class="counter-btn" onclick="openCounter(${pendingBet.id})" id="counter-btn${pendingBet.id}">Send counter offer</button>
                 <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
@@ -74,6 +74,7 @@
                     <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                     <input type="submit" value="Make counter offer">
                 </sf:form>
+
             </c:otherwise>
         </c:choose>
     </div>

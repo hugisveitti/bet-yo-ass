@@ -4,7 +4,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
-<header>
+<header class="header">
     <h1>BET YO ASS</h1>
     <nav>
         <sec:authorize access="isAuthenticated()">

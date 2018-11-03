@@ -3,7 +3,7 @@ html, body{
     padding: 0;
 }
 
-header{
+.header{
     height:150px;
     width: 100%;
     background-color:#3661A1;
@@ -11,7 +11,7 @@ header{
     position: relative;
 }
 
-header nav{
+.header nav{
     position:absolute;
     bottom:10px;
     right: 20px;

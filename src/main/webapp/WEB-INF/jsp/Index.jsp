@@ -14,7 +14,7 @@
 
 
     </body>
-    <div class="box">
+    <div class="logo">
         <img src="images/logo.png" />
     </div>
     <footer>Class HBV501G, University of Iceland</footer>
