@@ -8,7 +8,7 @@ var oppAmount = document.getElementById("opponent-amount");
 var submit = document.getElementById("pending-bet-button");
 
 yourOdds.addEventListener("keyup", calcOdds);
-yourAmount.addEventListener("keyup", calcAmount);
+yourAmount.addEventListener("keyup", calcOdds);
 
 
 function calcOdds(e) {
@@ -26,8 +26,6 @@ function calcOdds(e) {
         return
     }
 
-
-
     var odds = e.target.value;
     //todo if browser not support number in input
 
@@ -39,22 +37,4 @@ function calcOdds(e) {
     //oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
     oppOdds.innerHTML = oOdds;
     oppAmount.innerHTML = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) * 100) /100;
-}
-
-function calcAmount(e) {
-
-    if (yourAmount.value == "" || yourOdds.value == "") {
-        oppOdds.innerHTML = "";
-        oppAmount.innerHTML = "";
-        return;
-    }
-
-    //cant have odds less then 1
-    if(parseFloat(yourOdds.value) <= 1.0){
-        oppOdds.innerHTML = "";
-        oppAmount.innerHTML = "";
-        return
-    }
-
-    oppAmount.innerHTML =  Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oppOdds.innerHTML) *100)/100;
 }

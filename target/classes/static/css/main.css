@@ -39,3 +39,12 @@ h1{
     padding: 0;
     display: inline;
 }
+
+.counter-form{
+    display: none;
+}
+
+.counter-btn{
+    display: block;
+    margin: auto;
+}

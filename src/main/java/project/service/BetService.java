@@ -37,6 +37,7 @@ public interface BetService {
      */
     PendingBet findPendingBetById(Long Id);
 
+    void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds);
 
 
     void deleteBet(Bet bet);

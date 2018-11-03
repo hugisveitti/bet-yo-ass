@@ -84,20 +84,25 @@ public class BetController {
         String pendingBetId = request.getParameter("pendingBetId");
 
         PendingBet declinePendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
-        User currUser = customUserDetailsService.findByUsername(authentication.getName());
 
-        System.out.println(declinePendingBet);
-        System.out.println(currUser);
-
-        /*
-        try{
-            betService.saveBet(acceptPendingBet, currUser);
-        } catch (Exception e){
-            model.addAttribute("errorMsg", e.getMessage());
-        }
-        */
         return "redirect:userpage";
+    }
 
+    @RequestMapping(value = "/counter-pending-bet", method = RequestMethod.POST)
+    @ResponseBody
+    public String counterPendingBet(HttpServletRequest request, Authentication authentication, Model model){
+        // láta skila String
+        String pendingBetId = request.getParameter("pendingBetId");
+
+        PendingBet counterPendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
+
+        User currUser = customUserDetailsService.findByUsername(authentication.getName());
+        double counterAmount = Double.parseDouble(request.getParameter("counterAmount"));
+        double counterOdds = Double.parseDouble(request.getParameter("counterOdds"));
+
+        betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
+
+        return "redirect:userpage";
     }
 
 }

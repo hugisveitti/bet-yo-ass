@@ -11,6 +11,7 @@
     <%@ page isELIgnored="false" %>
 
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
 </head>
 
 <%@ include file="blocks/header.jsp" %>
@@ -39,46 +40,40 @@
         <p><i>Sender amount</i> ${pendingBet.amountSender}</p>
         <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
         <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
-
         <c:choose>
-            <c:when test="${pendingBet.sender == user.getUsername()}">
-                <c:choose>
-                    <c:when test="${pendingBet.acceptSender == true}">
-                        You are the sender. You are waiting for other user to respond the bet.
-                    </c:when>
-                    <c:otherwise>
-                        You are the sender. You have to respond to the bet.
-                        <sf:form method="POST" action="/accept-pending-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Accept bet">
-                        </sf:form>
-                    </c:otherwise>
-                </c:choose>
+            <c:when test="${(pendingBet.sender == user.getUsername() and pendingBet.acceptSender) or (pendingBet.receiver == user.getUsername() and pendingBet.acceptReceiver)}">
+                You are waiting for other user to respond the bet.
             </c:when>
             <c:otherwise>
-                <c:choose>
-                    <c:when test="${pendingBet.acceptReceiver == true}">
-                        You are the receiver. You are waiting for other user to respond the bet.
-                    </c:when>
-                    <c:otherwise>
-                        You are the receiver. You have to respond to the bet
-                        <sf:form method="POST" action="/accept-pending-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Accept bet">
-                        </sf:form>
+                You have to respond to the bet
+                <sf:form method="POST" action="/accept-pending-bet">
+                    <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                    <input type="submit" value="Accept bet">
+                </sf:form>
 
-                        <sf:form method="POST" action="/decline-pending-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Decline">
-                        </sf:form>
+                <sf:form method="POST" action="/decline-pending-bet">
+                    <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                    <input type="submit" value="Decline">
+                </sf:form>
 
-                        <sf:form method="POST" action="/make-counter-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Make counter offer">
-                        </sf:form>
 
-                    </c:otherwise>
-                </c:choose>
+                <button class="counter-btn" onclick="openCounter(${pendingBet.id})" id="counter-btn${pendingBet.id}">Send counter offer</button>
+                <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
+                    <legend>Your Amount</legend>
+                    <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
+
+                    <legend>Your Odds</legend>
+                    <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds">
+                    <span>Opponent-odds</span>
+                    <span id="opponent-odds"></span>
+                    <br>
+                    <br>
+
+                    <span>Opponent-amount</span>
+                    <span id="opponent-amount"></span>
+                    <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                    <input type="submit" value="Make counter offer">
+                </sf:form>
             </c:otherwise>
         </c:choose>
     </div>
@@ -118,3 +113,22 @@ You have ${user.getCredit()} credits
 <br>
 </body>
 </html>
+
+<script src="<c:url value="/javascript/calcOdds.js" />"></script>
+
+<script>
+    //to open counter offer form
+    function openCounter(pendingBetId){
+        // this.style.display = "none";
+
+        //athuga gæti verið slæmt að nota pendingbet id, þ.e. unsafe
+
+        console.log(pendingBetId);
+        var form = document.getElementById("counter-form" + pendingBetId);
+        console.log(form);
+        form.style.display = "block";
+
+        var btn = document.getElementById("counter-btn" + pendingBetId);
+        btn.style.display = "none";
+    }
+</script>

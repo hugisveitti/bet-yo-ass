@@ -1,6 +1,7 @@
 package project.persistence.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import project.persistence.entities.Bet;
 import project.persistence.entities.PendingBet;
@@ -26,5 +27,8 @@ public interface PendingBetRepository extends JpaRepository<PendingBet, Long> {
     @Query(value = "SELECT b FROM PendingBet b WHERE b.id = ?1")
     PendingBet findOne(Long id);
 
+//    @Modifying
+//    @Query(value = "update  PendingBet p where p.id = ?1")
+//    void update(Long id);
 
 }
