@@ -1,22 +1,19 @@
 package project.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.PendingBet;
 import project.persistence.entities.User;
-import project.persistence.entities.Bet;
 import project.service.BetService;
 import project.service.CustomUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
@@ -63,7 +60,7 @@ public class BetController {
 
     @RequestMapping(value = "/accept-pending-bet", method = RequestMethod.POST)
     @ResponseBody
-    public String acceptPendingBet(HttpServletRequest request, Authentication authentication, Model model){
+    public RedirectView acceptPendingBet(HttpServletRequest request, Authentication authentication, Model model){
         String pendingBetId = request.getParameter("pendingBetId");
 
         PendingBet acceptPendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
@@ -74,7 +71,7 @@ public class BetController {
         } catch (Exception e){
             model.addAttribute("errorMsg", e.getMessage());
         }
-        return "redirect:userpage";
+        return new RedirectView("userpage");
     }
 
 
@@ -96,7 +93,7 @@ public class BetController {
 
     @RequestMapping(value = "/counter-pending-bet", method = RequestMethod.POST)
     @ResponseBody
-    public String counterPendingBet(HttpServletRequest request, Authentication authentication, Model model){
+    public RedirectView counterPendingBet(HttpServletRequest request, Authentication authentication, Model model){
         // láta skila String
         String pendingBetId = request.getParameter("pendingBetId");
 
@@ -108,7 +105,7 @@ public class BetController {
 
         betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
 
-        return "redirect:userpage";
+        return new RedirectView("userpage");
     }
 
 }
