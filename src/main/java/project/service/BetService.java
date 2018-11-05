@@ -16,11 +16,16 @@ public interface BetService {
     /**
      * Save a {@link PendingBet}
      * @param pendingBet {@link PendingBet} to be saved
-     * @return {@link PendingBet} that was saved
      */
     //eyda thessum kannski
     void savePendingBet(PendingBet pendingBet);
 
+    /**
+     * Save a {@link PendingBet}
+     * @param pendingBet {@link PendingBet} to be saved
+     * @param sender {@link User} who initially sent the bet
+     * @param receiver {@link User} who initially received the bet
+     */
     void savePendingBet(PendingBet pendingBet, User sender, User receiver) throws Exception;
 
     /**
@@ -32,21 +37,50 @@ public interface BetService {
 
     /**
      * Get one (@link PendingBet) from id
-     * @param Id (@link PendingBet) to be found
+     * @param id (@link Long) to be found
      * @return one (@link PendingBet)
      */
-    PendingBet findPendingBetById(Long Id);
+    PendingBet findPendingBetById(Long id);
 
+
+    /**
+     * Counter a {@link PendingBet}
+     * @param counterPendingBet the {@link PendingBet} being countered
+     * @param currUser the {@link User} countering the bet
+     * @param counterAmount {@link Double} amount being countered
+     * @param counterOdds {@link Double} odds being countered
+     */
     void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds);
 
 
+    /**
+     * Delete {@link Bet}
+     * @param bet {@link Bet} to be deleted
+     */
     void deleteBet(Bet bet);
 
+    //delete
     void saveBet(Bet bet);
 
+    /**
+     * Save a {@link Bet}
+     * @param pendingBet {@link PendingBet} to be saved as a new Bet
+     * @param currUser {@link User} who is accepting the bet
+     */
     void saveBet(PendingBet pendingBet, User currUser) throws Exception;
 
-    Bet findBetById(Long Id);
+    /**
+     * Get one (@link Bet) from id
+     * @param id (@link Long) to be found
+     * @return one (@link PendingBet)
+     */
+    Bet findBetById(Long id);
 
+    /**
+     * Vote how won a {@link Bet}
+     * @param voteBet {@link Bet} which is the bet being voted on
+     * @param currUse {@link User} who is voting
+     * @param vote {@link String} what currUser voted
+     */
     void voteBet(Bet voteBet, User currUser, String vote);
 }

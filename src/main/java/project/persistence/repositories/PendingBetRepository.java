@@ -27,8 +27,4 @@ public interface PendingBetRepository extends JpaRepository<PendingBet, Long> {
     @Query(value = "SELECT b FROM PendingBet b WHERE b.id = ?1")
     PendingBet findOne(Long id);
 
-//    @Modifying
-//    @Query(value = "update  PendingBet p where p.id = ?1")
-//    void update(Long id);
-
 }
