@@ -48,3 +48,47 @@ h1{
     display: block;
     margin: auto;
 }
+
+
+
+.bet-more-info{
+    /*display: none;*/
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.bet{
+    background-color: #42cece;
+    margin: auto;
+    width: 50%;
+    height: auto;
+    color:black;
+    box-shadow: black 1px 1px;
+    padding: 15px;
+    margin-bottom:10px;
+
+    outline: none;
+    font-size: 15px;
+}
+
+.bet:hover{
+    cursor: pointer;
+    background-color: #38e2e2;
+}
+
+.active-bet{
+    background-color: #3bd683;
+}
+
+.active-bet:hover{
+    background-color: #29e882;
+}
+
+.resolved-bet{
+    background-color: #ce9e35;
+}
+
+.resolved-bet:hover{
+    background-color: #e0a82c;
+}

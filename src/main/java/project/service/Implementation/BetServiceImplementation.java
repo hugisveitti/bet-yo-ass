@@ -96,7 +96,15 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public void deletePendingBet(PendingBet pendingBet){
+    public void deletePendingBet(PendingBet pendingBet, User currUser){
+        ArrayList<User> senderReceiver = findWhoIsSender(currUser, pendingBet);
+        User sender = senderReceiver.get(0);
+        User receiver = senderReceiver.get(1);
+        //todo check if user who is declining has accepted bet
+
+        sender.removePendingBet(pendingBet);
+        receiver.removePendingBet(pendingBet);
+
         pendingBetRepository.delete(pendingBet);
     }
 
@@ -211,11 +219,7 @@ public class BetServiceImplementation implements BetService {
         }
 
 
-
-
-        receiver.removePendingBet(pendingBet);
-        sender.removePendingBet(pendingBet);
-        this.deletePendingBet(pendingBet);
+        this.deletePendingBet(pendingBet, currUser);
 
         Bet newBet = new Bet(pendingBet);
         Set<Bet> senderBets = sender.getBets();

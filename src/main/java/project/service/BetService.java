@@ -27,7 +27,7 @@ public interface BetService {
      * Delete {@link PendingBet}
      * @param pendingBet {@link PendingBet} to be deleted
      */
-    void deletePendingBet(PendingBet pendingBet);
+    void deletePendingBet(PendingBet pendingBet, User currUser);
 
 
     /**

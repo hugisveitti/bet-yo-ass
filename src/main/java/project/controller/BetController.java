@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.PendingBet;
 import project.persistence.entities.User;
 import project.persistence.entities.Bet;
@@ -79,13 +80,18 @@ public class BetController {
 
     @RequestMapping(value = "/decline-pending-bet", method = RequestMethod.POST)
     @ResponseBody
-    public String declinePendingBet(HttpServletRequest request, Authentication authentication, Model model){
+    public RedirectView declinePendingBet(HttpServletRequest request, Authentication authentication, Model model){
         // láta skila String
         String pendingBetId = request.getParameter("pendingBetId");
-
         PendingBet declinePendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
 
-        return "redirect:userpage";
+        //tharf kannski ad sja til thess ad sa sem er ekki buinn ad accept-a er sa sem er loggadur inn
+        //annars gaeti hinn userinn einhvern veginn sent inn decline bet
+
+        User currUser = customUserDetailsService.findByUsername(authentication.getName());
+        betService.deletePendingBet(declinePendingBet, currUser);
+
+        return new RedirectView("userpage");
     }
 
     @RequestMapping(value = "/counter-pending-bet", method = RequestMethod.POST)
