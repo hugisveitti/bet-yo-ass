@@ -33,8 +33,13 @@ public class Bet {
 
     private boolean senderResolved;
     private boolean receiverResolved;
-
     private boolean hasBeenResolved;
+
+
+
+    //hugsa að það sé best að voteið sé stengirnir sender og receiver
+    private String voteSender;
+    private String voteReceiver;
 
     //remember who won and lost
     private Long winnerId;
@@ -66,8 +71,6 @@ public class Bet {
         this.senderResolved = false;
         this.receiverResolved = false;
         this.hasBeenResolved = false;
-
-
     }
 
     public Long getId() {
@@ -172,9 +175,6 @@ public class Bet {
     }
 
     public void setSenderResolved(boolean senderResolved) {
-        if(receiverResolved){
-            this.hasBeenResolved = true;
-        }
         this.senderResolved = senderResolved;
     }
 
@@ -183,9 +183,6 @@ public class Bet {
     }
 
     public void setReceiverResolved(boolean receiverResolved) {
-        if(senderResolved){
-            this.hasBeenResolved = true;
-        }
         this.receiverResolved = receiverResolved;
     }
 
@@ -213,7 +210,23 @@ public class Bet {
         this.loserId = loserId;
     }
 
-    @Override
+    public String getVoteSender() {
+        return voteSender;
+    }
+
+    public void setVoteSender(String voteSender) {
+        this.voteSender = voteSender;
+    }
+
+    public String getVoteReceiver() {
+        return voteReceiver;
+    }
+
+    public void setVoteReceiver(String voteReceiver) {
+        this.voteReceiver = voteReceiver;
+    }
+
+
     public String toString(){
         return "Bet name " + this.title + " between " + this.sender + " and " + this.receiver;
     }

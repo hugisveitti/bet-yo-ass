@@ -150,25 +150,7 @@ public class BetServiceImplementation implements BetService {
         pendingBetRepository.save(counterPendingBet);
     }
 
-    private ArrayList<User> findWhoIsSender(User currUser, PendingBet pendingBet){
-        User sender;
-        User receiver;
-        ArrayList<User> senderReceiver = new ArrayList<>();
-        if(currUser.getUsername().equals(pendingBet.getSender())){
-            sender = currUser;
-            pendingBet.setAcceptSender(true);
-            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
-            senderReceiver.add(sender);
-            senderReceiver.add(receiver);
-        } else {
-            receiver = currUser;
-            pendingBet.setAcceptReceiver(true);
-            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
-            senderReceiver.add(sender);
-            senderReceiver.add(receiver);
-        }
-        return senderReceiver;
-    }
+
 
     /*
     Bet service implementation
@@ -243,6 +225,53 @@ public class BetServiceImplementation implements BetService {
         return betRepository.findOne(id);
     }
 
+    @Override
+    public void voteBet(Bet voteBet, User currUser, String vote){
+        //fáránleg lausn, en lögum hana ef við setjum búum til yfirklasa bet yfir allar tegundir af bettum
+        PendingBet p = new PendingBet();
+        p.setReceiver(voteBet.getReceiver());
+        p.setSender(voteBet.getSender());
+        ArrayList<User> senderReceiver = findWhoIsSender(currUser, p);
+        User sender = senderReceiver.get(0);
+        User receiver = senderReceiver.get(1);
+
+        if(currUser.getUsername().equals(voteBet.getSender())){
+            if(vote.equals("me")){
+                voteBet.setVoteSender("sender");
+            } else {
+                voteBet.setVoteSender("receiver");
+            }
+            voteBet.setSenderResolved(true);
+            if(voteBet.isReceiverResolved()){
+                voteBet.setHasBeenResolved(true);
+            }
+        } else {
+            if(vote.equals("me")){
+                voteBet.setVoteReceiver("receiver");
+            } else {
+                voteBet.setVoteReceiver("sender");
+            }
+            voteBet.setReceiverResolved(true);
+            if(voteBet.isSenderResolved()){
+                voteBet.setHasBeenResolved(true);
+            }
+        }
+        if(voteBet.isHasBeenResolved() && !voteBet.getVoteReceiver().equals(voteBet.getVoteSender())){
+            voteBet.setHasBeenResolved(false);
+            voteBet.setReceiverResolved(false);
+            voteBet.setSenderResolved(false);
+
+            betRepository.save(voteBet);
+
+            //todo throw error
+            System.out.println("receiver and sender disagree on who won!!!!! make an error throw");
+        } else {
+            betRepository.save(voteBet);
+        }
+
+
+    }
+
 
     private ArrayList<Double> calcOpponentOddsAndAmount(double odds, double amount){
         ArrayList<Double> opponentOddsAndAmount = new ArrayList<Double>();
@@ -256,4 +285,26 @@ public class BetServiceImplementation implements BetService {
 
         return opponentOddsAndAmount;
     }
+
+    private ArrayList<User> findWhoIsSender(User currUser, PendingBet pendingBet){
+        User sender;
+        User receiver;
+        ArrayList<User> senderReceiver = new ArrayList<>();
+        if(currUser.getUsername().equals(pendingBet.getSender())){
+            sender = currUser;
+            pendingBet.setAcceptSender(true);
+            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
+            senderReceiver.add(sender);
+            senderReceiver.add(receiver);
+        } else {
+            receiver = currUser;
+            pendingBet.setAcceptReceiver(true);
+            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
+            senderReceiver.add(sender);
+            senderReceiver.add(receiver);
+        }
+        return senderReceiver;
+    }
+
+
 }

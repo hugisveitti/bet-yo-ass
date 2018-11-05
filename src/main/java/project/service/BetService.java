@@ -47,4 +47,6 @@ public interface BetService {
     void saveBet(PendingBet pendingBet, User currUser) throws Exception;
 
     Bet findBetById(Long Id);
+
+    void voteBet(Bet voteBet, User currUser, String vote);
 }

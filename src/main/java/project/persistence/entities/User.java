@@ -31,6 +31,7 @@ public class User implements UserDetails {
 
     private String password;
 
+    private double credit;
 
     @Column(name="enabled")
     private Boolean enabled;
@@ -68,7 +69,7 @@ public class User implements UserDetails {
 
 
 
-    private double credit;
+
 
 
     public User(){}

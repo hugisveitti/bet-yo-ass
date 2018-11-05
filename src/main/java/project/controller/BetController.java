@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import project.persistence.entities.PendingBet;
+import project.persistence.entities.Bet;
 import project.persistence.entities.User;
 import project.service.BetService;
 import project.service.CustomUserDetailsService;
@@ -78,7 +79,6 @@ public class BetController {
     @RequestMapping(value = "/decline-pending-bet", method = RequestMethod.POST)
     @ResponseBody
     public RedirectView declinePendingBet(HttpServletRequest request, Authentication authentication, Model model){
-        // láta skila String
         String pendingBetId = request.getParameter("pendingBetId");
         PendingBet declinePendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
 
@@ -94,7 +94,6 @@ public class BetController {
     @RequestMapping(value = "/counter-pending-bet", method = RequestMethod.POST)
     @ResponseBody
     public RedirectView counterPendingBet(HttpServletRequest request, Authentication authentication, Model model){
-        // láta skila String
         String pendingBetId = request.getParameter("pendingBetId");
 
         PendingBet counterPendingBet = betService.findPendingBetById(Long.parseLong(pendingBetId));
@@ -104,6 +103,19 @@ public class BetController {
         double counterOdds = Double.parseDouble(request.getParameter("counterOdds"));
 
         betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
+
+        return new RedirectView("userpage");
+    }
+
+    @RequestMapping(value = "/vote-bet", method = RequestMethod.POST)
+    @ResponseBody
+    public RedirectView voteBet(HttpServletRequest request, Authentication authentication){
+        String betId = request.getParameter("betId");
+        String vote = request.getParameter("whoWon");
+        Bet voteBet = betService.findBetById(Long.parseLong(betId));
+        User currUser = customUserDetailsService.findByUsername(authentication.getName());
+
+        betService.voteBet(voteBet, currUser, vote);
 
         return new RedirectView("userpage");
     }
