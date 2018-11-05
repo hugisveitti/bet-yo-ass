@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
+ * Maybe we should implement User form spring core instead?
+ *
+ * By implementing {@link UserDetails} we can use spring core for Authentication
  * The class for the User itself.
  * The system generates a table schema based on this class for this entity.
  * Be sure to annotate any entities you have with the @Entity annotation.
@@ -83,6 +86,7 @@ public class User implements UserDetails {
         this.enabled = true;
     }
 
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         Set<Role> userRoles = this.getRoles();
@@ -142,6 +146,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -150,6 +155,7 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }

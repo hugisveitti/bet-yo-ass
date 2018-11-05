@@ -13,9 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-/*
-    * Class that controls authentication and
-    * what pages who can view.
+/**
+ * Class that controls authentication and
+ * what pages who can view.
  */
 
 

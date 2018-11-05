@@ -11,9 +11,9 @@ import project.persistence.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-/*
-    * Class is only for setting up the Roles in the RoleRepository
-    * Maybe delete later....
+/**
+ * Class is only for setting up the Roles in the RoleRepository
+ * Maybe delete later.... If we simply load these roles with sql directly
  */
 
 @Component

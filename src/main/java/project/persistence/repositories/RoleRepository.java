@@ -15,6 +15,7 @@ import java.util.List;
  *
  *
  * You can find users based on their roles
+ * Used for authentication.
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {
 

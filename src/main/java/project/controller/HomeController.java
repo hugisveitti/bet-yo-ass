@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Controller for the "/" and some get requests that are less related to users and changing and saving bets.
+ */
 
 @Controller
 public class HomeController {
@@ -35,4 +38,10 @@ public class HomeController {
 
 
 
+    //TODO implement 403 and 404 pages
+    @RequestMapping(value="/403", method = RequestMethod.GET)
+    public String errorViewGet(){
+        System.out.println("ERROR");
+        return "403";
+    }
 }

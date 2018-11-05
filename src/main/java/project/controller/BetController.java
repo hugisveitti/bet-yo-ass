@@ -16,6 +16,11 @@ import project.service.CustomUserDetailsService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * controller for the get and post requests for anything to do with bets and pending bets.
+ * Post methods usually redirect to the userpage.
+ * Try to only use controller to call methods from services.
+ */
 
 @Controller
 public class BetController {
@@ -101,7 +106,6 @@ public class BetController {
         User currUser = customUserDetailsService.findByUsername(authentication.getName());
         double counterAmount = Double.parseDouble(request.getParameter("counterAmount"));
         double counterOdds = Double.parseDouble(request.getParameter("counterOdds"));
-
         betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
 
         return new RedirectView("userpage");

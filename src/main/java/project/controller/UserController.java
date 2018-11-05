@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import project.persistence.entities.Role;
 import project.persistence.entities.User;
 import project.service.CustomUserDetailsService;
 
-import project.persistence.repositories.RoleRepository;
 
+/**
+ * Controller for most post and get request that have something to do with the user
+ * note that WebSecurityConfig handles the login post because of authentication
+ */
 
 @Controller
 public class UserController {
@@ -72,15 +74,4 @@ public class UserController {
         model.addAttribute("user", user);
         return "UserPage";
     }
-
-
-    //TODO implement 403 and 404 pages
-
-    @RequestMapping(value="/403", method = RequestMethod.GET)
-    public String errorViewGet(){
-        System.out.println("ERROR");
-        return "403";
-    }
-
-
 }
