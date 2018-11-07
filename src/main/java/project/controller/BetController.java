@@ -39,7 +39,7 @@ public class BetController {
     public String sendBetViewGet(@ModelAttribute("pendingbet") PendingBet pendingBet, Model model){
         List<User> users = customUserDetailsService.findAll();
         model.addAttribute("pendingBet",new PendingBet());
-        //todo ekki senda current user
+        //DONE - todo ekki senda current user - theta er hondlad a sidunnri sjalfri.
         model.addAttribute("users", users);
         return "SendBet";
     }
