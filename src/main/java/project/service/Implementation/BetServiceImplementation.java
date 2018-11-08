@@ -171,17 +171,6 @@ public class BetServiceImplementation implements BetService {
     public void saveBet(PendingBet pendingBet, User currUser) throws Exception{
         User sender;
         User receiver;
-//        if(currUser.getUsername().equals(pendingBet.getSender())){
-//            sender = currUser;
-//            pendingBet.setAcceptSender(true);
-//            receiver = customUserDetailsService.findByUsername(pendingBet.getReceiver());
-//            receiver.removeCredit(pendingBet.getAmountReceiver());
-//        } else {
-//            receiver = currUser;
-//            pendingBet.setAcceptReceiver(true);
-//            sender = customUserDetailsService.findByUsername(pendingBet.getSender());
-//            sender.removeCredit(pendingBet.getAmountSender());
-//        }
         ArrayList<User> senderReceiver = findWhoIsSender(currUser,pendingBet);
         sender = senderReceiver.get(0);
         receiver = senderReceiver.get(1);
@@ -278,7 +267,13 @@ public class BetServiceImplementation implements BetService {
 
         double likur = Math.floor((1 / odds) * 100 * 100) / 100;
         double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+
+        if(Math.ceil(oppOdds) - oppOdds <= 0.01){
+            oppOdds = Math.ceil(oppOdds);
+        }
+
         double oppAmount = (((amount * odds) / oppOdds) * 100) /100;
+
 
         opponentOddsAndAmount.add(oppOdds);
         opponentOddsAndAmount.add(oppAmount);
