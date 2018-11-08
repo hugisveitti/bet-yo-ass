@@ -2,7 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
 <header class="header">
     <h1>BET YO ASS</h1>
@@ -14,11 +14,13 @@
             <div class="user-info">
                 <div class="user-name">
                     <!-- <img class="user-img" src="images/default-user.png" /> -->
-                    <p>User: ${user.getUsername()}</p>
+
+                    <p><i class="fa fa-user"></i> ${user.getUsername()}</p>
                 </div>
                 <div class="user-credit">
                     <!-- <img src="images/logo.png" /> -->
-                    <p>Credits: ${user.getCredit()} </p>
+
+                    <p> <i class="fa fa-money"></i> ${user.getCredit()}</p>
                 </div>
 
             </div>

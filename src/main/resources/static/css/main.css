@@ -3,6 +3,11 @@ html, body{
     padding: 0;
 }
 
+#container{
+    text-align: center;
+    align-items: center;
+}
+
 .header{
     height:150px;
     width: 100%;

@@ -24,10 +24,9 @@ function calcOdds(e) {
         return
     }
 
-    var odds = e.target.value;
     //todo if browser not support number in input
 
-    var likur = Math.floor((1 / parseFloat(odds)) * 100 * 100) / 100;
+    var likur = Math.floor((1 / parseFloat(yourOdds.value)) * 100 * 100) / 100;
     var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
 
     //console.log("you have " + likur + "% chance of winning");
@@ -37,7 +36,7 @@ function calcOdds(e) {
     if(Math.ceil(oOdds) - oOdds <= 0.01){
         oOdds = Math.ceil(oOdds);
     }
-
+    console.log(oOdds);
 
     var oAmount  = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oOdds) * 100) /100;
 
