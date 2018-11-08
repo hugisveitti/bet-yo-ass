@@ -48,6 +48,7 @@ public class BetServiceImplementation implements BetService {
             throw new Exception("Sender does not have enough credits");
         }
 
+        // remove money from the sender
         sender.removeCredit(pendingBet.getAmountSender());
 
         //TODO laga
@@ -116,7 +117,7 @@ public class BetServiceImplementation implements BetService {
     }
 
     @Override
-    public void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds){
+    public void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds) throws Exception{
         System.out.println("counter");
 
         ArrayList<User> senderReceiver = findWhoIsSender(currUser, counterPendingBet);
@@ -127,19 +128,38 @@ public class BetServiceImplementation implements BetService {
         ArrayList<Double> opponentOddsAndAmount = calcOpponentOddsAndAmount(counterOdds, counterAmount);
         //ef senderinn er buinn accepta tha er receiverinn ad countera
         if(counterPendingBet.isAcceptSender()){
+
             newReceiverOdds = counterOdds;
             newReceiverAmount = counterAmount;
             newSenderOdds = opponentOddsAndAmount.get(0);
             newSenderAmount = opponentOddsAndAmount.get(1);
             counterPendingBet.setAcceptSender(false);
             counterPendingBet.setAcceptReceiver(true);
+
+            if(receiver.getCredit() < newReceiverAmount){
+                System.out.println("receiver trying to send more than he can afford, throw some error");
+                throw new Exception("User does not have enough funds to counter this much");
+            } else {
+                receiver.removeCredit(newReceiverAmount);
+                sender.addCredit(counterPendingBet.getAmountSender());
+            }
         }   else {
+
             newReceiverOdds = opponentOddsAndAmount.get(0);
             newReceiverAmount = opponentOddsAndAmount.get(1);
             newSenderOdds = counterOdds;
             newSenderAmount = counterAmount;
             counterPendingBet.setAcceptSender(true);
             counterPendingBet.setAcceptReceiver(false);
+
+
+            if(sender.getCredit() < newSenderAmount){
+                System.out.println("sender trying to be more than he can, must throw some error here");
+                throw new Exception("User does not have enough funds to counter this much");
+            } else {
+                sender.removeCredit(newSenderAmount);
+                receiver.addCredit(counterPendingBet.getAmountReceiver());
+            }
         }
 
         counterPendingBet.setOddsReceiver(newReceiverOdds);
@@ -167,6 +187,11 @@ public class BetServiceImplementation implements BetService {
         betRepository.save(bet);
     }
 
+
+    /*
+        save the bet when both users have accepted the pending bet
+        checks if both users have accepted and both users have enough credits
+     */
     @Override
     public void saveBet(PendingBet pendingBet, User currUser) throws Exception{
         User sender;
@@ -175,22 +200,31 @@ public class BetServiceImplementation implements BetService {
         sender = senderReceiver.get(0);
         receiver = senderReceiver.get(1);
 
-        if(!pendingBet.isAcceptSender() || !pendingBet.isAcceptReceiver()){
-            throw new Exception("Both users have to accept the bet.");
+        if(currUser.getUsername().equals(pendingBet.getSender())){
+            if(!pendingBet.isAcceptReceiver()){
+                throw new Exception("Both users have to accept the bet.");
+            } else {
+                if(currUser.getCredit() < pendingBet.getAmountSender()){
+                    throw new Exception("Sender not enough credits");
+                } else {
+                    currUser.removeCredit(pendingBet.getAmountSender());
+                }
+            }
+        } else if(currUser.getUsername().equals(pendingBet.getReceiver())){
+            if(!pendingBet.isAcceptSender()){
+                throw new Exception("Both users have to accept the bet.");
+            } else {
+                if(currUser.getCredit() < pendingBet.getAmountReceiver()){
+                    throw new Exception("Receiver not enough credits");
+                } else {
+                    currUser.removeCredit(pendingBet.getAmountReceiver());
+                }
+            }
         }
 
 
-        //athuga að sender á núþegar að hafa sent peninginn sinni...
-        if(receiver.getCredit() < pendingBet.getAmountReceiver()){
-            throw new Exception("Receiver does not have enough credits.");
-        }
-
-        if(sender.getCredit() < pendingBet.getAmountSender()){
-            throw new Exception("Sender does not have enough credits");
-        }
-
-
-        this.deletePendingBet(pendingBet, currUser);
+        this.deletePendingBet(pendingBet, sender);
+        this.deletePendingBet(pendingBet, receiver);
 
         Bet newBet = new Bet(pendingBet);
         Set<Bet> senderBets = sender.getBets();

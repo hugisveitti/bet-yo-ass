@@ -226,4 +226,8 @@ public class User implements UserDetails {
     public void removeCredit(double removeCredit){
         this.credit = this.credit - removeCredit;
     }
+
+    public void addCredit(double addCredit){
+        this.credit = this.credit + addCredit;
+    }
 }

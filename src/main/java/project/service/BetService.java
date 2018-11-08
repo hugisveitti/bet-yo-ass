@@ -50,7 +50,7 @@ public interface BetService {
      * @param counterAmount {@link Double} amount being countered
      * @param counterOdds {@link Double} odds being countered
      */
-    void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds);
+    void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds) throws Exception;
 
 
     /**
