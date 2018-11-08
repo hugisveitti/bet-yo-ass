@@ -87,7 +87,7 @@ input[type=submit], button{
 }
 
 .three-btn, .counter-btn{
-    width:30%;
+    width:60%;
     display: inline;
     height: 50px;
     background-color: white;
