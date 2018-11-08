@@ -59,6 +59,7 @@ public class BetController {
         } catch (Exception e){
             System.out.println(e.getMessage());
             model.addAttribute("errorMsg", e.getMessage());
+            model.addAttribute("user", sender);
             return "SendBet";
         }
 

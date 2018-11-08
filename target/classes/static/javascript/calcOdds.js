@@ -26,16 +26,13 @@ function calcOdds(e) {
 
     //todo if browser not support number in input
 
-    var likur = Math.floor((1 / parseFloat(yourOdds.value)) * 100 * 100) / 100;
-    var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+    var likur = Math.round((1 / parseFloat(yourOdds.value)) * 100 * 100) / 100;
+//    var oOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+    var oOdds = Math.round((1 / (100.0 - likur)) * 100 * 100) / 100;
 
-    //console.log("you have " + likur + "% chance of winning");
-    //yourOddsPercentage.innerHTML = "you have " + likur + "% chance of winning";
-    //oppOdds.innerHTML = oOdds + " (" + (100 - likur) + "%)";
+    console.log("oOdss pre " + oOdds);
 
-    if(Math.ceil(oOdds) - oOdds <= 0.01){
-        oOdds = Math.ceil(oOdds);
-    }
+
     console.log(oOdds);
 
     var oAmount  = Math.floor(parseFloat(yourAmount.value) * parseFloat(yourOdds.value) / parseFloat(oOdds) * 100) /100;

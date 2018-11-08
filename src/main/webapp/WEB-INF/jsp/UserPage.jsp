@@ -22,70 +22,102 @@
     <h1>USERPAGE</h1>
 
     <c:choose>
-        <c:when test="${pendingBets != null}">
-            <h3>Pending Bets</h3>
+        <c:when test="${notWaitingPendingBets != null}">
+            <h3>Bets you have to accept, decline or send a counter offer.</h3>
         </c:when>
         <c:otherwise>
-            <h5>You have no pending bets</h5>
+            <h5>You have no bets to accept, decline or send a counter offer.</h5>
         </c:otherwise>
     </c:choose>
 
-    <c:forEach items="${pendingBets}" var="pendingBet">
+    <c:forEach items="${notWaitingPendingBets}" var="pendingBet">
         <div class="bet" id="pending-bet${pendingBet.id}">
             <button class="expand-btn">+</button>
             <div class="bet-main-info" id="bet-more-info${pendingBet.id}">
                 <h4>${pendingBet.title}</h4>
-                <p>${pendingBet.sender} vs. ${pendingBet.receiver}</p>
+                <p>vs. ${pendingBet.getOpponent(user.getUsername())}</p>
+                <p>${pendingBet.getYourAmount(user.getUsername())} @ ${pendingBet.getYourOdds(user.getUsername())}</p>
             </div>
             <div class="bet-more-info" id="bet-more-info${pendingBet.id}">
                 <p><i>Description:</i> ${pendingBet.description}</p>
-                <p><i>Receiver odds</i> ${pendingBet.oddsReceiver}</p>
-                <p><i>Receiver amount</i> ${pendingBet.amountReceiver}</p>
-                <p><i>Sender odds</i> ${pendingBet.oddsSender}</p>
-                <p><i>Sender amount</i> ${pendingBet.amountSender}</p>
+                <p><i>Opponent amount</i> ${pendingBet.getOpponentAmount(user.getUsername())}</p>
+                <p><i>Opponent odds</i> ${pendingBet.getOppenentOdds(user.getUsername())}</p>
+                <p><i>Your amount</i> ${pendingBet.getYourAmount(user.getUsername())}</p>
+                <p><i>Your odds</i> ${pendingBet.getYourOdds(user.getUsername())}</p>
+
                 <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
                 <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
-                <c:choose>
-                    <c:when test="${(pendingBet.sender == user.getUsername() and pendingBet.acceptSender) or (pendingBet.receiver == user.getUsername() and pendingBet.acceptReceiver)}">
-                        You are waiting for other user to respond the bet.
-                    </c:when>
-                    <c:otherwise>
-                        <p>You have to respond to the bet</p>
+                <p>You have to respond to the bet</p>
 
-                        <sf:form method="POST" action="/accept-pending-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Accept bet">
-                        </sf:form>
 
-                        <sf:form method="POST" action="/decline-pending-bet">
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Decline">
-                        </sf:form>
+                    <sf:form method="POST" action="/accept-pending-bet" class="userpage-form">
+                        <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                        <input type="submit" value="Accept bet" class="three-btn accept">
+                    </sf:form>
 
-                        <button class="counter-btn" id="counter-btn${pendingBet.id}">Send counter offer</button>
-                        <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
-                            <legend>Your Amount</legend>
-                            <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
+                    <sf:form method="POST" action="/decline-pending-bet" class="userpage-form">
+                        <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                        <input type="submit" value="Decline" class="three-btn decline">
+                    </sf:form>
 
-                            <legend>Your Odds</legend>
-                            <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds">
-                            <span>Opponent-odds</span>
-                            <span id="opponent-odds"></span>
-                            <br>
-                            <br>
+                    <button class="counter-btn" id="counter-btn${pendingBet.id}">Send counter offer</button>
 
-                            <span>Opponent-amount</span>
-                            <span id="opponent-amount"></span>
-                            <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                            <input type="submit" value="Make counter offer">
-                        </sf:form>
+                    <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
+                    <legend>Your Amount</legend>
+                    <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
 
-                    </c:otherwise>
-                </c:choose>
+                    <legend>Your Odds</legend>
+                    <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds">
+                    <span>Opponent-odds</span>
+                    <span id="opponent-odds"></span>
+                    <br>
+                    <br>
+
+                    <span>Opponent-amount</span>
+                    <span id="opponent-amount"></span>
+                    <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                    <input type="submit" value="Make counter offer">
+                </sf:form>
             </div>
         </div>
-
     </c:forEach>
+
+
+    <br>
+
+    <c:choose>
+        <c:when test="${waitingPendingBets != null}">
+            <h3>You are waiting for the other user to respond to these bets.</h3>
+        </c:when>
+        <c:otherwise>
+            <h5>You are not waiting for any bet.</h5>
+        </c:otherwise>
+    </c:choose>
+
+    <c:forEach items="${waitingPendingBets}" var="pendingBet">
+        <div class="bet" id="pending-bet${pendingBet.id}">
+            <button class="expand-btn">+</button>
+            <div class="bet-main-info" id="bet-more-info${pendingBet.id}">
+                <h4>${pendingBet.title}</h4>
+                <p>vs. ${pendingBet.getOpponent(user.getUsername())}</p>
+                <p>${pendingBet.getYourAmount(user.getUsername())} @ ${pendingBet.getYourOdds(user.getUsername())}</p>
+            </div>
+            <div class="bet-more-info" id="bet-more-info${pendingBet.id}">
+                <p><i>Description:</i> ${pendingBet.description}</p>
+
+                <p><i>Opponent amount</i> ${pendingBet.getOpponentAmount(user.getUsername())}</p>
+                <p><i>Opponent odds</i> ${pendingBet.getOppenentOdds(user.getUsername())}</p>
+                <p><i>Your amount</i> ${pendingBet.getYourAmount(user.getUsername())}</p>
+                <p><i>Your odds</i> ${pendingBet.getYourOdds(user.getUsername())}</p>
+
+                <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
+                <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
+            </div>
+        </div>
+    </c:forEach>
+
+    <br>
+
 
     <br>
     <h3>Active bets</h3>
@@ -94,14 +126,17 @@
             <button class="expand-btn">+</button>
             <div class="bet-main-info" id="bet-more-info${bet.id}">
                 <h4>${bet.title}</h4>
-                <p>${bet.sender} vs. ${bet.receiver}</p>
+                <p>vs. ${bet.getOpponent(user.getUsername())}</p>
+                <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
             </div>
             <div class="bet-more-info" id="bet-more-info${bet.id}">
                 <p><i>Description:</i> ${bet.description}</p>
-                <p><i>Receiver odds</i> ${bet.oddsReceiver}</p>
-                <p><i>Receiver amount</i> ${bet.amountReceiver}</p>
-                <p><i>Sender odds</i> ${bet.oddsSender}</p>
-                <p><i>Sender amount</i> ${bet.amountSender}</p>
+
+                <p><i>Opponent amount</i> ${bet.getOpponentAmount(user.getUsername())}</p>
+                <p><i>Opponent odds</i> ${bet.getOppenentOdds(user.getUsername())}</p>
+                <p><i>Your amount</i> ${bet.getYourAmount(user.getUsername())}</p>
+                <p><i>Your odds</i> ${bet.getYourOdds(user.getUsername())}</p>
+
                 <p><i>Date and time created</i> ${bet.dateAndTimeCreated}</p>
                 <p><i>Date and time for bet to be resolved</i> ${bet.dateAndTimeResolve}</p>
                 <p>You can vote on who won the be, even though the resolved date has not been reached.</p>
@@ -139,14 +174,17 @@
             <button class="expand-btn">+</button>
             <div class="bet-main-info" id="bet-more-info${bet.id}">
                 <h4>${bet.title}</h4>
-                <p>${bet.sender} vs. ${bet.receiver}</p>
+                <p>vs. ${bet.getOpponent(user.getUsername())}</p>
+                <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
             </div>
             <div class="bet-more-info" id="bet-more-info${bet.id}">
                 <p><i>Description:</i> ${bet.description}</p>
-                <p><i>Receiver odds</i> ${bet.oddsReceiver}</p>
-                <p><i>Receiver amount</i> ${bet.amountReceiver}</p>
-                <p><i>Sender odds</i> ${bet.oddsSender}</p>
-                <p><i>Sender amount</i> ${bet.amountSender}</p>
+
+                <p><i>Opponent amount</i> ${bet.getOpponentAmount(user.getUsername())}</p>
+                <p><i>Opponent odds</i> ${bet.getOppenentOdds(user.getUsername())}</p>
+                <p><i>Your amount</i> ${bet.getYourAmount(user.getUsername())}</p>
+                <p><i>Your odds</i> ${bet.getYourOdds(user.getUsername())}</p>
+
                 <p><i>Date and time created</i> ${bet.dateAndTimeCreated}</p>
                 <p><i>Date and time for bet to be resolved</i> ${bet.dateAndTimeResolve}</p>
             </div>
@@ -201,7 +239,6 @@
            voteForm.style.display = "block";
            var moreInfo = voteForm.parentElement;
             moreInfo.style.maxHeight = moreInfo.scrollHeight + "px";
-
         });
     }
 

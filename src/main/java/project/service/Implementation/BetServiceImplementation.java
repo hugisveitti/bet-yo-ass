@@ -116,15 +116,19 @@ public class BetServiceImplementation implements BetService {
         return pendingBetRepository.findOne(Id);
     }
 
+
+    /*
+    Method used when a bet is being countered.
+    Removes credit's from current user and put's credit back to the other user's account
+    the original amount he betted.
+     */
     @Override
     public void counterPendingBet(PendingBet counterPendingBet, User currUser, double counterAmount, double counterOdds) throws Exception{
-        System.out.println("counter");
-
         ArrayList<User> senderReceiver = findWhoIsSender(currUser, counterPendingBet);
         User sender = senderReceiver.get(0);
         User receiver = senderReceiver.get(1);
 
-        double oppAmount, newReceiverOdds, newReceiverAmount, newSenderOdds, newSenderAmount;
+        double newReceiverOdds, newReceiverAmount, newSenderOdds, newSenderAmount;
         ArrayList<Double> opponentOddsAndAmount = calcOpponentOddsAndAmount(counterOdds, counterAmount);
         //ef senderinn er buinn accepta tha er receiverinn ad countera
         if(counterPendingBet.isAcceptSender()){
@@ -189,7 +193,7 @@ public class BetServiceImplementation implements BetService {
 
 
     /*
-        save the bet when both users have accepted the pending bet
+        Save the bet when both users have accepted the pending bet
         checks if both users have accepted and both users have enough credits
      */
     @Override
@@ -279,6 +283,8 @@ public class BetServiceImplementation implements BetService {
                 voteBet.setHasBeenResolved(true);
             }
         }
+
+        //if both disagree then either delete bet or make both vote again
         if(voteBet.isHasBeenResolved() && !voteBet.getVoteReceiver().equals(voteBet.getVoteSender())){
             voteBet.setHasBeenResolved(false);
             voteBet.setReceiverResolved(false);
@@ -295,16 +301,18 @@ public class BetServiceImplementation implements BetService {
 
     }
 
+    /*
 
+    */
     private ArrayList<Double> calcOpponentOddsAndAmount(double odds, double amount){
         ArrayList<Double> opponentOddsAndAmount = new ArrayList<Double>();
 
-        double likur = Math.floor((1 / odds) * 100 * 100) / 100;
-        double oppOdds = Math.floor((1 / (100.0 - likur)) * 100 * 100) / 100;
+        double likur = Math.round((1.0 / odds) * 100.0 * 100.0) / 100.0;
+        double oppOdds = Math.round((1.0 / (100.0 - likur)) * 100.0 * 100.0) / 100.0;
 
-        if(Math.ceil(oppOdds) - oppOdds <= 0.01){
-            oppOdds = Math.ceil(oppOdds);
-        }
+//        if(Math.ceil(oppOdds) - oppOdds <= 0.01){
+//            oppOdds = Math.ceil(oppOdds);
+//        }
 
         double oppAmount = (((amount * odds) / oppOdds) * 100) /100;
 

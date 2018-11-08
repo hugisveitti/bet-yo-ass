@@ -5,7 +5,6 @@ html, body{
 
 #container{
     text-align: center;
-    align-items: center;
 }
 
 .header{
@@ -81,4 +80,35 @@ h1{
     position: absolute;
     left: -23px;
     bottom: 20px;
+}
+
+input[type=submit], button{
+    background-color: white;
+}
+
+.three-btn, .counter-btn{
+    width:30%;
+    display: inline;
+    height: 50px;
+    background-color: white;
+}
+
+.counter-btn:hover{
+    background-color: lightcyan;
+}
+
+.three-btn:hover{
+    background-color: lightcyan;
+}
+
+.three-buttons{
+    display: inline;
+}
+
+.userpage-form{
+    display: inline;
+}
+
+input[type=submit]:hover {
+    background-color: lightcyan;
 }
