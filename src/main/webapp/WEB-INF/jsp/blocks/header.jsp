@@ -6,19 +6,38 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
 <header class="header">
     <h1>BET YO ASS</h1>
-    <nav>
+    <nav class="navigation">
+
+
+
         <sec:authorize access="isAuthenticated()">
-            <a href="/userpage">User Page</a>
-            <a href="/sendbet">Make a bet</a>
-            <sf:form method="POST" action="/logout" id="logout-form">
-                <a href="javascript:;" onclick="parentNode.submit();">Logout</a>
-                <input type="hidden" VALUE="logout"/>
-            </sf:form>
+            <div class="user-info">
+                <div class="user-name">
+                    <!-- <img class="user-img" src="images/default-user.png" /> -->
+                    <p>User: ${user.getUsername()}</p>
+                </div>
+                <div class="user-credit">
+                    <!-- <img src="images/logo.png" /> -->
+                    <p>Credits: ${user.getCredit()} </p>
+                </div>
+
+            </div>
+
+            <div class="header-tabs">
+                <a href="/userpage">User Page</a>
+                <a href="/sendbet">Make a bet</a>
+                <sf:form method="POST" action="/logout" id="logout-form">
+                    <a href="javascript:;" onclick="parentNode.submit();">Logout</a>
+                    <input type="hidden" VALUE="logout"/>
+                </sf:form>
+            </div>
 
         </sec:authorize>
         <sec:authorize access="!isAuthenticated()">
-            <a href="/signup">Signup</a>
-            <a href="/login">Login</a>
+            <div class="header-tabs">
+                <a href="/signup">Signup</a>
+                <a href="/login">Login</a>
+            </div>
         </sec:authorize>
     </nav>
 </header>
