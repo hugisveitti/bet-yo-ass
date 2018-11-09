@@ -54,14 +54,20 @@
         <span>Opponent-amount</span>
         <span id="opponent-amount"></span>
 
+        <br>
+
+        <span class="credits-error"></span>
+        <br>
         <button class="button submit" type="submit">
             <span>
                 Send bet
             </span>
         </button>
-       <!-- <input id="pending-bet-button" type="submit" VALUE="Send bet"/> -->
-
+        <%--<input id="submit-button" type="submit" VALUE="Send bet"/>--%>
     </sf:form>
+    <span id="user-credits" hidden>${user.getCredit()}</span>
+
+
 </div>
 </body>
 <script src="<c:url value="/javascript/autofillbox.js" />"></script>

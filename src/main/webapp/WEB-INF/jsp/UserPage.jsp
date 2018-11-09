@@ -45,7 +45,7 @@
                     <p><i>Description:</i> ${pendingBet.description}</p>
                     <p><i>Opponent amount</i> ${pendingBet.getOpponentAmount(user.getUsername())}</p>
                     <p><i>Opponent odds</i> ${pendingBet.getOppenentOdds(user.getUsername())}</p>
-                    <p><i>Your amount</i> ${pendingBet.getYourAmount(user.getUsername())}</p>
+                    <p><i>Your amount</i> <span>${pendingBet.getYourAmount(user.getUsername())}</span></p>
                     <p><i>Your odds</i> ${pendingBet.getYourOdds(user.getUsername())}</p>
 
                     <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
@@ -54,6 +54,8 @@
 
                     <sf:form method="POST" action="/accept-pending-bet" class="userpage-form">
                         <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
+                        <span hidden class="your-pending-amount">${pendingBet.getYourAmount(user.getUsername())}</span>
+                        <span class="credits-error"></span>
                         <button class="button submit" type="submit" value="Accept bet">
                             <span>
                                 Accept bet
@@ -75,6 +77,7 @@
                             Send counter offer
                         </span>
                     </button>
+
                     <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
                         <legend>Your Amount</legend>
                         <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
@@ -88,6 +91,12 @@
 
                         <span>Opponent-amount</span>
                         <span id="opponent-amount"></span>
+
+                        <br>
+
+                        <span class="credits-error"></span>
+                        <br>
+
                         <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                         <button class="button submit" type="submit" value="Make counter offer">
                             <span>
@@ -234,6 +243,8 @@
 
 <br>
 <br>
+<span id="user-credits" hidden>${user.getCredit()}</span>
+
 </body>
 </html>
 
@@ -263,7 +274,7 @@
             if (moreInfo.style.maxHeight){
                 moreInfo.style.maxHeight = null;
             } else {
-                moreInfo.style.maxHeight = (moreInfo.scrollHeight + 20) + "px";
+                moreInfo.style.maxHeight = moreInfo.scrollHeight + "px";
             }
             if(this.innerHTML === "+"){
                 this.innerHTML = "-";
