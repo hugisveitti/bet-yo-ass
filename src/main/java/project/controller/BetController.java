@@ -36,11 +36,13 @@ public class BetController {
 
 
     @RequestMapping(value="/sendbet", method = RequestMethod.GET)
-    public String sendBetViewGet(@ModelAttribute("pendingbet") PendingBet pendingBet, Model model){
+    public String sendBetViewGet(@ModelAttribute("pendingbet") PendingBet pendingBet, Model model, Authentication authentication){
         List<User> users = customUserDetailsService.findAll();
         model.addAttribute("pendingBet",new PendingBet());
         //DONE - todo ekki senda current user - theta er hondlad a sidunnri sjalfri.
         model.addAttribute("users", users);
+        User currUser = customUserDetailsService.findByUsername(authentication.getName());
+        model.addAttribute("user", currUser);
         return "SendBet";
     }
 
@@ -57,6 +59,7 @@ public class BetController {
         } catch (Exception e){
             System.out.println(e.getMessage());
             model.addAttribute("errorMsg", e.getMessage());
+            model.addAttribute("user", sender);
             return "SendBet";
         }
 
@@ -106,7 +109,13 @@ public class BetController {
         User currUser = customUserDetailsService.findByUsername(authentication.getName());
         double counterAmount = Double.parseDouble(request.getParameter("counterAmount"));
         double counterOdds = Double.parseDouble(request.getParameter("counterOdds"));
-        betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
+        try{
+            betService.counterPendingBet(counterPendingBet, currUser, counterAmount, counterOdds);
+        } catch(Exception e){
+            System.err.println(e);
+            //to do make some kind of notification system that let's the user know what error occurd
+        }
+
 
         return new RedirectView("userpage");
     }

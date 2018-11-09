@@ -69,7 +69,8 @@ html{
     color: white;
     height: 25px;
     width: 25px;
-    font-size: 20px;
+    font-size: 15px;
+    border-radius: 0;
 }
 
 .expand-btn:hover{
@@ -95,6 +96,7 @@ input[type=radio]{
     margin: 2em;
     background-color: rgba(19, 5, 5, 0.5);
     border-radius: 10px;
+    color: white;
 }
 
 .wrapper{

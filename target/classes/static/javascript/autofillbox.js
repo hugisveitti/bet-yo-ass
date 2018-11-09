@@ -16,18 +16,10 @@ for(var i=0;i<getUsers.length;i++){
 function opponentDropdown(e){
     closeDropdown();
 
-    var a = this.value;
-    a = document.createElement("DIV");
+    var a = document.createElement("DIV");
     a.setAttribute("id", "autocomplete-list");
     a.setAttribute("class", "autocomplete-items");
-
-    a.style.backgroundColor = "white";
-    a.style.height = "auto";
-    a.style.width = "inherit";
-
-
     this.parentNode.appendChild(a);
-
 
     //users that match the input
     var matchUsers = [];

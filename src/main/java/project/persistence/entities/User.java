@@ -125,6 +125,27 @@ public class User implements UserDetails {
         return pendingBets;
     }
 
+
+    public Set<PendingBet> getWaitingPendingBets(){
+        Set<PendingBet> waitingPendingBets = new HashSet<>();
+        for(PendingBet p : getPendingBets()){
+            if(p.hasUserAcceptedPendingBet(this)){
+                waitingPendingBets.add(p);
+            }
+        }
+        return waitingPendingBets;
+    }
+
+    public Set<PendingBet> getNotWaitingPendingBets(){
+        Set<PendingBet> notWaitingPendingBets = new HashSet<>();
+        for(PendingBet p : getPendingBets()){
+            if(!p.hasUserAcceptedPendingBet(this)){
+                notWaitingPendingBets.add(p);
+            }
+        }
+        return notWaitingPendingBets;
+    }
+
     @Transactional
     public void removePendingBet(PendingBet pendingBet){
         pendingBets.remove(pendingBet);
@@ -225,5 +246,9 @@ public class User implements UserDetails {
 
     public void removeCredit(double removeCredit){
         this.credit = this.credit - removeCredit;
+    }
+
+    public void addCredit(double addCredit){
+        this.credit = this.credit + addCredit;
     }
 }

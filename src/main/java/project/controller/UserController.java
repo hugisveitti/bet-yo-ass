@@ -69,6 +69,10 @@ public class UserController {
     public String userPageViewGet(Authentication authentication, Model model){
         User user = customUserDetailsService.findByUsername(authentication.getName());
         model.addAttribute("pendingBets", user.getPendingBets());
+
+        model.addAttribute("waitingPendingBets", user.getWaitingPendingBets());
+        model.addAttribute("notWaitingPendingBets", user.getNotWaitingPendingBets());
+
         model.addAttribute("resolvedBets", user.getResolvedBets());
         model.addAttribute("activeBets", user.getActiveBets());
         model.addAttribute("user", user);

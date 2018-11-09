@@ -32,11 +32,7 @@
         </div>
 
 
-        <c:set var="gottUserNAME" value='${pageContext.request.userPrincipal.name}' />
-        <% System.out.println(pageContext.findAttribute("gottUserNAME") ); %>
         <c:forEach items="${users}" var="user">
-            <c:set var="gottUserNAME" value='${user.getUsername()}' />
-            <% System.out.println(pageContext.findAttribute("gottUserNAME") ); %>
             <c:if test="${pageContext.request.userPrincipal.name != user.getUsername()}">
                 <span class="get-users" hidden>${user.getUsername()}</span>
             </c:if>

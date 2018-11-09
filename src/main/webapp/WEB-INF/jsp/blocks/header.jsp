@@ -12,19 +12,40 @@
     <h3 class="secondaryHeading" href="/">
         <a class="indexLink" href="/">You surely can!</a>
     </h3>
-        <nav>
-            <sec:authorize access="isAuthenticated()">
+    <nav class="navigation">
+
+
+
+        <sec:authorize access="isAuthenticated()">
+            <div class="user-info">
+                <div class="user-name">
+                    <!-- <img class="user-img" src="images/default-user.png" /> -->
+
+                    <p><i class="fa fa-user"></i> ${user.getUsername()}</p>
+                </div>
+                <div class="user-credit">
+                    <!-- <img src="images/logo.png" /> -->
+
+                    <p> <i class="fa fa-money"></i> ${user.getCredit()}</p>
+                </div>
+
+            </div>
+
+            <div class="header-tabs">
                 <a href="/userpage">User Page</a>
                 <a href="/sendbet">Make a bet</a>
                 <sf:form method="POST" action="/logout" id="logout-form">
                     <a href="javascript:;" onclick="parentNode.submit();">Logout</a>
                     <input type="hidden" VALUE="logout"/>
                 </sf:form>
+            </div>
 
-            </sec:authorize>
-            <sec:authorize access="!isAuthenticated()">
+        </sec:authorize>
+        <sec:authorize access="!isAuthenticated()">
+            <div class="header-tabs">
                 <a href="/signup">Signup</a>
                 <a href="/login">Login</a>
-            </sec:authorize>
-        </nav>
+            </div>
+        </sec:authorize>
+    </nav>
 </header>

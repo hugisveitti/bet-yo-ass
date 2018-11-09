@@ -227,6 +227,46 @@ public class Bet {
     }
 
 
+    public double getOpponentAmount(String username){
+        if(username.equals(getSender())){
+            return getAmountReceiver();
+        } else {
+            return getAmountSender();
+        }
+    }
+
+    public double getOppenentOdds(String username){
+        if(username.equals(getSender())){
+            return getOddsReceiver();
+        } else {
+            return getOddsSender();
+        }
+    }
+
+    public double getYourAmount(String username){
+        if(username.equals(getSender())){
+            return getAmountSender();
+        } else {
+            return getAmountReceiver();
+        }
+    }
+
+    public double getYourOdds(String username){
+        if(username.equals(getSender())){
+            return getOddsSender();
+        } else {
+            return getOddsReceiver();
+        }
+    }
+
+    public String getOpponent(String username){
+        if(username.equals(getSender())){
+            return getReceiver();
+        } else {
+            return getSender();
+        }
+    }
+
     public String toString(){
         return "Bet name " + this.title + " between " + this.sender + " and " + this.receiver;
     }
