@@ -57,7 +57,8 @@ function calcOdds(e) {
             console.log(submitBtns[i].parentElement);
             if(this.parentElement === submitBtns[i].parentElement){
 
-                submitBtns[i].setAttribute("disabled", true);
+                // submitBtns[i].setAttribute("disabled", true);
+                submitBtns[i].disabled= true;
                 // console.log(submitBtns[i]);
                 // console.log(submitBtns[i].style["backgroundColor"]);
                 // console.log(submitBtns[i].style["background-color"]);
@@ -79,7 +80,8 @@ function calcOdds(e) {
 
         for(var i=0; i<submitBtns.length; i++){
             if(this.parentElement === submitBtns[i].parentElement){
-                submitBtns[i].setAttribute("disabled", false);
+                // submitBtns[i].setAttribute("disabled", false);
+                submitBtns[i].disabled= false;
                 submitBtns[i].style.backgroundColor = "rgba(82, 29, 29, 0.8)";
             }
 
