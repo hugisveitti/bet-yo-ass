@@ -97,12 +97,41 @@
                     </sf:form>
                 </div>
             </div>
-
         </c:forEach>
-
         <br>
     </div>
+    <div class="pendingBetsWrapper wrapper">
+    <c:choose>
+        <c:when test="${waitingPendingBets != null}">
+            <h3>You are waiting for the other user to respond to these bets.</h3>
+        </c:when>
+        <c:otherwise>
+            <h5>You are not waiting for any bet.</h5>
+        </c:otherwise>
+    </c:choose>
 
+    <c:forEach items="${waitingPendingBets}" var="pendingBet">
+        <div class="bet" id="pending-bet${pendingBet.id}">
+            <button class="expand-btn">+</button>
+            <div class="bet-main-info" id="bet-more-info${pendingBet.id}">
+                <h4>${pendingBet.title}</h4>
+                <p>vs. ${pendingBet.getOpponent(user.getUsername())}</p>
+                <p>${pendingBet.getYourAmount(user.getUsername())} @ ${pendingBet.getYourOdds(user.getUsername())}</p>
+            </div>
+            <div class="bet-more-info" id="bet-more-info${pendingBet.id}">
+                <p><i>Description:</i> ${pendingBet.description}</p>
+
+                <p><i>Opponent amount</i> ${pendingBet.getOpponentAmount(user.getUsername())}</p>
+                <p><i>Opponent odds</i> ${pendingBet.getOppenentOdds(user.getUsername())}</p>
+                <p><i>Your amount</i> ${pendingBet.getYourAmount(user.getUsername())}</p>
+                <p><i>Your odds</i> ${pendingBet.getYourOdds(user.getUsername())}</p>
+
+                <p><i>Date and time created</i> ${pendingBet.dateAndTimeCreated}</p>
+                <p><i>Date and time for bet to be resolved</i> ${pendingBet.dateAndTimeResolve}</p>
+            </div>
+        </div>
+    </c:forEach>
+    </div>
     <div class="activeBetsWrapper wrapper">
         <h3>Active bets</h3>
         <c:forEach items="${activeBets}" var="bet">
@@ -234,7 +263,7 @@
             if (moreInfo.style.maxHeight){
                 moreInfo.style.maxHeight = null;
             } else {
-                moreInfo.style.maxHeight = moreInfo.scrollHeight + "px";
+                moreInfo.style.maxHeight = (moreInfo.scrollHeight + 20) + "px";
             }
             if(this.innerHTML === "+"){
                 this.innerHTML = "-";
