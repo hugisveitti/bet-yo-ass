@@ -1,3 +1,10 @@
+html{
+    background-image: url("../images/waterfall.gif");
+    background-color: #cccccc;
+    height: 100%;
+    background-repeat: repeat-y;
+}
+
 .counter-form{
     display: none;
 }
@@ -17,11 +24,12 @@
 }
 
 .bet{
-    background-color: #42cece;
+    border-radius: 10px;
+    background-color: rgba(4, 15, 5, 0.9);
     margin: auto;
     width: 50%;
     height: auto;
-    color:black;
+    color:white;
     box-shadow: black 1px 1px;
     padding: 15px;
     margin-bottom:10px;
@@ -36,7 +44,7 @@
 /*}*/
 
 .active-bet{
-    background-color: #3bd683;
+    background-color: rgba(19, 18, 5, 0.9);
 }
 
 /*.active-bet:hover{*/
@@ -44,7 +52,7 @@
 /*}*/
 
 .resolved-bet{
-    background-color: #ce9e35;
+    background-color: rgba(19, 5, 6, 0.9);
 }
 
 /*.resolved-bet:hover{*/
@@ -81,4 +89,33 @@ input[type=radio]{
 
 .vote-option{
 
+}
+
+.betInfo{
+    margin: 2em;
+    background-color: rgba(19, 5, 5, 0.5);
+    border-radius: 10px;
+}
+
+.wrapper{
+    margin: 1em;
+    color: white;
+}
+
+.resolvedBetsWrapper{
+    padding-bottom: 2em;
+}
+
+.pendingBetsWrapper{
+    padding-top: 1em;
+}
+
+.userInfo{
+    padding: 1em;
+    background-color: rgba(19, 5, 5, 0.5);
+    width: 20%;
+    border-radius: 10px;
+    margin-left: 2em;
+    height: 5em;
+    color: white;
 }

@@ -1,14 +1,20 @@
 html, body{
     margin: 0;
     padding: 0;
+    font-family: 'Krub', sans-serif;
 }
 
 .header{
     height:150px;
     width: 100%;
-    background-color:#3661A1;
+    background-color: rgba(19, 5, 5, 0.8);
     color: white;
     position: relative;
+}
+
+.indexLink{
+    color: white;
+    text-decoration: none;
 }
 
 .header nav{
@@ -34,9 +40,25 @@ h1{
     text-align: center;
 }
 
+.mainHeading{
+    width: 30%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.secondaryHeading{
+    width: 30%;
+    margin: auto;
+    text-align: center;
+}
+
 #logout-form{
     margin: 0;
     padding: 0;
     display: inline;
 }
 
+input{
+    font-family: 'Krub', sans-serif;
+}

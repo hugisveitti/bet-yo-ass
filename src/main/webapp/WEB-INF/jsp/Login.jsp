@@ -9,7 +9,10 @@
 <head>
     <title>Login</title>
 
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+    <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
+
 </head>
 <%@ include file="blocks/header.jsp" %>
 <body>
@@ -19,13 +22,19 @@
     <sf:form method="POST" action="/login">
         <input type="text" name="username" placeholder="Username" />
         <input type="password" name="password" placeholder="Password" />
-        <input type="submit" VALUE="Login"/>
-
+        <button class="button submit" type="submit">
+            <span>
+                Login
+            </span>
+        </button>
     </sf:form>
-    <p>${errorMsg}</p>
-    <c:if test="${not empty param.error}">
-        <p>Wrong username or password, ((kannski vitlaust ad segja thetta thvi eina sem eg veit er ad thad var error))</p>
-    </c:if>
+    <div class="message">
+        <p>${errorMsg}</p>
+        <c:if test="${not empty param.error}">
+            <p>Wrong username or password, (kannski vitlaust ad segja thetta thvi eina sem eg veit er ad thad var error)</p>
+        </c:if>
+    </div>
+
 </div>
 
 </body>

@@ -5,16 +5,17 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <body>
 <head>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+    <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
 </head>
 
 <%@ include file="blocks/header.jsp" %>
 
-<body>
 <h1>Send bet</h1>
 
-<div class="box">
-    <sf:form method="POST" modelAttribute="pendingBet" action="/sendbet" autocomplete="off">
+<div class="box makeBetBox">
+    <sf:form method="POST" modelAttribute="pendingBet" action="/sendbet" autocomplete="off" onkeypress="return event.keyCode != 13;">
         <input type="hidden" value="${username}" name="sender">
         <legend>Name of bet</legend>
         <input type="text" placeholder="Bet name" name="title"/>
@@ -57,8 +58,12 @@
         <span>Opponent-amount</span>
         <span id="opponent-amount"></span>
 
-
-        <input id="pending-bet-button" type="submit" VALUE="Send bet"/>
+        <button class="button submit" type="submit">
+            <span>
+                Send bet
+            </span>
+        </button>
+       <!-- <input id="pending-bet-button" type="submit" VALUE="Send bet"/> -->
 
     </sf:form>
 </div>
