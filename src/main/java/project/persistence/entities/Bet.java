@@ -6,6 +6,8 @@ import javax.persistence.*;
  * The class for the Bet itself.
  * The system generates a table schema based on this class for this entity.
  * Be sure to annotate any entities you have with the @Entity annotation.
+ *
+ * Bets are split in active bets and resolved bets.
  */
 @Entity
 @Table(name = "bet") // If you want to specify a table name, you can do so here

@@ -4,7 +4,6 @@ import project.persistence.entities.Bet;
 import project.persistence.entities.User;
 import project.persistence.entities.PendingBet;
 
-import java.util.List;
 
 /*
 Service for both bet repository and pending bet repository

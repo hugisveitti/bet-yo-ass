@@ -15,6 +15,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.time.ZonedDateTime;
 
+/*
+**
+* The implementation of the bet service. For both the pending bet's and bet's.
+* There maybe a problem in calculating the opponent odds and amount because of
+* floating point.
+ */
+
 @Service
 public class BetServiceImplementation implements BetService {
 
@@ -101,7 +108,6 @@ public class BetServiceImplementation implements BetService {
         ArrayList<User> senderReceiver = findWhoIsSender(currUser, pendingBet);
         User sender = senderReceiver.get(0);
         User receiver = senderReceiver.get(1);
-        //todo check if user who is declining has accepted bet
 
         sender.removePendingBet(pendingBet);
         receiver.removePendingBet(pendingBet);
@@ -252,9 +258,17 @@ public class BetServiceImplementation implements BetService {
         return betRepository.findOne(id);
     }
 
+
+    /*
+    Method used when users vote on who won the bet.
+    If they disagree on who won, either make them vote again
+    or give them their money back.
+     */
     @Override
     public void voteBet(Bet voteBet, User currUser, String vote){
-        //fáránleg lausn, en lögum hana ef við setjum búum til yfirklasa bet yfir allar tegundir af bettum
+        //findWhoIsSender notar pendingbet en ekki bet. Buum til pending bet ur bettinu og setjum
+        // bara mikilvaegustu hlutina. Ef vid setjum einn yfirklasa sem heitir Bet
+        //og svo thrja undirklasa sem heita active, pending og resolved, tha tharf thetta ekki.
         PendingBet p = new PendingBet();
         p.setReceiver(voteBet.getReceiver());
         p.setSender(voteBet.getSender());
@@ -290,22 +304,32 @@ public class BetServiceImplementation implements BetService {
             voteBet.setReceiverResolved(false);
             voteBet.setSenderResolved(false);
 
-            betRepository.save(voteBet);
-
             //todo throw error
-            System.out.println("receiver and sender disagree on who won!!!!! make an error throw");
-        } else {
-            betRepository.save(voteBet);
-        }
+            System.out.println("receiver and sender disagree on who won!!!!! make an exception throw");
+        } else if(voteBet.isHasBeenResolved()) {
 
+            System.out.println("sender voted " + voteBet.getVoteSender());
+            System.out.println("receiver voted "+ voteBet.getVoteReceiver());
+
+
+            if(voteBet.getVoteSender().equals("sender")){
+                System.out.println("sender won");
+                sender.addCredit(voteBet.getAmountSender() + voteBet.getAmountReceiver());
+            } else {
+                System.out.println("recevier won");
+                receiver.addCredit(voteBet.getAmountSender() + voteBet.getAmountReceiver());
+            }
+        }
+        betRepository.save(voteBet);
 
     }
 
     /*
-
+    Class that uses what the user sent with post to calculate what the opponent should send to match.
+    We both calculate here and on the frontend because I think it may be securer.
     */
     private ArrayList<Double> calcOpponentOddsAndAmount(double odds, double amount){
-        ArrayList<Double> opponentOddsAndAmount = new ArrayList<Double>();
+        ArrayList<Double> opponentOddsAndAmount = new ArrayList<>();
 
         double likur = Math.round((1.0 / odds) * 100.0 * 100.0) / 100.0;
         double oppOdds = Math.round((1.0 / (100.0 - likur)) * 100.0 * 100.0) / 100.0;
@@ -323,6 +347,10 @@ public class BetServiceImplementation implements BetService {
         return opponentOddsAndAmount;
     }
 
+    /*
+    findWhoIsSender can be use full because sometimes it does not matter who is sending
+    or receiving. Not all the methods in this class use this.
+     */
     private ArrayList<User> findWhoIsSender(User currUser, PendingBet pendingBet){
         User sender;
         User receiver;

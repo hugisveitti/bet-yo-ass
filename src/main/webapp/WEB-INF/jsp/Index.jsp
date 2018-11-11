@@ -65,7 +65,7 @@
 
     </body>
 
-    <footer>Class HBV501G, University of Iceland</footer>
+    <%--<footer>Class HBV501G, University of Iceland</footer>--%>
 
 
 </html>

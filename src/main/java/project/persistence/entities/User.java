@@ -110,6 +110,7 @@ public class User implements UserDetails {
         return resolvedBets;
     }
 
+
     public Set<Bet> getActiveBets(){
         Set<Bet> activeBets = new HashSet<>();
         for(Bet b : getBets()){
@@ -146,13 +147,11 @@ public class User implements UserDetails {
         return notWaitingPendingBets;
     }
 
+
+    // When deleting a pending bet it needs to be removed from the set stored with the user.
     @Transactional
     public void removePendingBet(PendingBet pendingBet){
         pendingBets.remove(pendingBet);
-        for(PendingBet p : pendingBets){
-            System.out.println(p);
-        }
-
     }
 
     public void setPendingBets(Set<PendingBet> pendingBets) {

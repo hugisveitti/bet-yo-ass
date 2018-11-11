@@ -109,6 +109,7 @@
         </c:forEach>
         <br>
     </div>
+
     <div class="pendingBetsWrapper wrapper">
     <c:choose>
         <c:when test="${waitingPendingBets != null}">
@@ -141,6 +142,7 @@
         </div>
     </c:forEach>
     </div>
+
     <div class="activeBetsWrapper wrapper">
         <h3>Active bets</h3>
         <c:forEach items="${activeBets}" var="bet">
@@ -231,14 +233,14 @@
 
 
 
-<div class="userInfo">
-    <br>
-    Logged in as ${user.getUsername()}
-    <br>
-    You have ${user.getCredit()} credits
-    <br>
-    Eru einhver not fyrir þetta?
-</div>
+<%--<div class="userInfo">--%>
+    <%--<br>--%>
+    <%--Logged in as ${user.getUsername()}--%>
+    <%--<br>--%>
+    <%--You have ${user.getCredit()} credits--%>
+    <%--<br>--%>
+    <%--Eru einhver not fyrir þetta?--%>
+<%--</div>--%>
 
 
 <br>
