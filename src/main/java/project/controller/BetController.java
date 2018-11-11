@@ -35,11 +35,11 @@ public class BetController {
     }
 
 
+    //send all the users so the sender can get an autofill box.
     @RequestMapping(value="/sendbet", method = RequestMethod.GET)
     public String sendBetViewGet(@ModelAttribute("pendingbet") PendingBet pendingBet, Model model, Authentication authentication){
         List<User> users = customUserDetailsService.findAll();
         model.addAttribute("pendingBet",new PendingBet());
-        //DONE - todo ekki senda current user - theta er hondlad a sidunnri sjalfri.
         model.addAttribute("users", users);
         User currUser = customUserDetailsService.findByUsername(authentication.getName());
         model.addAttribute("user", currUser);
@@ -62,8 +62,6 @@ public class BetController {
             model.addAttribute("user", sender);
             return "SendBet";
         }
-
-
     }
 
 

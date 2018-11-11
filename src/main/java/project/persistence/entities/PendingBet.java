@@ -39,13 +39,6 @@ public class PendingBet {
     public PendingBet() {
     }
 
-    /*
-    public PendingBet(String receiver, String title, String description) {
-        this.receiver = receiver;
-        this.title = title;
-        this.description = description;
-    }
-*/
     public Long getId() {
         return id;
     }
@@ -163,6 +156,8 @@ public class PendingBet {
         return (user.getUsername().equals(this.getSender()) && this.isAcceptSender() ) || (user.getUsername().equals(this.getReceiver()) && this.isAcceptReceiver());
     }
 
+
+    //the next four methods are used by the jsp.
     public double getOpponentAmount(String username){
         if(username.equals(getSender())){
             return getAmountReceiver();

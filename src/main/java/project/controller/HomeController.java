@@ -44,7 +44,7 @@ public class HomeController {
 
 
 
-    //TODO implement 403 and 404 pages
+    //TODO implement 403 and 404 pages, this does not work
     @RequestMapping(value="/403", method = RequestMethod.GET)
     public String errorViewGet(){
         System.out.println("ERROR");

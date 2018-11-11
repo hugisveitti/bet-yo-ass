@@ -40,12 +40,6 @@ public class BetServiceImplementation implements BetService {
     Pending bet service implementation
      */
 
-    //ma kannski eyda thessum classa
-    @Override
-    public void savePendingBet(PendingBet pendingBet){
-         pendingBetRepository.save(pendingBet);
-    }
-
 
 
     @Override
@@ -190,12 +184,6 @@ public class BetServiceImplementation implements BetService {
         betRepository.delete(bet);
     }
 
-    //ma kannski eyda
-    @Override
-    public void saveBet(Bet bet){
-        betRepository.save(bet);
-    }
-
 
     /*
         Save the bet when both users have accepted the pending bet
@@ -248,7 +236,7 @@ public class BetServiceImplementation implements BetService {
         }
         receiverBets.add(newBet);
 
-        this.saveBet(newBet);
+        betRepository.save(newBet);
 
     }
 
@@ -262,6 +250,7 @@ public class BetServiceImplementation implements BetService {
     Method used when users vote on who won the bet.
     If they disagree on who won, either make them vote again
     or give them their money back.
+    Todo: let users know with some kind of notification that the other user has voted.
      */
     @Override
     public void voteBet(Bet voteBet, User currUser, String vote){
@@ -314,9 +303,13 @@ public class BetServiceImplementation implements BetService {
             if(voteBet.getVoteSender().equals("sender")){
                 System.out.println("sender won");
                 sender.addCredit(voteBet.getAmountSender() + voteBet.getAmountReceiver());
+                voteBet.setWinnerId(sender.getId());
+                voteBet.setLoserId(receiver.getId());
             } else {
                 System.out.println("recevier won");
                 receiver.addCredit(voteBet.getAmountSender() + voteBet.getAmountReceiver());
+                voteBet.setLoserId(sender.getId());
+                voteBet.setWinnerId(receiver.getId());
             }
         }
         betRepository.save(voteBet);
@@ -325,6 +318,7 @@ public class BetServiceImplementation implements BetService {
     /*
     Class that uses what the user sent with post to calculate what the opponent should send to match.
     We both calculate here and on the frontend because I think it may be securer.
+    Maybe some errors with this calculation. We have to test and find out.
     */
     private ArrayList<Double> calcOpponentOddsAndAmount(double odds, double amount){
         ArrayList<Double> opponentOddsAndAmount = new ArrayList<>();
@@ -332,9 +326,6 @@ public class BetServiceImplementation implements BetService {
         double likur = Math.round((1.0 / odds) * 100.0 * 100.0) / 100.0;
         double oppOdds = Math.round((1.0 / (100.0 - likur)) * 100.0 * 100.0) / 100.0;
 
-//        if(Math.ceil(oppOdds) - oppOdds <= 0.01){
-//            oppOdds = Math.ceil(oppOdds);
-//        }
 
         double oppAmount = (((amount * odds) / oppOdds) * 100) /100;
 

@@ -96,3 +96,11 @@ legend{
     width: 100%;
     background-color: white;
 }
+
+.no-account{
+    text-align: center;
+}
+
+.no-account a{
+    color: aqua;
+}

@@ -1,3 +1,6 @@
+<%--Page that displays when the user get's a 403--%>
+<%--Does not work atm.--%>
+
 <!DOCTYPE html>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>

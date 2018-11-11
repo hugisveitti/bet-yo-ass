@@ -15,13 +15,6 @@ public interface BetService {
     /**
      * Save a {@link PendingBet}
      * @param pendingBet {@link PendingBet} to be saved
-     */
-    //eyda thessum kannski
-    void savePendingBet(PendingBet pendingBet);
-
-    /**
-     * Save a {@link PendingBet}
-     * @param pendingBet {@link PendingBet} to be saved
      * @param sender {@link User} who initially sent the bet
      * @param receiver {@link User} who initially received the bet
      */
@@ -58,8 +51,6 @@ public interface BetService {
      */
     void deleteBet(Bet bet);
 
-    //delete
-    void saveBet(Bet bet);
 
     /**
      * Save a {@link Bet}

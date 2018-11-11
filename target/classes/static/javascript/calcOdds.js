@@ -9,8 +9,11 @@ var creditsErrors = document.getElementsByClassName("credits-error");
 var submitBtns = document.getElementsByClassName("submit");
 
 console.log(submitBtns);
-yourOdds.addEventListener("keyup", calcOdds);
-yourAmount.addEventListener("keyup", calcOdds);
+if(yourAmount && yourOdds){
+    yourOdds.addEventListener("keyup", calcOdds);
+    yourAmount.addEventListener("keyup", calcOdds);
+}
+
 
 var yourPendingAmount = document.getElementsByClassName("your-pending-amount");
 console.log(yourPendingAmount);

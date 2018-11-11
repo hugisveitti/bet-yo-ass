@@ -1,3 +1,8 @@
+<%--The page users get when going to "/userpage" --%>
+<%--On this page is information about all the bets user has made.--%>
+<%--The bets are split into three categories, pending, resolved and active.--%>
+<%--Todo: search (by title and by string)--%>
+
 <!DOCTYPE html>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -80,10 +85,10 @@
 
                     <sf:form method="POST" action="/counter-pending-bet" class="counter-form ${pendingBet.id}" id="counter-form${pendingBet.id}">
                         <legend>Your Amount</legend>
-                        <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount">
+                        <input id="your-amount" type="number" step="0.001" placeholder="Your amount" name="counterAmount" required>
 
                         <legend>Your Odds</legend>
-                        <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds">
+                        <input id="your-odds" type="number" step="0.001" placeholder="Your Odds" name="counterOdds" required>
                         <span>Opponent-odds</span>
                         <span id="opponent-odds"></span>
                         <br>

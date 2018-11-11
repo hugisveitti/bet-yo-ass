@@ -32,6 +32,7 @@
         </button>
         <span class="message">${errorMsg}</span>
     </sf:form>
+    <p class="no-account">Already have an account? <a href="/login">Login here!</a></p>
 </div>
 
 </body>

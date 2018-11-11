@@ -28,10 +28,11 @@
             </span>
         </button>
     </sf:form>
+    <p class="no-account">Don't have an account? <a href="/signup">Signup here!</a></p>
     <div class="message">
         <p>${errorMsg}</p>
         <c:if test="${not empty param.error}">
-            <p>Wrong username or password, (kannski vitlaust ad segja thetta thvi eina sem eg veit er ad thad var error)</p>
+            <p>Wrong username or password.</p>
         </c:if>
     </div>
 
