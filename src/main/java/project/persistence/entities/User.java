@@ -40,6 +40,10 @@ public class User implements UserDetails {
     private Boolean enabled;
 
 
+    /*
+    When a user creates a pending bet or a pending bet is sent to him, the user's id and the bet's id are stored in a
+    two column table created here.
+    */
     @ManyToMany
     @JoinTable(
             name = "user_pending_bet",
@@ -86,6 +90,7 @@ public class User implements UserDetails {
         this.enabled = true;
     }
 
+    //UserDetails makes you implement this method, used for authentication.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
         Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -127,6 +132,7 @@ public class User implements UserDetails {
     }
 
 
+    //pending bet's that the user has sent and is waiting for the other user to accept, counter or decline.
     public Set<PendingBet> getWaitingPendingBets(){
         Set<PendingBet> waitingPendingBets = new HashSet<>();
         for(PendingBet p : getPendingBets()){

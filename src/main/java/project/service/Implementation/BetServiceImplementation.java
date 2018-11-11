@@ -147,7 +147,6 @@ public class BetServiceImplementation implements BetService {
             counterPendingBet.setAcceptReceiver(true);
 
             if(receiver.getCredit() < newReceiverAmount){
-                System.out.println("receiver trying to send more than he can afford, throw some error");
                 throw new Exception("User does not have enough funds to counter this much");
             } else {
                 receiver.removeCredit(newReceiverAmount);
@@ -304,7 +303,7 @@ public class BetServiceImplementation implements BetService {
             voteBet.setReceiverResolved(false);
             voteBet.setSenderResolved(false);
 
-            //todo throw error
+            //todo throw error, let the users know that they disagreed
             System.out.println("receiver and sender disagree on who won!!!!! make an exception throw");
         } else if(voteBet.isHasBeenResolved()) {
 
@@ -321,7 +320,6 @@ public class BetServiceImplementation implements BetService {
             }
         }
         betRepository.save(voteBet);
-
     }
 
     /*
@@ -348,7 +346,7 @@ public class BetServiceImplementation implements BetService {
     }
 
     /*
-    findWhoIsSender can be use full because sometimes it does not matter who is sending
+    findWhoIsSender can be usefull because sometimes it does not matter who is sending
     or receiving. Not all the methods in this class use this.
      */
     private ArrayList<User> findWhoIsSender(User currUser, PendingBet pendingBet){
@@ -370,6 +368,4 @@ public class BetServiceImplementation implements BetService {
         }
         return senderReceiver;
     }
-
-
 }

@@ -68,7 +68,7 @@ public class UserController {
     @RequestMapping(value="/userpage", method = RequestMethod.GET)
     public String userPageViewGet(Authentication authentication, Model model){
         User user = customUserDetailsService.findByUsername(authentication.getName());
-        model.addAttribute("pendingBets", user.getPendingBets());
+        //model.addAttribute("pendingBets", user.getPendingBets());
 
         model.addAttribute("waitingPendingBets", user.getWaitingPendingBets());
         model.addAttribute("notWaitingPendingBets", user.getNotWaitingPendingBets());
