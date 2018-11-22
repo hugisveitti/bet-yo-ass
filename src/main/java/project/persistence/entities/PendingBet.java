@@ -28,8 +28,10 @@ public class PendingBet {
     private double oddsReceiver;
     private double amountSender;
     private double amountReceiver;
+
+//    @Column(name = "start_time", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private String dateAndTimeCreated;
-    //must use datetime-local in html form
+    //must use datetime-local in html form or use time and date html
     private String dateAndTimeResolve;
 
     private boolean acceptSender;

@@ -52,6 +52,7 @@ public class BetServiceImplementation implements BetService {
         // remove money from the sender
         sender.removeCredit(pendingBet.getAmountSender());
 
+
         //TODO laga
         pendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
 

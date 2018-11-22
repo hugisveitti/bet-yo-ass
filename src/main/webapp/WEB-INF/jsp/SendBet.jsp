@@ -31,8 +31,15 @@
         <%--date and time virka ekki a ollum browserum t.d. firefox!!!!!!!--%>
         <lengend>Date and time for bet to be resolved</lengend>
 
-        <%--<legend>The format dd-MON-yyyyThh:mm</legend>--%>
-        <input type="datetime-local" name="dateAndTimeResolve" required>
+        <%--This error only displays when client browser does not support date-time-local--%>
+        <p id="date-time-not-supported" hidden>
+            Your browser does not support datetime-local input, you have to manually write the date and time for bet to be resolved in the format dd-Mon-yyyyThh:mm
+            <br>
+            For example 12-Jan-2019T23:12.
+            <br>
+            The hour format is 24 and you must put a 'T' between date and time.
+        </p>
+        <input type="datetime-local" name="dateAndTimeResolve" id="datetime-local" required>
         <%--You can only send to users that exist.--%>
         <legend>Opponent</legend>
         <div id="users-dropdown">
@@ -70,7 +77,7 @@
 
         <span class="credits-error"></span>
         <br>
-        <button class="button submit" type="submit">
+        <button class="button submit" id="submit-btn" type="submit">
             <span>
                 Send bet
             </span>
@@ -83,4 +90,5 @@
 </body>
 <script src="<c:url value="/javascript/autofillbox.js" />"></script>
 <script src="<c:url value="/javascript/calcOdds.js" />"></script>
+<script src="<c:url value="/javascript/dateTimeChecker.js" />"></script>
 </html>
