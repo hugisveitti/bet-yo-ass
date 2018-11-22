@@ -9,3 +9,10 @@ you have to have postgres downloaded on your machine and a db called HBV with us
 the tables are made automatically <br />
 *todo: make some sql that will automatically create some users and some bets and stuff* <br />
 *todo:sjá hvað stendur í uppsetningu á skeleton kóðanum og herma* <br />
+<br />
+### More info
+There are two users loaded in the beginning, they are <br />
+user: **hugi** pw: **hugi** <br />
+user: **villi** pw: **villi** <br />
+<br />
+But you can also create your own users.
