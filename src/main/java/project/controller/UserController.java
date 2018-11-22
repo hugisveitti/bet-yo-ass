@@ -11,7 +11,7 @@ import project.persistence.entities.Bet;
 import project.service.CustomUserDetailsService;
 
 import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 
 /**
@@ -82,9 +82,13 @@ public class UserController {
 //        model.addAttribute("activeBets", user.getActiveBets());
         //user.getActiveBets returns set of sets that, first set are active bets that should not be resolved
         //the second is active bets that should be resolved (because of the time) (dateTimeResolved)
-        HashSet<Set<Bet>> allActiveBets = user.getActiveBets();
-        model.addAttribute("activeBetsThatShouldBeResolved", allActiveBets.toArray()[1]);
-        model.addAttribute("activeBetsThatShouldNotBeResolved", allActiveBets.toArray()[0]);
+        ArrayList<ArrayList<Bet>> allActiveBets = user.getActiveBets();
+        System.out.println(allActiveBets);
+        
+
+        model.addAttribute("activeBetsThatShouldBeResolved", allActiveBets.get(1));
+
+        model.addAttribute("activeBetsThatShouldNotBeResolved", allActiveBets.get(0));
         model.addAttribute("user", user);
 
         return "UserPage";

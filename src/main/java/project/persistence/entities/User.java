@@ -138,9 +138,9 @@ public class User implements UserDetails {
     //does the same with time now.
     //There is most def a better solution.
     //Maybe store the dateTimeResolved as Date not string, i could not get it to work....
-    public HashSet<Set<Bet>> getActiveBets(){
-        Set<Bet> betsThatShouldBeResolved = new HashSet<>();
-        Set<Bet> betsThatShouldNotBeResolved = new HashSet<>();
+    public ArrayList<ArrayList<Bet>> getActiveBets(){
+        ArrayList<Bet> betsThatShouldBeResolved = new ArrayList<>();
+        ArrayList<Bet> betsThatShouldNotBeResolved = new ArrayList<>();
         for(Bet b : getBets()){
 
             String now = ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -166,7 +166,7 @@ public class User implements UserDetails {
             }
         }
 
-        HashSet<Set<Bet>> bothBets = new HashSet<>();
+        ArrayList<ArrayList<Bet>> bothBets = new ArrayList<>();
         bothBets.add(betsThatShouldBeResolved);
         bothBets.add(betsThatShouldNotBeResolved);
         return bothBets;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import project.persistence.entities.User;
 import org.springframework.ui.Model;
 import project.service.CustomUserDetailsService;
@@ -49,5 +50,11 @@ public class HomeController {
     public String errorViewGet(){
         System.out.println("ERROR");
         return "403";
+    }
+
+    @RequestMapping(value="/404", method = RequestMethod.GET)
+    public String error404ViewGet(){
+        System.out.println("ERROR");
+        return "404";
     }
 }
