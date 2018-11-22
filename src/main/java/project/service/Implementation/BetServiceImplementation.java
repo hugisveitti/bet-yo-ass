@@ -295,6 +295,9 @@ public class BetServiceImplementation implements BetService {
             voteBet.setHasBeenResolved(false);
             voteBet.setReceiverResolved(false);
             voteBet.setSenderResolved(false);
+            voteBet.setVoteSender(null);
+            voteBet.setVoteReceiver(null);
+
 
             //todo throw error, let the users know that they disagreed
             System.out.println("receiver and sender disagree on who won!!!!! make an exception throw");

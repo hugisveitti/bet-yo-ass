@@ -273,6 +273,14 @@ public class Bet {
         }
     }
 
+    public String getOpponentVote(String username) {
+        if(username.equals(getSender())){
+            return getVoteReceiver();
+        } else {
+            return getVoteSender();
+        }
+    }
+
     public String toString(){
         return "Bet name " + this.title + " between " + this.sender + " and " + this.receiver;
     }
