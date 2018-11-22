@@ -1,6 +1,10 @@
 package project.persistence.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalTime;
+import java.util.Date;
 
 /**
  * The class for the PendingBet Note itself.
@@ -31,8 +35,14 @@ public class PendingBet {
 
 //    @Column(name = "start_time", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private String dateAndTimeCreated;
+
+
+
     //must use datetime-local in html form or use time and date html
     private String dateAndTimeResolve;
+//    private String dateResolve;
+//
+//    private String timeResolve;
 
     private boolean acceptSender;
     private boolean acceptReceiver;
@@ -201,6 +211,21 @@ public class PendingBet {
     }
 
 
+//    public String getDateResolve() {
+//        return dateResolve;
+//    }
+//
+//    public void setDateResolve(String dateResolve) {
+//        this.dateResolve = dateResolve;
+//    }
+//
+//    public String getTimeResolve() {
+//        return timeResolve;
+//    }
+//
+//    public void setTimeResolve(String timeResolve) {
+//        this.timeResolve = timeResolve;
+//    }
 
 
     @Override
@@ -218,7 +243,6 @@ public class PendingBet {
                 ", amountSender=" + amountSender +
                 ", amountReceiver=" + amountReceiver +
                 ", dateAndTimeCreated='" + dateAndTimeCreated + '\'' +
-                ", dateAndTimeResolve='" + dateAndTimeResolve + '\'' +
                 ", acceptSender=" + acceptSender +
                 ", acceptReceiver=" + acceptReceiver +
                 '}';

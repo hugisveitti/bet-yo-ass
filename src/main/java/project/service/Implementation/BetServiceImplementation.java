@@ -45,6 +45,8 @@ public class BetServiceImplementation implements BetService {
     @Override
     public void savePendingBet(PendingBet pendingBet, User sender, User receiver) throws Exception{
 
+
+        System.out.println(pendingBet);
         if(sender.getCredit() < pendingBet.getAmountSender()){
             throw new Exception("Sender does not have enough credits");
         }
@@ -55,6 +57,7 @@ public class BetServiceImplementation implements BetService {
 
         //TODO laga
         pendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
+
 
         //TODO LAGA floating point number
         double odds = pendingBet.getOddsSender();

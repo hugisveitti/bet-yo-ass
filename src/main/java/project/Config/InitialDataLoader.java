@@ -6,6 +6,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import project.persistence.repositories.RoleRepository;
 import project.persistence.entities.Role;
+import project.persistence.entities.User;
+import project.service.CustomUserDetailsService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     private boolean alreadySetup = false;
     private RoleRepository roleRepository;
-
+    private CustomUserDetailsService userService;
 
     @Autowired
-    public InitialDataLoader(RoleRepository roleRepository){
+    public InitialDataLoader(RoleRepository roleRepository, CustomUserDetailsService userService){
         this.roleRepository = roleRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -36,6 +39,22 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             return;
         createRoleIfNotFound("ROLE_ADMIN");
         createRoleIfNotFound("ROLE_USER");
+
+        User hugi = new User("hugi", "hugi");
+        User villi = new User("villi", "villi");
+
+        try{
+            userService.save(hugi);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            userService.save(villi);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
 
         alreadySetup = true;
     }

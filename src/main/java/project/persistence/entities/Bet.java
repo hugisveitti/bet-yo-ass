@@ -1,6 +1,9 @@
 package project.persistence.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * The class for the Bet itself.
@@ -31,6 +34,7 @@ public class Bet {
     private double amountReceiver;
 
     private String dateAndTimeCreated;
+
     private String dateAndTimeResolve;
 
     private boolean senderResolved;

@@ -40,6 +40,13 @@
             The hour format is 24 and you must put a 'T' between date and time.
         </p>
         <input type="datetime-local" name="dateAndTimeResolve" id="datetime-local" required>
+
+        <%--<lengend>Date for the bet to be resolved by</lengend>--%>
+        <%--<input type="date" name="dateResolve" required>--%>
+
+        <%--<legend>Time for the bet to be resolved</legend>--%>
+        <%--<input type="time" name="timeResolve" required>--%>
+
         <%--You can only send to users that exist.--%>
         <legend>Opponent</legend>
         <div id="users-dropdown">
@@ -90,5 +97,5 @@
 </body>
 <script src="<c:url value="/javascript/autofillbox.js" />"></script>
 <script src="<c:url value="/javascript/calcOdds.js" />"></script>
-<script src="<c:url value="/javascript/dateTimeChecker.js" />"></script>
+<%--<script src="<c:url value="/javascript/dateTimeChecker.js" />"></script>--%>
 </html>
