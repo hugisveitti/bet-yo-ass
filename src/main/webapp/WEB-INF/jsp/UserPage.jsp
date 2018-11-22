@@ -149,8 +149,67 @@
     </div>
 
     <div class="activeBetsWrapper wrapper">
-        <h3>Active bets</h3>
-        <c:forEach items="${activeBets}" var="bet">
+        <h3>Active bets that should be resolved (because of time)</h3>
+        <c:forEach items="${activeBetsThatShouldBeResolved}" var="bet">
+            <div class="bet active-bet" id="pending-bet${bet.id}">
+                <button class="expand-btn">+</button>
+                <div class="bet-main-info" id="bet-more-info${bet.id}">
+                    <h4>${bet.title}</h4>
+                    <p>vs. ${bet.getOpponent(user.getUsername())}</p>
+                    <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
+                </div>
+                <div class="bet-more-info" id="bet-more-info${bet.id}">
+                    <p><i>Description:</i> ${bet.description}</p>
+
+                    <p><i>Opponent amount</i> ${bet.getOpponentAmount(user.getUsername())}</p>
+                    <p><i>Opponent odds</i> ${bet.getOppenentOdds(user.getUsername())}</p>
+                    <p><i>Your amount</i> ${bet.getYourAmount(user.getUsername())}</p>
+                    <p><i>Your odds</i> ${bet.getYourOdds(user.getUsername())}</p>
+
+                    <p><i>Date and time created</i> ${bet.dateAndTimeCreated}</p>
+                    <p><i>Date and time for bet to be resolved</i> ${bet.dateAndTimeResolve}</p>
+                    <p>You can vote on who won the be, even though the resolved date has not been reached.</p>
+                    <c:choose>
+                        <c:when test="${(bet.sender == user.getUsername() and bet.senderResolved) or (bet.receiver == user.getUsername() and bet.receiverResolved) }">
+                            You have voted
+                            <c:choose>
+                                <c:when test="${(bet.sender == user.getUsername() and bet.voteSender == 'sender') or (bet.receiver == user.getUsername() and bet.voteReceiver == 'receiver')}">
+                                    for yourself to win.
+                                </c:when>
+                                <c:otherwise>
+                                    for your opponent to win.
+                                </c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="vote-expand-btn button submit">
+                                <span>
+                                    Vote on this bet!
+                                </span>
+                            </button>
+                            <sf:form action="/vote-bet" method="post" class="vote-form">
+                                <legend>Who won?</legend>
+                                <input type="hidden" name="betId" value="${bet.id}">
+                                <input type="radio" name="whoWon" value="me"> <span class="vote-option">I Won</span> <br>
+                                <input type="radio" name="whoWon" value="opponent"><span class="vote-option">My opponent won</span> <br>
+                                <button class="button submit" type="submit">
+                                    <span>
+                                        Vote
+                                    </span>
+                                </button>
+                            </sf:form>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </c:forEach>
+
+        <br>
+    </div>
+
+    <div class="activeBetsWrapper wrapper">
+        <h3>Active bets that should not be resolved.</h3>
+        <c:forEach items="${activeBetsThatShouldNotBeResolved}" var="bet">
             <div class="bet active-bet" id="pending-bet${bet.id}">
                 <button class="expand-btn">+</button>
                 <div class="bet-main-info" id="bet-more-info${bet.id}">

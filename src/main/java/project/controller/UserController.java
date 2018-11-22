@@ -7,7 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.persistence.entities.User;
+import project.persistence.entities.Bet;
 import project.service.CustomUserDetailsService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -74,8 +78,15 @@ public class UserController {
         model.addAttribute("notWaitingPendingBets", user.getNotWaitingPendingBets());
 
         model.addAttribute("resolvedBets", user.getResolvedBets());
-        model.addAttribute("activeBets", user.getActiveBets());
+
+//        model.addAttribute("activeBets", user.getActiveBets());
+        //user.getActiveBets returns set of sets that, first set are active bets that should not be resolved
+        //the second is active bets that should be resolved (because of the time) (dateTimeResolved)
+        HashSet<Set<Bet>> allActiveBets = user.getActiveBets();
+        model.addAttribute("activeBetsThatShouldBeResolved", allActiveBets.toArray()[1]);
+        model.addAttribute("activeBetsThatShouldNotBeResolved", allActiveBets.toArray()[0]);
         model.addAttribute("user", user);
+
         return "UserPage";
     }
 }

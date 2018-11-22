@@ -6,7 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Maybe we should implement User form spring core instead?
@@ -116,14 +120,56 @@ public class User implements UserDetails {
     }
 
 
-    public Set<Bet> getActiveBets(){
-        Set<Bet> activeBets = new HashSet<>();
+//    public Set<Bet> getActiveBets(){
+//        Set<Bet> activeBets = new HashSet<>();
+//        for(Bet b : getBets()){
+//            if(!b.isHasBeenResolved()){
+//                activeBets.add(b);
+//            }
+//        }
+//        return activeBets;
+//    }
+
+    //method that finds active bets and puts them in two sets
+    //one set is bets that should be resolved according to their date
+    //other should not be resolved.
+    //Takes the DateTimeResolved attribute that is a string and creates a
+    //Gregorian time calender object,
+    //does the same with time now.
+    //There is most def a better solution.
+    //Maybe store the dateTimeResolved as Date not string, i could not get it to work....
+    public HashSet<Set<Bet>> getActiveBets(){
+        Set<Bet> betsThatShouldBeResolved = new HashSet<>();
+        Set<Bet> betsThatShouldNotBeResolved = new HashSet<>();
         for(Bet b : getBets()){
-            if(!b.isHasBeenResolved()){
-                activeBets.add(b);
+
+            String now = ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+            //faranleg lausn, virkar  en, todo finna betri lausn
+            String[] resolveDateTime = b.getDateAndTimeResolve().split("T");
+            String[] resolveDate = resolveDateTime[0].split("-");
+            String[] resolveTime = resolveDateTime[1].split(":");
+            String[] nowDateTime = now.split("T");
+            String[] nowDate = nowDateTime[0].split("-");
+            String[] nowTime = nowDateTime[1].split(":");
+
+            GregorianCalendar nowGerg = new GregorianCalendar(Integer.parseInt(nowDate[0]),Integer.parseInt(nowDate[1]),Integer.parseInt(nowDate[2]),Integer.parseInt(nowTime[0]),Integer.parseInt(nowTime[1]));
+            GregorianCalendar resolveGreg = new GregorianCalendar(Integer.parseInt(resolveDate[0]),Integer.parseInt(resolveDate[1]),Integer.parseInt(resolveDate[2]),Integer.parseInt(resolveTime[0]),Integer.parseInt(resolveTime[1]));
+
+            System.out.println("nowGerg.after(resolveGreg)"  +nowGerg.after(resolveGreg));
+            if(nowGerg.after(resolveGreg) && !b.isHasBeenResolved()){
+                System.out.println("bet should be resolved");
+                betsThatShouldBeResolved.add(b);
+            } else if(!nowGerg.after(resolveGreg) && !b.isHasBeenResolved()){
+                System.out.println("bet should not be");
+                betsThatShouldNotBeResolved.add(b);
             }
         }
-        return activeBets;
+
+        HashSet<Set<Bet>> bothBets = new HashSet<>();
+        bothBets.add(betsThatShouldBeResolved);
+        bothBets.add(betsThatShouldNotBeResolved);
+        return bothBets;
     }
 
 
