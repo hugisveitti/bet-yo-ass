@@ -157,6 +157,14 @@
                     <h4>${bet.title}</h4>
                     <p>vs. ${bet.getOpponent(user.getUsername())}</p>
                     <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
+
+                    <c:if test="${(bet.sender == user.getUsername() and bet.senderResolved) or (bet.receiver == user.getUsername() and bet.receiverResolved) }">
+                        You have voted on this bet.
+                    </c:if>
+
+                    <c:if test="${bet.message != null}">
+                        <p><strong>${bet.message}</strong></p>
+                    </c:if>
                 </div>
                 <div class="bet-more-info" id="bet-more-info${bet.id}">
                     <p><i>Description:</i> ${bet.description}</p>
@@ -169,6 +177,26 @@
                     <p><i>Date and time created</i> ${bet.dateAndTimeCreated}</p>
                     <p><i>Date and time for bet to be resolved</i> ${bet.dateAndTimeResolve}</p>
                     <p>You can vote on who won the be, even though the resolved date has not been reached.</p>
+
+
+                    <c:choose>
+                        <c:when test="${ bet.getOpponentVote(user.getUsername()) == null}">
+                            <p>Your opponent has not yet voted on this bet</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+
+                                <c:when test="${bet.didOpponentVoteForHimself(user.getUsername())}">
+                                    <p>Your opponent has voted himself to win</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p>Your opponent has voted you to win</p>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+
+
                     <c:choose>
                         <c:when test="${(bet.sender == user.getUsername() and bet.senderResolved) or (bet.receiver == user.getUsername() and bet.receiverResolved) }">
                             You have voted
@@ -216,6 +244,14 @@
                     <h4>${bet.title}</h4>
                     <p>vs. ${bet.getOpponent(user.getUsername())}</p>
                     <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
+
+                    <c:if test="${(bet.sender == user.getUsername() and bet.senderResolved) or (bet.receiver == user.getUsername() and bet.receiverResolved) }">
+                    You have voted on this bet.
+                    </c:if>
+
+                    <c:if test="${bet.message != null}">
+                        <p><strong>${bet.message}</strong></p>
+                    </c:if>
                 </div>
                 <div class="bet-more-info" id="bet-more-info${bet.id}">
                     <p><i>Description:</i> ${bet.description}</p>
@@ -229,8 +265,6 @@
                     <p><i>Date and time for bet to be resolved</i> ${bet.dateAndTimeResolve}</p>
                     <p>You can vote on who won the bet, even though the resolved date has not been reached.</p>
 
-
-                    <c:if test="${(bet.sender == user.getUsername())}">
                     <c:choose>
                         <c:when test="${ bet.getOpponentVote(user.getUsername()) == null}">
                             <p>Your opponent has not yet voted on this bet</p>
@@ -238,36 +272,15 @@
                         <c:otherwise>
                             <c:choose>
 
-                                <c:when test="${(bet.getOpponentVote(user.getUsername()) == 'sender')}">
-                                    <p>Your opponent has voted you to win</p>
+                                <c:when test="${bet.didOpponentVoteForHimself(user.getUsername())}">
+                                    <p>Your opponent has voted himself to win</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <p>Your opponent has voted himself to win</p>
+                                    <p>Your opponent has voted you to win</p>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
                     </c:choose>
-                    </c:if>
-
-                    <c:if test="${(bet.receiver == user.getUsername())}">
-                        <c:choose>
-                            <c:when test="${ bet.getOpponentVote(user.getUsername()) == null}">
-                                <p>Your opponent has not yet voted on this bet</p>
-                            </c:when>
-                            <c:otherwise>
-                                <c:choose>
-                                    <c:when test="${(bet.getOpponentVote(user.getUsername()) == 'receiver')}">
-                                        <p>Your opponent has voted you to win</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p>Your opponent has voted himself to win</p>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
-
-
 
 
                     <c:choose>

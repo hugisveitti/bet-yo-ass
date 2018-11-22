@@ -43,6 +43,10 @@ public class Bet {
 
 
 
+    //to hold a message if users vote the opposite, maybe there is a better way to do this.
+    private String message;
+
+
     //hugsa að það sé best að voteið sé stengirnir sender og receiver
     private String voteSender;
     private String voteReceiver;
@@ -232,6 +236,13 @@ public class Bet {
         this.voteReceiver = voteReceiver;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public double getOpponentAmount(String username){
         if(username.equals(getSender())){
@@ -278,6 +289,22 @@ public class Bet {
             return getVoteReceiver();
         } else {
             return getVoteSender();
+        }
+    }
+
+    public boolean didOpponentVoteForHimself(String username){
+        if(username.equals(getSender())){
+            if(getVoteReceiver().equals("receiver")){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if(getVoteSender().equals("sender")){
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

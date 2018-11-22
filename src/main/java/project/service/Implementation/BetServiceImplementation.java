@@ -10,6 +10,7 @@ import project.persistence.repositories.PendingBetRepository;
 import project.service.BetService;
 import project.service.CustomUserDetailsService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class BetServiceImplementation implements BetService {
 
 
         //TODO laga
-        pendingBet.setDateAndTimeCreated(ZonedDateTime.now().toString());
+        pendingBet.setDateAndTimeCreated(ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
 
         //TODO LAGA floating point number
@@ -301,6 +302,7 @@ public class BetServiceImplementation implements BetService {
 
             //todo throw error, let the users know that they disagreed
             System.out.println("receiver and sender disagree on who won!!!!! make an exception throw");
+            voteBet.setMessage("You and the other user voted the opposite, you have to vote again!");
         } else if(voteBet.isHasBeenResolved()) {
 
             System.out.println("sender voted " + voteBet.getVoteSender());

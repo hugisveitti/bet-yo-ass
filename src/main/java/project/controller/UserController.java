@@ -84,11 +84,11 @@ public class UserController {
         //the second is active bets that should be resolved (because of the time) (dateTimeResolved)
         ArrayList<ArrayList<Bet>> allActiveBets = user.getActiveBets();
         System.out.println(allActiveBets);
-        
 
-        model.addAttribute("activeBetsThatShouldBeResolved", allActiveBets.get(1));
 
-        model.addAttribute("activeBetsThatShouldNotBeResolved", allActiveBets.get(0));
+        model.addAttribute("activeBetsThatShouldBeResolved", allActiveBets.get(0));
+
+        model.addAttribute("activeBetsThatShouldNotBeResolved", allActiveBets.get(1));
         model.addAttribute("user", user);
 
         return "UserPage";

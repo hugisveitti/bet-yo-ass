@@ -43,6 +43,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         User hugi = new User("hugi", "hugi");
         User villi = new User("villi", "villi");
 
+
+
         try{
             userService.save(hugi);
         } catch(Exception e){
