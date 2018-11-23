@@ -45,22 +45,23 @@
                     </div>
                 </div>
             </div>
-            <div class="card adviceCard">
-                <div class="cardContent">
-                    <div class="text-area">
-                        <p>Need some help with gambling addiction? Get the help you need.</p>
-                    </div>
-                    <div class="buttonArea">
-                        <a href="https://www.helpguide.org/articles/addictions/gambling-addiction-and-problem-gambling.htm">
-                            <button class="button adviceButton" style="vertical-align:middle">
-                                <span>Get help </span>
-                            </button>
-                        </a>
-                    </div>
 
-                </div>
-            </div>
         </sec:authorize>
+        <div class="card adviceCard">
+            <div class="cardContent">
+                <div class="text-area">
+                    <p>Need some help with gambling addiction? Get the help you need.</p>
+                </div>
+                <div class="buttonArea">
+                    <a href="https://www.helpguide.org/articles/addictions/gambling-addiction-and-problem-gambling.htm">
+                        <button class="button adviceButton" style="vertical-align:middle">
+                            <span>Get help </span>
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     </body>

@@ -231,8 +231,6 @@
                 </div>
             </div>
         </c:forEach>
-
-        <br>
     </div>
 
     <div class="activeBetsWrapper wrapper">
@@ -317,8 +315,6 @@
                 </div>
             </div>
         </c:forEach>
-
-        <br>
     </div>
 
     <div class="resolvedBetsWrapper wrapper">
@@ -345,9 +341,6 @@
             </div>
         </c:forEach>
     </div>
-
-
-
 </div>
 
 
