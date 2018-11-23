@@ -1,19 +1,23 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.User;
 import org.springframework.ui.Model;
 import project.service.CustomUserDetailsService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Controller for the "/" and some get requests that are less related to users and changing and saving bets.
  */
+
 
 @Controller
 public class HomeController {
@@ -45,16 +49,24 @@ public class HomeController {
 
 
 
-    //TODO implement 403 and 404 pages, this does not work
-    @RequestMapping(value="/403", method = RequestMethod.GET)
-    public String errorViewGet(){
-        System.out.println("ERROR");
-        return "403";
-    }
+    //virka ekki
+//    @ExceptionHandler(RuntimeException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public String handleResourceNotFoundException() {
+//        return "404";
+//    }
+//
+//    @ExceptionHandler(RuntimeException.class)
+//    @ResponseStatus(HttpStatus.FORBIDDEN)
+//    public String handleResourceForbiddenException() {
+//        return "403";
+//    }
 
-    @RequestMapping(value="/404", method = RequestMethod.GET)
-    public String error404ViewGet(){
-        System.out.println("ERROR");
+
+    // heimskulegt en virkar semi
+    @GetMapping("/*")
+    public String handle() {
         return "404";
     }
+
 }

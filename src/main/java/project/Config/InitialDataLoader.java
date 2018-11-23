@@ -4,6 +4,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import project.persistence.repositories.RoleRepository;
 import project.persistence.entities.Role;
 import project.persistence.entities.User;
@@ -12,6 +14,9 @@ import project.service.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 
 /**
  * Class is only for setting up the Roles in the RoleRepository
@@ -35,6 +40,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
+
         if (alreadySetup)
             return;
         createRoleIfNotFound("ROLE_ADMIN");
@@ -57,7 +63,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             System.out.println(e);
         }
 
-
         alreadySetup = true;
     }
 
@@ -70,8 +75,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
             roleRepository.save(role);
         }
-
     }
+
 
 
 }
