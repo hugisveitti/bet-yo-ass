@@ -1,5 +1,5 @@
 html{
-    /*background-image: url("../images/waterfall.gif");*/
+    background-image: url("../images/background.gif");
     background-color: #cccccc;
     height: 100%;
     /*background-repeat: repeat-y;*/
@@ -16,9 +16,16 @@ h3{
 .counter-btn{
     display: block;
     margin: auto;
+    background-color: rgba(21, 21, 63, 0.8);
 }
 
+.accept{
+    background-color: rgba(25, 55, 25, 0.8);
+}
 
+.decline{
+    background-color: rgba(75, 23, 23, 0.8);
+}
 
 .bet-more-info{
     /*display: none;*/

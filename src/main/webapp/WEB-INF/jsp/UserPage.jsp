@@ -61,7 +61,7 @@
                         <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
                         <span hidden class="your-pending-amount">${pendingBet.getYourAmount(user.getUsername())}</span>
                         <span class="credits-error"></span>
-                        <button class="button submit" type="submit" value="Accept bet">
+                        <button class="button submit accept" type="submit" value="Accept bet">
                             <span>
                                 Accept bet
                             </span>
@@ -70,7 +70,7 @@
 
                     <sf:form method="POST" action="/decline-pending-bet" class="userpage-form">
                         <input type="hidden" name="pendingBetId" value="${pendingBet.id}">
-                        <button class="button submit" type="submit" value="Decline">
+                        <button class="button submit decline" type="submit" value="Decline">
                             <span>
                                 Decline
                             </span>

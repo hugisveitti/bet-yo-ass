@@ -13,6 +13,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/sendBet.css"/>"/>
     <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
 </head>
 
