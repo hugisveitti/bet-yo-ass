@@ -7,7 +7,7 @@
 
     <head>
         <meta charset="utf-8"/>
-        <title>BET YO ASS</title>
+
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">

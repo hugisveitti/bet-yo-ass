@@ -3,9 +3,7 @@ package project.persistence.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import project.persistence.entities.Bet;
-import project.persistence.entities.PendingBet;
 
-import java.util.List;
 
 /**
  * By extending the {@link JpaRepository} we have access to powerful methods.

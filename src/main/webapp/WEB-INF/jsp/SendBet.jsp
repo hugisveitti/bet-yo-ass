@@ -9,13 +9,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<body>
+
 <head>
+    <title>BET YO ASS</title>
+    <link rel="icon" type="image/png" href="<c:url value="/images/icon.png" /> " />
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/sendBet.css"/>"/>
     <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
 </head>
+<body>
+
 
 <%@ include file="blocks/header.jsp" %>
 
