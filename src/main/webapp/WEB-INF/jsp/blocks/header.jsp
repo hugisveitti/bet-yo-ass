@@ -3,7 +3,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 
-<link rel="icon" type="image/png" href="/images/icon.png">
+<link rel="icon" type="image/png" href="<c:url value="/images/icon.png" /> " />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>"/>
 <header class="header">

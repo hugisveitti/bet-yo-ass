@@ -2,6 +2,11 @@ package project.persistence.entities;
 
 import javax.persistence.*;
 
+/**
+ * Role is used in authentication
+ * User role is for the default user
+ */
+
 @Entity
 @Table(name="role")
 public class Role {
