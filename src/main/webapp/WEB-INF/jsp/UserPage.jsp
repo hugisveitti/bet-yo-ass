@@ -112,7 +112,6 @@
                 </div>
             </div>
         </c:forEach>
-        <br>
     </div>
 
     <div class="pendingBetsWrapper wrapper">
