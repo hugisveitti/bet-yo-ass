@@ -28,7 +28,7 @@
 <div class="box makeBetBox">
     <sf:form method="POST" modelAttribute="pendingBet" action="/sendbet" autocomplete="off" onkeypress="return event.keyCode != 13;">
         <input type="hidden" value="${username}" name="sender" required>
-        <legend>Name of bet</legend>
+        <legend>Name of bet, in the form of a statement</legend>
         <input type="text" placeholder="Bet name" name="title" required>
         <legend>Description</legend>
         <input type="text" placeholder="Description" name="description" required>
