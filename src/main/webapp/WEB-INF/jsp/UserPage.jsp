@@ -42,7 +42,17 @@
             <div class="bet" id="pending-bet${pendingBet.id}">
                 <button class="expand-btn">+</button>
                 <div class="bet-main-info" id="bet-more-info${pendingBet.id}">
-                    <h4>${pendingBet.title}</h4>
+                    <h4>
+                        <c:choose>
+                            <c:when test="${pendingBet.getSender().equals(user.getUsername())}">
+                                <i>You wager that</i>
+                            </c:when>
+                            <c:otherwise>
+                                <i>${pendingBet.getSender()} wagers that</i>
+                            </c:otherwise>
+                        </c:choose>
+                            ${pendingBet.title}
+                    </h4>
                     <p>vs. ${pendingBet.getOpponent(user.getUsername())}</p>
                     <p>${pendingBet.getYourAmount(user.getUsername())} @ ${pendingBet.getYourOdds(user.getUsername())}</p>
                 </div>
@@ -128,7 +138,17 @@
         <div class="bet" id="pending-bet${pendingBet.id}">
             <button class="expand-btn">+</button>
             <div class="bet-main-info" id="bet-more-info${pendingBet.id}">
-                <h4>${pendingBet.title}</h4>
+                <h4>
+                    <c:choose>
+                        <c:when test="${pendingBet.getSender().equals(user.getUsername())}">
+                            <i>You wager that</i>
+                        </c:when>
+                        <c:otherwise>
+                            <i>${pendingBet.getSender()} wagers that</i>
+                        </c:otherwise>
+                    </c:choose>
+                        ${pendingBet.title}
+                </h4>
                 <p>vs. ${pendingBet.getOpponent(user.getUsername())}</p>
                 <p>${pendingBet.getYourAmount(user.getUsername())} @ ${pendingBet.getYourOdds(user.getUsername())}</p>
             </div>
@@ -153,7 +173,17 @@
             <div class="bet active-bet" id="pending-bet${bet.id}">
                 <button class="expand-btn">+</button>
                 <div class="bet-main-info" id="bet-more-info${bet.id}">
-                    <h4>${bet.title}</h4>
+                    <h4>
+                        <c:choose>
+                            <c:when test="${bet.getSender().equals(user.getUsername())}">
+                                <i>You wager that</i>
+                            </c:when>
+                            <c:otherwise>
+                                <i>${bet.getSender()} wagers that</i>
+                            </c:otherwise>
+                        </c:choose>
+                            ${bet.title}
+                    </h4>
                     <p>vs. ${bet.getOpponent(user.getUsername())}</p>
                     <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
 
@@ -238,7 +268,17 @@
             <div class="bet active-bet" id="pending-bet${bet.id}">
                 <button class="expand-btn">+</button>
                 <div class="bet-main-info" id="bet-more-info${bet.id}">
-                    <h4>${bet.title}</h4>
+                    <h4>
+                        <c:choose>
+                            <c:when test="${bet.getSender().equals(user.getUsername())}">
+                                <i>You wager that</i>
+                            </c:when>
+                            <c:otherwise>
+                                <i>${bet.getSender()} wagers that</i>
+                            </c:otherwise>
+                        </c:choose>
+                            ${bet.title}
+                    </h4>
                     <p>vs. ${bet.getOpponent(user.getUsername())}</p>
                     <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
 
@@ -322,7 +362,17 @@
             <div class="bet resolved-bet" id="pending-bet${bet.id}">
                 <button class="expand-btn">+</button>
                 <div class="bet-main-info" id="bet-more-info${bet.id}">
-                    <h4>${bet.title}</h4>
+                    <h4>
+                        <c:choose>
+                            <c:when test="${bet.getSender().equals(user.getUsername())}">
+                                <i>You wager that</i>
+                            </c:when>
+                            <c:otherwise>
+                                <i>${bet.getSender()} wagers that</i>
+                            </c:otherwise>
+                        </c:choose>
+                            ${bet.title}
+                    </h4>
                     <p>vs. ${bet.getOpponent(user.getUsername())}</p>
                     <p>${bet.getYourAmount(user.getUsername())} @ ${bet.getYourOdds(user.getUsername())}</p>
                 </div>
