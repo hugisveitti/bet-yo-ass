@@ -49,6 +49,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         User hugi = new User("hugi", "hugi");
         User villi = new User("villi", "villi");
         User joe = new User("joe", "joe");
+        User jim = new User("jim", "jim");
+        User james = new User("james", "james");
+        User hugga = new User("hugga", "hugga");
 
 
 
@@ -67,6 +70,24 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         try{
             userService.save(joe);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            userService.save(jim);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            userService.save(james);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            userService.save(hugga);
         } catch(Exception e){
             System.out.println(e);
         }
