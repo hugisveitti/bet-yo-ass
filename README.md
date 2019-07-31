@@ -1,4 +1,7 @@
 # bet-yo-ass
+Assignment in the University of Iceland
+A peer-to-peer betting service.
+
 Verkefni hugbúnaðarverkefni 2 í HÍ
 
 ## How do I get this ?	
